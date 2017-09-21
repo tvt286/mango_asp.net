@@ -1,0 +1,89 @@
+﻿@using System.Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+
+    @*<marquee style="z-index: 1; left: 777px; width: 00px; position: absolute; top: -14px; height: 1000px;" scrollamount="5"/>*@
+        <title>Mango | @ViewBag.Title</title>
+        @Scripts.Render("~/bundles/admin/jquery")
+        @Scripts.Render("~/bundles/admin/jqueryval")
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet">
+
+        <link href="/Content/Admin/style.css" rel="stylesheet" />
+
+        <link href="/Content/Admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/Admin/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/Admin/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="/Fonts/Admin/font-awesome/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/Admin/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/Admin/css/menu.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/Admin/css/responsive.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/Admin/footable.core.css" rel="stylesheet" />
+        <link href="~/Content/Admin/toastr.min.css" rel="stylesheet" />
+        @RenderSection("Styles", required: false)
+    @Styles.Render("~/font-awesome/admin/css")
+    <script src="/Scripts/Admin/modernizr.min.js"></script>
+
+</head>
+<body class="fixed-left">
+
+    <!-- Wrapper-->
+    <div id="wrapper">
+        <!-- Top Navbar -->
+        @Html.Partial("_TopNavbar")
+
+        <!-- Navigation -->
+        @*@Html.Partial("_Navigation")*@
+
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+                    <!-- Main view  -->
+                    @RenderBody()
+                </div>
+            </div>
+
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End right Content here -->
+        <!-- ============================================================== -->
+
+    </div>
+
+    <!-- End wrapper-->
+    <script src="/Scripts/js/modernizr.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+    <script>
+        var resizefunc = [];
+    </script>
+
+    <!-- jQuery  -->
+    <script src="/Scripts/Admin/detect.js"></script>
+    <script src="/Scripts/Admin/fastclick.js"></script>
+    <script src="/Scripts/Admin/jquery.blockUI.js"></script>
+    <script src="/Scripts/Admin/waves.js"></script>
+    <script src="/Scripts/Admin/jquery.slimscroll.js"></script>
+    <script src="/Scripts/Admin/jquery.scrollTo.min.js"></script>
+    @Scripts.Render("~/plugins/admin/select2")
+    @Scripts.Render("~/plugins/admin/sweetalert")
+    @Scripts.Render("~/bundles/admin/bootstrap")
+
+
+
+</body>
+</html>
