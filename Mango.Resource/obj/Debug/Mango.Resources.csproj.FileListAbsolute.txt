@@ -1,0 +1,7 @@
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\bin\Debug\Mango.Resource.dll.config
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\bin\Debug\Mango.Resource.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\bin\Debug\Mango.Resource.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\obj\Debug\Mango.Resource.EnumText.resources
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\obj\Debug\Mango.Resources.csproj.GenerateResource.Cache
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\obj\Debug\Mango.Resource.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Resource\obj\Debug\Mango.Resource.pdb

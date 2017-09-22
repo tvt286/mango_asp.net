@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupId" />
+    </Key>
+    <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+    <Property Name="CompanyId" Type="int" />
+  </EntityType>
+  <EntityType Name="Group_Permission">
+    <Key>
+      <PropertyRef Name="GroupId" />
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="GroupId" Type="int" Nullable="false" />
+    <Property Name="PermissionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="int" />
+    <Property Name="IsAdminCompany" Type="bit" Nullable="false" />
+    <Property Name="IsAdminRoot" Type="bit" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" MaxLength="300" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Group">
+    <Key>
+      <PropertyRef Name="GroupId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="GroupId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Permission">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="PermissionId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Group_Per__Group__286302EC">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="Group_Permission" Type="Self.Group_Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupId" />
+      </Principal>
+      <Dependent Role="Group_Permission">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Grou__Group__29572725">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="User_Group" Type="Self.User_Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupId" />
+      </Principal>
+      <Dependent Role="User_Group">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Grou__UserI__2A4B4B5E">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="User_Group" Type="Self.User_Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User_Group">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Perm__UserI__2B3F6F97">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="User_Permission" Type="Self.User_Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User_Permission">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mangoModelStoreContainer">
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group_Permission" EntityType="Self.Group_Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Group" EntityType="Self.User_Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Permission" EntityType="Self.User_Permission" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Group_Per__Group__286302EC" Association="Self.FK__Group_Per__Group__286302EC">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Group_Permission" EntitySet="Group_Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Grou__Group__29572725" Association="Self.FK__User_Grou__Group__29572725">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="User_Group" EntitySet="User_Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Grou__UserI__2A4B4B5E" Association="Self.FK__User_Grou__UserI__2A4B4B5E">
+      <End Role="User" EntitySet="User" />
+      <End Role="User_Group" EntitySet="User_Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Perm__UserI__2B3F6F97" Association="Self.FK__User_Perm__UserI__2B3F6F97">
+      <End Role="User" EntitySet="User" />
+      <End Role="User_Permission" EntitySet="User_Permission" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

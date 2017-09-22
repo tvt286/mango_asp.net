@@ -5,6 +5,14 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango", "Mango\Mango.csproj", "{0498BCA3-4FC7-4B3C-8A7B-707B27C9DA30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Common", "Mango.Common\Mango.Common.csproj", "{F99D7FD9-244F-4FC4-ACDE-79342283B967}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Resources", "Mango.Resource\Mango.Resources.csproj", "{B27F92CA-D081-4BC0-9E1F-3348312EB953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Data", "Mango.Data\Mango.Data.csproj", "{6A6065A7-63F7-449F-969C-0B3235720C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Services", "Mango.Services\Mango.Services.csproj", "{63DD59AA-3CEA-4E9C-AE37-8453917813AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{0498BCA3-4FC7-4B3C-8A7B-707B27C9DA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0498BCA3-4FC7-4B3C-8A7B-707B27C9DA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0498BCA3-4FC7-4B3C-8A7B-707B27C9DA30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99D7FD9-244F-4FC4-ACDE-79342283B967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99D7FD9-244F-4FC4-ACDE-79342283B967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99D7FD9-244F-4FC4-ACDE-79342283B967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99D7FD9-244F-4FC4-ACDE-79342283B967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B27F92CA-D081-4BC0-9E1F-3348312EB953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27F92CA-D081-4BC0-9E1F-3348312EB953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27F92CA-D081-4BC0-9E1F-3348312EB953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27F92CA-D081-4BC0-9E1F-3348312EB953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6065A7-63F7-449F-969C-0B3235720C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6065A7-63F7-449F-969C-0B3235720C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6065A7-63F7-449F-969C-0B3235720C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6065A7-63F7-449F-969C-0B3235720C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DD59AA-3CEA-4E9C-AE37-8453917813AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DD59AA-3CEA-4E9C-AE37-8453917813AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DD59AA-3CEA-4E9C-AE37-8453917813AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DD59AA-3CEA-4E9C-AE37-8453917813AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

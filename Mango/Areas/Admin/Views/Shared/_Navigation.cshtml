@@ -1,7 +1,8 @@
-﻿@*@using Vovinam.Services
-@using Vovinam.WebBackend.Common
-@using Vovinam.WebBackend.Web
-@using Vovinam.Common
+﻿@using Mango.Services
+@using Mango.Web
+@using Mango.Common
+@using Mango.Data.Enums
+@using Mango.Security
 @{
     var user = UserService.GetUserInfo();
 }
@@ -25,21 +26,15 @@
 
             <div class="dropdown" id="setting-dropdown">
                 <ul class="dropdown-menu">
-                    <li><a href="javascript:void(0)"><i class="mdi mdi-face-profile m-r-5"></i> Thông tin</a></li>
-                    <li><a href="javascript:void(0)"><i class="mdi mdi-logout m-r-5"></i> Đăng xuất</a></li>
+                    <li><a href="javascript:void(0)"><i class="mdi mdi-face-profile m-r-5"></i> Profile</a></li>
+                    <li><a href="javascript:void(0)"><i class="mdi mdi-logout m-r-5"></i> Logout</a></li>
                 </ul>
             </div>
 
             <ul>
                 <li class="menu-title">Menu</li>
 
-                @if (user.IsAdminRoot)
-                {
-                    <li class="@Html.IsSelected(action: "Index", controller: "Company") ">
-                        <a href="@Url.Action("Index","Company")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Công ty </span></a>
-                    </li>
-                }
-
+             
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Quản trị viên </span> <span class="menu-arrow"></span></a>
 
@@ -53,99 +48,7 @@
                             <li class=""><a href="@Url.Action("Index", "GroupPermission")">Quản lý vai trò</a></li>
                         }
                     </ul>
-                </li>
-
-                @if (!user.IsAdminRoot)
-                {
-                    if (user.IsAdminCompany || UserPermission.Has(Permission.Club_View))
-                    {
-                        <li class="@Html.IsSelected(action: "Index", controller: "Club") ">
-                            <a href="@Url.Action("Index","Club")" class="waves-effect"><i class="mdi mdi-trophy-variant"></i><span> Câu lạc bộ </span></a>
-                        </li>
-                    }
-                    if (user.IsAdminCompany || UserPermission.Has(Permission.StudentKA_View) || UserPermission.Has(Permission.StudentKB_View) || UserPermission.Has(Permission.StudentNL_View))
-                    {
-                        <li class="@Html.IsSelected(action: "Index", controller: "School") ">
-                            <a href="@Url.Action("Index", "School")" class="waves-effect"><i class="mdi mdi-star-circle"></i><span> Trường </span></a>
-                        </li>
-                    }
-                    <li class="menu-title">Quản lý</li>
-
-                    if (UserPermission.Has(Permission.StudentKA_View) || UserPermission.Has(Permission.StudentKB_View) || UserPermission.Has(Permission.StudentNL_View) || user.IsAdminCompany)
-                    {
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-tag-faces"></i><span>Học viên </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                @if (UserPermission.Has(Permission.StudentKA_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Student", id: 1)"><a href="@Url.Action("Index", "Student", new { id = 1 })">Học viên khu A</a></li>
-                                }
-                                @if (UserPermission.Has(Permission.StudentKB_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Student", id: 2)"><a href="@Url.Action("Index", "Student", new { id = 2 })">Học viên khu B</a></li>
-                                }
-                                @if (UserPermission.Has(Permission.StudentNL_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Student", id: 3)"><a href="@Url.Action("Index", "Student", new { id = 3 })">Học viên Nông Lâm</a></li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                    if (UserPermission.Has(Permission.TuitionKA_View) || UserPermission.Has(Permission.TuitionKB_View) || UserPermission.Has(Permission.TuitionNL_View) || user.IsAdminCompany)
-                    {
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cash-usd"></i><span>Học phí </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                @if (UserPermission.Has(Permission.TuitionKA_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Tuition", id: 1)"><a href="@Url.Action("Index", "Tuition", new { id = 1 })">Học phí khu A</a></li>
-                                }
-                                @if (UserPermission.Has(Permission.TuitionKB_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Tuition", id: 2)"><a href="@Url.Action("Index", "Tuition", new { id = 2 })">Học phí khu B</a></li>
-                                }
-                                @if (UserPermission.Has(Permission.TuitionNL_View) || user.IsAdminCompany)
-                                {
-                                    <li class="@Html.IsSelected(action: "Index, Edit", controller: "Tuition", id: 3)"><a href="@Url.Action("Index", "Tuition", new { id = 3 })">Học phí Nông Lâm</a></li>
-                                }
-                            </ul>
-                        </li>
-                    }
-                    <li class="menu-title">Thi thăng cấp</li>
-
-                    if (user.IsAdminCompany || UserPermission.Has(Permission.ChamThi_View) || UserPermission.Has(Permission.ChamThi_Import))
-                    {
-                        <li>
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span> Danh sách khóa thi </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                @if (user.IsAdminCompany || UserPermission.Has(Permission.ChamThi_View))
-                                {
-
-                                    <li class="@Html.IsSelected(action: "Index", controller: "LevelUp")"><a href="@Url.Action("Index", "LevelUp")">Danh sách thi</a></li>
-
-                                }
-
-                                @if (user.IsAdminCompany || UserPermission.Has(Permission.ChamThi_Import))
-                                {
-
-                                    <li class="@Html.IsSelected(action: "Import", controller: "LevelUp")"><a href="@Url.Action("Import", "LevelUp")">Import danh sách thi</a></li>
-
-                                }
-
-                            </ul>
-                        </li>
-                    }
-                    if (user.IsAdminCompany || UserPermission.Has(Permission.ChamThi_ViewCompete))
-                    {
-                        <li>
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-location"></i><span> Danh sách đối kháng </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li class="@Html.IsSelected(action: "Index", controller: "Compete", id : 1)"><a href="@Url.Action("Index", "Compete", new { id = 1 })">Nam</a></li>
-                                <li class="@Html.IsSelected(action: "Index", controller: "Compete", id : 2)"><a href="@Url.Action("Index", "Compete", new { id = 2 })">Nữ</a></li>
-                            </ul>
-                        </li>
-                    }
-                }
+                </li>         
             </ul>
         </div>
         <!-- Sidebar -->
@@ -161,4 +64,4 @@
     <!-- Sidebar -left -->
 
 </div>
-<!-- Left Sidebar End -->*@
+<!-- Left Sidebar End -->

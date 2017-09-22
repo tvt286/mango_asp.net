@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mangoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="mangoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Groups" EntityType="mangoModel.Group" />
+    <EntitySet Name="Group_Permission" EntityType="mangoModel.Group_Permission" />
+    <EntitySet Name="Users" EntityType="mangoModel.User" />
+    <EntitySet Name="User_Permission" EntityType="mangoModel.User_Permission" />
+    <AssociationSet Name="FK__Group_Per__Group__286302EC" Association="mangoModel.FK__Group_Per__Group__286302EC">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Group_Permission" EntitySet="Group_Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Perm__UserI__2B3F6F97" Association="mangoModel.FK__User_Perm__UserI__2B3F6F97">
+      <End Role="User" EntitySet="Users" />
+      <End Role="User_Permission" EntitySet="User_Permission" />
+    </AssociationSet>
+    <AssociationSet Name="User_Group" Association="mangoModel.User_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EnumType Name="UserStatus">
+    <Member Name="Active" Value="1" />
+    <Member Name="InActive" Value="0" />
+  </EnumType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupId" />
+    </Key>
+    <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Group_Permission" Relationship="mangoModel.FK__Group_Per__Group__286302EC" FromRole="Group" ToRole="Group_Permission" />
+    <NavigationProperty Name="Users" Relationship="mangoModel.User_Group" FromRole="Group" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Group_Permission">
+    <Key>
+      <PropertyRef Name="GroupId" />
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="GroupId" Type="Int32" Nullable="false" />
+    <Property Name="PermissionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="mangoModel.FK__Group_Per__Group__286302EC" FromRole="Group_Permission" ToRole="Group" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="mangoModel.UserStatus" />
+    <Property Name="IsAdminCompany" Type="Boolean" Nullable="false" />
+    <Property Name="IsAdminRoot" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User_Permission" Relationship="mangoModel.FK__User_Perm__UserI__2B3F6F97" FromRole="User" ToRole="User_Permission" />
+    <NavigationProperty Name="Groups" Relationship="mangoModel.User_Group" FromRole="User" ToRole="Group" />
+    <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Permission">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="PermissionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="mangoModel.FK__User_Perm__UserI__2B3F6F97" FromRole="User_Permission" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Group_Per__Group__286302EC">
+    <End Type="mangoModel.Group" Role="Group" Multiplicity="1" />
+    <End Type="mangoModel.Group_Permission" Role="Group_Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupId" />
+      </Principal>
+      <Dependent Role="Group_Permission">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Perm__UserI__2B3F6F97">
+    <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+    <End Type="mangoModel.User_Permission" Role="User_Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User_Permission">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="User_Group">
+    <End Type="mangoModel.Group" Role="Group" Multiplicity="*" />
+    <End Type="mangoModel.User" Role="User" Multiplicity="*" />
+  </Association>
+</Schema>
