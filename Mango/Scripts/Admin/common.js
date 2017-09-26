@@ -47,6 +47,7 @@ function ConfirmPopup(title, text, callFunc) {
 
 function OnSuccessAjax(result) {
     if (result.Code != null && result.Code != 0) {
+
         swal({
             type: "error",
             title: "",
@@ -55,6 +56,7 @@ function OnSuccessAjax(result) {
     } else if (result.Code == 0) {
 
         if (result.Message != null && result.Message.length > 0) {
+
             swal({
                 type: "success",
                 title: result.Message

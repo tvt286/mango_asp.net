@@ -54,7 +54,7 @@ namespace Mango.Areas.Admin.Controllers
             };
 
 
-            if (id != 0)
+            if (id.HasValue)
             {
                 model = UserService.Get(id.Value, true, true);
             }

@@ -21,7 +21,7 @@ namespace Mango.Areas.Admin.Controllers
             if (Request.HttpMethod == "GET")
             {
                 var user = UserService.GetUserInfo();
-                if (!(UserPermission.Has(Permission.GroupPermission_View) || user.IsAdminCompany))
+                if (!(UserPermission.Has(Permission.GroupPermission_View)))
                 {
                     return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index") });
                 }
@@ -32,6 +32,7 @@ namespace Mango.Areas.Admin.Controllers
             pagedList.SearchModel = searchModel;
             return PartialView("_List", pagedList);
         }
+
 
         public ActionResult Create()
         {
@@ -91,11 +92,11 @@ namespace Mango.Areas.Admin.Controllers
             return View("Index");
         }
 
-        [AuthorizeAdmin(Permission = Permission.GroupPermission_Create)]
+        //[AuthorizeAdmin(Permission = Permission.GroupPermission_Create)]
         public ActionResult Edit(int? id)
         {
             var user = UserService.GetUserInfo();
-            if (!(UserPermission.Has(Permission.GroupPermission_Create) || user.IsAdminCompany))
+            if (!(UserPermission.Has(Permission.GroupPermission_Create)))
             {
                 return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index") });
             }

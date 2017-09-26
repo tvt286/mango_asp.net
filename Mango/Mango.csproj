@@ -149,6 +149,7 @@
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Areas\CustomMembershipProvider.cs" />
     <Compile Include="Common\AjaxCommonOption.cs" />
+    <Compile Include="Common\EnumUtil.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -495,6 +496,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Views\GroupPermission\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPermission\_List.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPermission\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPermission\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPermission\_PermissionTree.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />
@@ -616,6 +622,19 @@
     <Content Include="Scripts\Admin\waves.js" />
     <Content Include="Scripts\Admin\wow.min.js" />
     <None Include="Scripts\Admin\_references.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\easy-responsive-tabs.js" />
+    <Content Include="Scripts\imagezoom.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.countup.js" />
+    <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\jquery.flexslider.js" />
+    <Content Include="Scripts\jquery.waypoints.min.js" />
+    <Content Include="Scripts\minicart.min.js" />
+    <Content Include="Scripts\modernizr.custom.js" />
+    <Content Include="Scripts\move-top.js" />
+    <Content Include="Scripts\responsiveslides.min.js" />
     <Content Include="Views\Home\About.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -635,7 +654,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\GroupPermission\" />
     <Folder Include="Content\Plugin\" />
     <Folder Include="Content\Upload\" />
     <Folder Include="Models\" />

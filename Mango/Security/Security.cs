@@ -39,6 +39,9 @@ namespace Mango.Security
     {
         public static bool Has(Permission p)
         {
+            var user = UserService.GetUserInfo();
+            if (user.IsAdminRoot)
+                return true;
             return AuthorizeService.HasPermission((int)p);
         }
     }

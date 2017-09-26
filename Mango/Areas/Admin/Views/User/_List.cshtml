@@ -3,8 +3,8 @@
 @using Mango.Web
 @using Mango.Security
 @using Mango.Data.Enums
+@using Mango.Client.Common
 @using PagedList.Mvc;
-
 @model Mango.Services.PagedSearchList<Mango.Data.User>
 @{
     var user = UserService.GetUserInfo();
@@ -82,9 +82,9 @@
                     @item.Status.GetString()
                 </td>
                 <td>
-                    @item.DateCreated.ToString("dd-MM-yyyy")
+                    @item.TimeCreate.ToString("dd-MM-yyyy")
                 </td>
-                @if (UserPermission.Has(Permission.User_Create) || user.IsAdminCompany || user.IsAdminRoot)
+                @if (UserPermission.Has(Permission.User_Create) || user.IsAdminRoot)
                 {
                     <td>
                         <a href="@Url.Action("Detail", new {id = item.Id})">
@@ -93,7 +93,7 @@
 
                     </td>
                 }
-                @if (UserPermission.Has(Permission.User_Delete) || user.IsAdminCompany)
+                @if (UserPermission.Has(Permission.User_Delete) || user.IsAdminRoot)
                 {
                     <td>
                         <input type="checkbox" name="deleteUserId" value="@item.Id" />

@@ -106,7 +106,7 @@ namespace Mango.App_Start
                       "~/Scripts/Admin/plugins/pace/pace.min.js"));
 
             bundles.Add(new ScriptBundle("~/plugins/admin/sweetalert").Include(
-                      "~/Scripts/plugins/sweetalert/sweetalert.min.js"));
+                      "~/Scripts/Admin/plugins/sweetalert/sweetalert.min.js"));
 
             bundles.Add(new ScriptBundle("~/plugins/admin/select2").Include(
                       "~/Scripts/Admin/plugins/select2/select2.full.min.js"));

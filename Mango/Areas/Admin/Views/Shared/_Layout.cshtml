@@ -26,8 +26,10 @@
         <link href="/Content/Admin/css/responsive.css" rel="stylesheet" type="text/css" />
         <link href="~/Content/Admin/footable.core.css" rel="stylesheet" />
         <link href="~/Content/Admin/toastr.min.css" rel="stylesheet" />
+        @Styles.Render("~/Content/Admin/css")
+        @Styles.Render("~/font-awesome/admin/css")
         @RenderSection("Styles", required: false)
-    @Styles.Render("~/font-awesome/admin/css")
+
     <script src="/Scripts/Admin/modernizr.min.js"></script>
 
 </head>
@@ -65,7 +67,7 @@
     </div>
 
     <!-- End wrapper-->
-    <script src="/Scripts/js/modernizr.min.js"></script>
+    <script src="/Scripts/Admin/js/modernizr.min.js"></script>
 
     @RenderSection("scripts", required: false)
     <script>

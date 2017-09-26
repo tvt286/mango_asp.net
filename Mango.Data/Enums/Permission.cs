@@ -25,7 +25,8 @@ namespace Mango.Data.Enums
         GroupPermission_View = 2004,
         [Description("Tạo vai trò")]
         GroupPermission_Create = 2005,
-
+        [Description("Xóa vai trò")]
+        GroupPermission_Delete = 2006,
 
         [Description("Xem loại sản phẩm")]
         Category_View = 3001,
