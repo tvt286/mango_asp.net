@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace Mango.Areas.Admin.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -23,6 +23,6 @@ namespace Mango.Areas.Admin.Controllers
             return View();
         }
 
-        
+
     }
 }

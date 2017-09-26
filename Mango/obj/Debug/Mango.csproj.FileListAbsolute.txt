@@ -66,3 +66,5 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\PagedLi
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\PagedList.Mvc.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\PagedList.xml
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\PagedList.Mvc.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\EntityFramework.SqlServer.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango\bin\EntityFramework.SqlServer.xml

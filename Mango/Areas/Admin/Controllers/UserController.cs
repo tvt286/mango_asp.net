@@ -14,6 +14,7 @@ using Mango.Common;
 
 namespace Mango.Areas.Admin.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
 
