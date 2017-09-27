@@ -1,8 +1,8 @@
 ﻿@using Mango.Services
-@using Mango.Web
 @using Mango.Common
 @using Mango.Data.Enums
 @using Mango.Security
+@using Mango.Web
 @{
     var user = UserService.GetUserInfo();
 }
@@ -48,7 +48,21 @@
                             <li class=""><a href="@Url.Action("Index", "GroupPermission")">Quản lý vai trò</a></li>
                         }
                     </ul>
-                </li>         
+                </li>    
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Hàng hóa </span> <span class="menu-arrow"></span></a>
+
+                    <ul class="list-unstyled">
+                        @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
+                        {
+                            <li class="@Html.IsSelected(action: "Index", controller: "Category")"><a href="@Url.Action("Index", "Category")">Loại sản phẩm</a></li>
+                        }
+                        @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
+                        {
+                            <li class="@Html.IsSelected(action: "Index, Detail", controller: "Product")"><a href="@Url.Action("Index", "Product")">Sản phẩm</a></li>
+                        }
+                    </ul>
+                </li>           
             </ul>
         </div>
         <!-- Sidebar -->

@@ -19,6 +19,8 @@ namespace Mango.Data
         {
             this.User_Permission = new HashSet<User_Permission>();
             this.Groups = new HashSet<Group>();
+            this.Categories = new HashSet<Category>();
+            this.Products = new HashSet<Product>();
         }
     
         public int Id { get; set; }
@@ -38,5 +40,9 @@ namespace Mango.Data
         public virtual ICollection<User_Permission> User_Permission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Group> Groups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Categories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -139,13 +139,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\GroupPermissionController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
     <Compile Include="Areas\Admin\Models\GroupPermissionModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Areas\CustomMembershipProvider.cs" />
     <Compile Include="Common\AjaxCommonOption.cs" />
@@ -501,6 +505,13 @@
     <Content Include="Areas\Admin\Views\GroupPermission\Create.cshtml" />
     <Content Include="Areas\Admin\Views\GroupPermission\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\GroupPermission\_PermissionTree.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\_Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\_List.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\_Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\_List.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />

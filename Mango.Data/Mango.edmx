@@ -4,7 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar" MaxLength="300" />
+          <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+          <Property Name="TimeUpdate" Type="datetime" />
+          <Property Name="UserCreateId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupId" />
@@ -22,6 +35,24 @@
           </Key>
           <Property Name="GroupId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AmountAlertForStore" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="300" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="TimeDeleted" Type="datetime" />
+          <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+          <Property Name="TimeUpdate" Type="datetime" />
+          <Property Name="UserCreateId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -56,6 +87,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Category__UserCr__49C3F6B7">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserCreateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Group_Per__Group__286302EC">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Permission" Type="Self.Group_Permission" Multiplicity="*" />
@@ -65,6 +108,30 @@
             </Principal>
             <Dependent Role="Group_Permission">
               <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__47DBAE45">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__UserCre__48CFD27E">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UserCreateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -105,14 +172,28 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="mangoModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group_Permission" EntityType="Self.Group_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Group" EntityType="Self.User_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission" EntityType="Self.User_Permission" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Category__UserCr__49C3F6B7" Association="Self.FK__Category__UserCr__49C3F6B7">
+            <End Role="User" EntitySet="User" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
           <AssociationSet Name="FK__Group_Per__Group__286302EC" Association="Self.FK__Group_Per__Group__286302EC">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Permission" EntitySet="Group_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="Self.FK__Product__Categor__47DBAE45">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__UserCre__48CFD27E" Association="Self.FK__Product__UserCre__48CFD27E">
+            <End Role="User" EntitySet="User" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK__User_Grou__Group__29572725" Association="Self.FK__User_Grou__Group__29572725">
             <End Role="Group" EntitySet="Group" />
@@ -147,6 +228,20 @@
           <AssociationSet Name="User_Group" Association="mangoModel.User_Group">
             <End Role="Group" EntitySet="Groups" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="mangoModel.Category" />
+          <EntitySet Name="Products" EntityType="mangoModel.Product" />
+          <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="mangoModel.FK__Product__Categor__47DBAE45">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__UserCr__49C3F6B7" Association="mangoModel.FK__Category__UserCr__49C3F6B7">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__UserCre__48CFD27E" Association="mangoModel.FK__Product__UserCre__48CFD27E">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
         <EnumType Name="UserStatus">
@@ -192,6 +287,8 @@
           <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="mangoModel.FK__Category__UserCr__49C3F6B7" FromRole="User" ToRole="Category" />
+          <NavigationProperty Name="Products" Relationship="mangoModel.FK__Product__UserCre__48CFD27E" FromRole="User" ToRole="Product" />
         </EntityType>
         <EntityType Name="User_Permission">
           <Key>
@@ -229,6 +326,77 @@
         <Association Name="User_Group">
           <End Type="mangoModel.Group" Role="Group" Multiplicity="*" />
           <End Type="mangoModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeUpdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Category" ToRole="Product" />
+          <Property Name="UserCreateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="mangoModel.FK__Category__UserCr__49C3F6B7" FromRole="Category" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="AmountAlertForStore" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="TimeDeleted" Type="DateTime" Precision="3" />
+          <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeUpdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Product" ToRole="Category" />
+          <Property Name="UserCreateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="mangoModel.FK__Product__UserCre__48CFD27E" FromRole="Product" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Product__Categor__47DBAE45">
+          <End Type="mangoModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="mangoModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category__UserCr__49C3F6B7">
+          <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+          <End Type="mangoModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserCreateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__UserCre__48CFD27E">
+          <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+          <End Type="mangoModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UserCreateId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -289,6 +457,39 @@
               <ScalarProperty Name="GroupId" ColumnName="GroupId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="mangoModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="UserCreateId" ColumnName="UserCreateId" />
+                <ScalarProperty Name="TimeUpdate" ColumnName="TimeUpdate" />
+                <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="mangoModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="UserCreateId" ColumnName="UserCreateId" />
+                <ScalarProperty Name="TimeUpdate" ColumnName="TimeUpdate" />
+                <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
+                <ScalarProperty Name="TimeDeleted" ColumnName="TimeDeleted" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="AmountAlertForStore" ColumnName="AmountAlertForStore" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

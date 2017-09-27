@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Permission.cs" />
     <Compile Include="Enums\UploadFileStatus.cs" />
     <Compile Include="Extensions\MangoContextExtension.cs" />
@@ -80,6 +83,9 @@
       <DependentUpon>Mango.edmx</DependentUpon>
     </Compile>
     <Compile Include="Partials\MangoContext.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
       <DependentUpon>Mango.tt</DependentUpon>

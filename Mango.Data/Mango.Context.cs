@@ -29,5 +29,7 @@ namespace Mango.Data
         public virtual DbSet<Group_Permission> Group_Permission { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<User_Permission> User_Permission { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

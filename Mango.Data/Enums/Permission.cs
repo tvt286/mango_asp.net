@@ -28,14 +28,17 @@ namespace Mango.Data.Enums
         [Description("Xóa vai trò")]
         GroupPermission_Delete = 2006,
 
-        [Description("Xem loại sản phẩm")]
+        [Description("View category")]
         Category_View = 3001,
-        [Description("Tạo loại sản phẩm")]
+        [Description("Create category")]
         Category_Create = 3002,
-        [Description("Xem đơn vị tính")]
-        Unit_View = 3003,
-        [Description("Tạo đơn vị tính")]
-        Unit_Create = 3004,
+        [Description("Delete category")]
+        Category_Delete = 3003,
+
+        //[Description("Xem đơn vị tính")]
+        //Unit_View = 3003,
+        //[Description("Tạo đơn vị tính")]
+        //Unit_Create = 3004,
         [Description("Xem sản phẩm")]
         Product_View = 3005,
         [Description("Tạo sản phẩm")]

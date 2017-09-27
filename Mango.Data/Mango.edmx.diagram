@@ -12,6 +12,11 @@
         <AssociationConnector Association="mangoModel.FK__Group_Per__Group__286302EC" />
         <AssociationConnector Association="mangoModel.FK__User_Perm__UserI__2B3F6F97" />
         <AssociationConnector Association="mangoModel.User_Group" />
+        <EntityTypeShape EntityType="mangoModel.Category" Width="1.5" PointX="5.375" PointY="4.5" />
+        <EntityTypeShape EntityType="mangoModel.Product" Width="1.5" PointX="7.625" PointY="4" />
+        <AssociationConnector Association="mangoModel.FK__Product__Categor__47DBAE45" />
+        <AssociationConnector Association="mangoModel.FK__Category__UserCr__49C3F6B7" />
+        <AssociationConnector Association="mangoModel.FK__Product__UserCre__48CFD27E" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
