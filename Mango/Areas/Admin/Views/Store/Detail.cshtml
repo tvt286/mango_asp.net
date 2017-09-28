@@ -1,0 +1,245 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+
+@model Mango.Data.Store
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "Create Store";
+    }
+    else
+    {
+        ViewBag.Title = "Edit Store";
+    }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Store</h4>
+            <ol class="breadcrumb p-0 m-0">
+                <li>
+                    <a href="@Url.Action("Index","Home")">Mango</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">Store</a>
+                </li>
+                <li class="active">
+                    @if (Model.Id == 0)
+                    {
+                        <strong>Create</strong>
+                    }
+                    else
+                    {
+                        <strong>Edit</strong>
+                    }
+                </li>
+            </ol>
+
+            <div class="clearfix"></div>
+            <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+<div class="card-box animated fadeInRight">
+    <div class="row">
+        @using (Ajax.BeginForm("Create", "Store", null, new AjaxCommonOption { OnSuccess = "CreateSuccess", OnBegin = "CreateBegin" }, new { role = "form", id = "CreateForm", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-lg-12">
+                <!--Box thông tin-->
+                <div class="ibox ">
+                    <div>
+                        <h5>Store Info</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Code<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @if (Model.Id == 0)
+                                    {
+                                        @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", @placeholder = "Code", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(x => x.Code, null, new { @disabled = "disabled", @class = "form-control", @placeholder = "Code", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+                                    }
+
+                                </div>
+                                <label class="control-label col-md-2">Name<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Name, null, new { @class = "form-control", @placeholder = "Name", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">City<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.CityId, null, "-- City --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(x => x.CityId)
+                                </div>
+
+                                <label class="control-label col-md-2">District<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.DistrictId, null, "-- District --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(x => x.DistrictId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Ward<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.WardId, null, "-- Ward --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(x => x.WardId)
+                                </div>
+
+                                <label class="control-label col-md-2">Street<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.StreetId, null, "-- Street --", new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(x => x.StreetId)
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+
+                                <label class="control-label col-md-2">Street Number<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.NumberStreet, new { @class = "form-control ", @placeholder = "Street Number", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.NumberStreet, "", new { @class = "text-danger" })
+                                </div>
+
+                                <label class="control-label col-md-2">Phone<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control ", @placeholder = "Street Number", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input style="margin-right:10px" class="btn btn-primary" type="submit" id="btCreate" value="Save" />
+                                @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default ", role = "button" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
+
+    <style>
+        .input-validation-error {
+            border: 1px solid red;
+        }
+    </style>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        //$("#btResetProductVending").click(function () {
+        //    $("#ProductId").val('').trigger('change');
+        //    $("#CategoryId").val('').trigger('change');
+        //    $("#btSearch").click();
+        //});
+
+        function CreateBegin() {
+            OnBeginAjax();
+            if (!$('#CreateForm').valid()) {
+                OnCompleteAjax();
+                return false;
+            }
+            $('#btCreate').click(function (event) {
+                $('#btCreate').prop('disabled', true);
+            });
+        }
+
+        function CreateSuccess(result) {
+            $('#btCreate').click(function (event) {
+                $('#btCreate').prop('disabled', false);
+            });
+            //var data = JSON.parse(result);
+            //OnSuccessAjax(data);
+            OnSuccessAjax(result);
+        }
+
+
+        function selectCity() {
+            $('#DistrictId,#WardId').find("option[value\!='']").remove();
+         //   $('#DistrictId,#WardId').select2('val', '');
+            $.post('@Url.Action("GetDictrict", "Common")',
+                { cityID: $(this).val() },
+                function (data) {
+                    $.each(data,
+                        function (key, value) {
+                            $('#DistrictId').append($('<option></option>').val(value.ID).html(value.Text));
+                        });
+                });
+        }
+
+        function selectDistrict() {
+            $('#WardId').find("option[value\!='']").remove();
+       //     $('#WardId').select2('val', '');
+            $.post('@Url.Action("GetWard","Common")',
+                { dictrictID: $(this).val() },
+                function (data) {
+                    $('#WardId').find("option[value\!='']").remove();
+                    $.each(data,
+                        function (key, value) {
+                            $('#WardId').append($('<option></option>').val(value.ID).html(value.Text));
+                        });
+                });
+
+
+            $('#StreetId').find("option[value\!='']").remove();
+        //    $('#StreetId').select2('val', '');
+            $.post('@Url.Action("GetStreet","Common")',
+                {
+                    dictrictID: $(this).val(),
+                    cityId: $("#CityId").val()
+                },
+                function (data) {
+                    $('#StreetId').find("option[value\!='']").remove();
+                    $.each(data,
+                        function (key, value) {
+                            $('#StreetId').append($('<option></option>').val(value.ID).html(value.Text));
+                        });
+                });
+        }
+
+
+
+        $(function () {
+            $('#CityId').change(selectCity);
+            $('#DistrictId').change(selectDistrict);
+
+        });
+    </script>
+}
+
+

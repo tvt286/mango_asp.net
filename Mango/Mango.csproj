@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommonController.cs" />
     <Compile Include="Areas\Admin\Controllers\GroupPermissionController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs">
       <SubType>Code</SubType>
@@ -514,6 +515,9 @@
     <Content Include="Areas\Admin\Views\Product\_List.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Store\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Store\_List.cshtml" />
+    <Content Include="Areas\Admin\Views\Store\Detail.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />
@@ -667,7 +671,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Store\" />
     <Folder Include="Content\Plugin\" />
     <Folder Include="Content\Upload\" />
     <Folder Include="Models\" />

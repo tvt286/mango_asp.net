@@ -41,11 +41,11 @@
                     <ul class="list-unstyled">
                         @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class=""><a href="@Url.Action("Index,Detail", "User")">User</a></li>
+                            <li class="@Html.IsSelected(action: "Index, Detail", controller: "User")"><a href="@Url.Action("Index", "User")">User</a></li>
                         }
                         @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class=""><a href="@Url.Action("Index,Create,Edit", "GroupPermission")">Role</a></li>
+                            <li class="@Html.IsSelected(action: "Index,Create,Edit", controller: "GroupPermission")"><a href="@Url.Action("Index", "GroupPermission")">Role</a></li>
                         }
                     </ul>
                 </li>    
@@ -65,7 +65,7 @@
                 </li>     
                 @if (UserPermission.Has(Permission.Store_View)  || user.IsAdminCompany)
                 {
-                    <li class="@Html.IsSelected(action: "Index", controller: "Store") ">
+                    <li class="@Html.IsSelected(action: "Index, Detail", controller: "Store") ">
                         <a href="@Url.Action("Index", "Store")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Store </span></a>
                     </li>  
                 }    
@@ -75,9 +75,9 @@
         <div class="clearfix"></div>
 
         <div class="help-box">
-            <h5 class="text-muted m-t-0">Cần giúp đỡ ?</h5>
-            <p class=""><span class="text-dark"><b>Email:</b></span> <br /> tytv@magik.vn</p>
-            <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br /> (+84) 1677012829</p>
+            <h5 class="text-muted m-t-0">Need help ?</h5>
+            <p class=""><span class="text-white"><b>Email:</b></span> <br /> tytv@magik.vn</p>
+            <p class="m-b-0"><span class="text-white"><b>Call:</b></span> <br /> (+84) 1677012829</p>
         </div>
 
     </div>

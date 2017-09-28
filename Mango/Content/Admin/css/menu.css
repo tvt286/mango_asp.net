@@ -263,7 +263,7 @@ body.fixed-left .side-menu.left {
   border-top: 0;
 }
 #sidebar-menu ul ul li.active a {
-  color: #4c4c4c;
+  color: #fff;
 }
 #sidebar-menu ul ul a {
   color: #989898;
@@ -401,7 +401,7 @@ body.fixed-left .side-menu.left {
   width: 260px;
   background-color: #f2f2f2;
 }
-#wrapper.enlarged .left.side-menu #sidebar-menu ul > li:hover > ul {
+#wrapper.enlarged .left.side-menu #sidebar-menu ul > li:dropdown-menu > ul {
   display: block;
   left: 70px;
   position: absolute;

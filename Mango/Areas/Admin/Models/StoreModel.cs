@@ -8,5 +8,9 @@ namespace Mango.Areas.Admin.Models
 {
     public class StoreSearchModel : SearchModel
     {
+
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }

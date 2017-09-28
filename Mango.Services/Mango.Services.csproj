@@ -62,6 +62,7 @@
     <Compile Include="AuthorizeService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="GroupPermissionService.cs" />
+    <Compile Include="LocationService.cs" />
     <Compile Include="PagedSearchResult.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

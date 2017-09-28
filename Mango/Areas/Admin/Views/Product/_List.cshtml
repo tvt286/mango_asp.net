@@ -106,7 +106,7 @@
     @Html.PagedListPager(Model, page =>
 {
     Model.SearchModel.PageIndex = page;
-    return Url.Action("Index", "Student", Model.SearchModel);
+    return Url.Action("Index", "Product", Model.SearchModel);
 },
         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
 
