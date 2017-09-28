@@ -26,6 +26,9 @@ namespace Mango.Security
             // call base method            
             var result = base.AuthorizeCore(httpContext);
             // if base return true, check additional logic base on Permissions
+            var user = UserService.GetUserInfo();
+            if (user.IsAdminCompany)
+                return true;
             if (result)
             {
                 return AuthorizeService.HasPermission((int)Permission) ||
@@ -40,7 +43,7 @@ namespace Mango.Security
         public static bool Has(Permission p)
         {
             var user = UserService.GetUserInfo();
-            if (user.IsAdminRoot)
+            if (user.IsAdminCompany)
                 return true;
             return AuthorizeService.HasPermission((int)p);
         }

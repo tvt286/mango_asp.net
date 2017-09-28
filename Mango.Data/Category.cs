@@ -28,9 +28,11 @@ namespace Mango.Data
         public System.DateTime TimeCreate { get; set; }
         public Nullable<System.DateTime> TimeUpdate { get; set; }
         public int UserCreateId { get; set; }
+        public Nullable<System.DateTime> TimeDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
-        public virtual User User { get; set; }
     }
 }

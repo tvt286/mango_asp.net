@@ -22,11 +22,11 @@ namespace Mango.Data
         public decimal SellingPrice { get; set; }
         public Nullable<int> AmountAlertForStore { get; set; }
         public string Image { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> TimeDeleted { get; set; }
         public System.DateTime TimeCreate { get; set; }
         public Nullable<System.DateTime> TimeUpdate { get; set; }
         public int UserCreateId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }

@@ -24,13 +24,13 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Categories.AsNoTracking().ToList();
+                return context.Categories.Where(x => x.IsDeleted == false).AsNoTracking().ToList();
             }
         }
 
-        public static CommandResult Create(Category data)
+        public static RedirectCommand Create(Category data)
         {
-            var result = new CommandResult
+            var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
                 Message = "Đã tạo danh mục thành công!"
@@ -54,9 +54,9 @@ namespace Mango.Services
         }
 
 
-        public static CommandResult Update(Category data)
+        public static RedirectCommand Update(Category data)
         {
-            var result = new CommandResult
+            var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
                 Message = "Đã cập nhật danh mục thành công!"
@@ -88,7 +88,7 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 var user = UserService.GetUserInfo();
-                IQueryable<Category> query = context.Categories.AsNoTracking();
+                IQueryable<Category> query = context.Categories.Where(x => x.IsDeleted == false).AsNoTracking();
 
                 if (code.NotEmpty())
                 {
@@ -111,6 +111,39 @@ namespace Mango.Services
             }
         }
 
+        public static RedirectCommand DeleteCategory(string categoryIdStr)
+        {
+            var result = new RedirectCommand
+            {
+                Code = ResultCode.Success,
+                Message = "Đã xóa sản phẩm thành công!",
+            };
+            using (var context = new mangoEntities())
+            {
+                var categoryIdList =
+                    categoryIdStr.Replace(" ", "").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var categoryId in categoryIdList)
+                {
+                    var Id = int.Parse(categoryId);
+                    var category = context.Categories.FirstOrDefault(x => x.Id == Id);
+                    //if (context.WarehouseProducts
+                    //    .Any(x => x.ProductId == product.Id
+                    //    && x.CompanyId == product.CompanyId
+                    //    && (x.QuantityExchange > 0 ||
+                    //    x.QuantityExchangeFail > 0 ||
+                    //    x.QuantityExchangeLose > 0)))
+                    //{
+                    //    result.Code = ResultCode.Fail;
+                    //    result.Message = "Sản phẩm này còn tồn trong kho không thể xóa được!";
+                    //    return result;
+                    //}
+                    category.IsDeleted = true;
+                    category.TimeDeleted = DateTime.Now;
+                }
+                context.SaveChanges();
+            }
 
+            return result;
+        }
     }
 }

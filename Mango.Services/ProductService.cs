@@ -176,7 +176,8 @@ namespace Mango.Services
                     productIdStr.Replace(" ", "").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 foreach (var productId in productIdList)
                 {
-                    var product = context.Products.First(x => x.Id == int.Parse(productId));
+                    var Id = int.Parse(productId);
+                    var product = context.Products.First(x => x.Id == Id);
                     //if (context.WarehouseProducts
                     //    .Any(x => x.ProductId == product.Id
                     //    && x.CompanyId == product.CompanyId

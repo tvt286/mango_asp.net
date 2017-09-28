@@ -31,5 +31,10 @@ namespace Mango.Data
         public virtual DbSet<User_Permission> User_Permission { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<Ward> Wards { get; set; }
     }
 }

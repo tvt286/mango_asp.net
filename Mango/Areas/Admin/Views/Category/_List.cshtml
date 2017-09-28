@@ -3,6 +3,7 @@
 @using Mango.Security
 @using Mango.Data.Enums
 @using Mango.Client.Common
+@using Mango.Web
 @using PagedList.Mvc;
 @model Mango.Services.PagedSearchList<Mango.Data.Category>
 
@@ -19,10 +20,16 @@
             <tr>
                 <th>#</th>
                 <th>
+                    Image
+                </th>
+                <th>
+                    Code
+                </th>
+                <th>
                     Name
                 </th>
                 <th>
-                    Status
+                    Description
                 </th>
                 <th>
                     Date create
@@ -52,18 +59,24 @@
                         @(index++)
                     </td>
                     <td>
+                        <img style="width: 70px;" src="@Url.ImageCategory(item)" />
+                    </td>
+                    <td>
+                        @item.Code
+                    </td>
+                    <td>
                         @item.Name
                     </td>
+                    <th>
+                        @item.Description
+                    </th>
                     <td>
-                        @item.Status.GetString()
-                    </td>
-                    <td>
-                        @item.DateCreated.ToString("MM-yyyy")
+                        @item.TimeCreate.ToString("MM-yyyy")
                     </td>
                     @if (UserPermission.Has(Permission.Category_Create) || user.IsAdminCompany)
                     {
                         <td>
-                            <a href="javascript:void(0)" onclick="DetailCategory(@item.Id)">
+                            <a href="javascript:void(0)" onclick="Detail(@item.Id)">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         </td>

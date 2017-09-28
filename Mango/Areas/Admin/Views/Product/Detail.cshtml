@@ -1,0 +1,236 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+
+@model Mango.Data.Product
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "Create product";
+    }
+    else
+    {
+        ViewBag.Title = "Edit product";
+    }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Product</h4>
+            <ol class="breadcrumb p-0 m-0">
+                <li>
+                    <a href="@Url.Action("Index","Home")">Mango</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">Product</a>
+                </li>
+                <li class="active">
+                    @if (Model.Id == 0)
+                    {
+                        <strong>Create new</strong>
+                    }
+                    else
+                    {
+                        <strong>Edit</strong>
+                    }
+                </li>
+            </ol>
+
+            <div class="clearfix"></div>
+            <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Lưu</a>
+            @Html.ActionLink("Thoát", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+<div class="card-box animated fadeInRight">
+    <div class="row">
+        @using (Ajax.BeginForm("Create", "Product", null, new AjaxCommonOption { OnSuccess = "CreateSuccess" }, new { role = "form", id = "CreateForm", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-lg-12">
+                <!--Box thông tin-->
+                <div class="ibox ">
+                    <div>
+                        <h5>Product Info</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Code<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @if (Model.Id == 0)
+                                    {
+                                        @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", @placeholder = "Code", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(x => x.Code, null, new { @disabled = "disabled", @class = "form-control", @placeholder = "Code", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+                                    }
+
+                                </div>
+                                <label class="control-label col-md-2">Name<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Name, null, new { @class = "form-control", @placeholder = "Name", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Category<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Danh mục --", new { @class = "form-control select2", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                                </div>
+                                <label class="control-label col-md-2">Supplier Price<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.SupplierPrice, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.SupplierPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <label class="control-label col-md-2">Selling Price<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.SellingPrice, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Amount Alert For Store<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.AmountAlertForStore, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(model => model.AmountAlertForStore, "", new { @class = "text-danger" })
+                                </div>
+                                <label class="control-label col-md-2">Image<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    <input type="file" id="Image" name="FileAttach" />
+                                    <img src="@(Model.Image.NotEmpty() ? Url.Content(Model.Image) : "")" style="@(Model.Image.NotEmpty() ? "" : "display: none")" width="150" id="blah" />
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input style="margin-right:10px" class="btn btn-primary" type="submit" id="btUpdate" value="Save" />
+                                @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default ", role = "button" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
+
+    <style>
+        .input-validation-error {
+            border: 1px solid red;
+        }
+    </style>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnImage").on('click', function (e) {
+                e.preventDefault();
+                $("#Image:hidden").trigger('click');
+            });
+        });
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(function () {
+            $('.autoNumeric')
+            .autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+            $('.autoNumeric').blur();
+
+            $("#Image")
+            .change(function () {
+                readURL(this);
+                $('#blah').show();
+            });
+
+        });
+
+        function inItUploadAjaxForm(successFunction) {
+            window.addEventListener("submit", function (e) {
+                OnBeginAjax();
+                if (!$('#CreateForm').valid()) {
+                    OnCompleteAjax();
+                    return false;
+                }
+
+                $('.autoNumeric').each(function (i) {
+                    var self = $(this);
+                    try {
+                        var v = self.autoNumeric('get');
+                        //self.autoNumeric('destroy');
+                        self.val(v);
+                    } catch (err) {
+                        self.val(0);
+                    }
+                });
+
+                var form = e.target;
+                if (form.getAttribute("enctype") === "multipart/form-data") {
+                    if (form.dataset.ajax) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        var xhr = new XMLHttpRequest();
+                        xhr.open(form.method, form.action);
+                        xhr.onreadystatechange = function (result) {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                if (successFunction)
+                                    successFunction(xhr.responseText);
+                            }
+                            OnCompleteAjax();
+                        };
+                        xhr.send(new FormData(form));
+                    }
+                }
+            }, true);
+        }
+
+        inItUploadAjaxForm(CreateSuccess);
+
+        function CreateSuccess(result) {
+            var data = JSON.parse(result);
+            OnSuccessAjax(data);
+        }
+
+
+    </script>
+}
+
+

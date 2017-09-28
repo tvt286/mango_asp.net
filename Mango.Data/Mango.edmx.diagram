@@ -13,10 +13,24 @@
         <AssociationConnector Association="mangoModel.FK__User_Perm__UserI__2B3F6F97" />
         <AssociationConnector Association="mangoModel.User_Group" />
         <EntityTypeShape EntityType="mangoModel.Category" Width="1.5" PointX="5.375" PointY="4.5" />
-        <EntityTypeShape EntityType="mangoModel.Product" Width="1.5" PointX="7.625" PointY="4" />
-        <AssociationConnector Association="mangoModel.FK__Product__Categor__47DBAE45" />
         <AssociationConnector Association="mangoModel.FK__Category__UserCr__49C3F6B7" />
+        <EntityTypeShape EntityType="mangoModel.Product" Width="1.5" PointX="7.625" PointY="2.25" />
+        <AssociationConnector Association="mangoModel.FK__Product__Categor__47DBAE45" />
         <AssociationConnector Association="mangoModel.FK__Product__UserCre__48CFD27E" />
+        <EntityTypeShape EntityType="mangoModel.City" Width="1.5" PointX="7.375" PointY="12.5" />
+        <EntityTypeShape EntityType="mangoModel.District" Width="1.5" PointX="9.625" PointY="12.5" />
+        <EntityTypeShape EntityType="mangoModel.Store" Width="1.5" PointX="14.125" PointY="9.875" />
+        <EntityTypeShape EntityType="mangoModel.Street" Width="1.5" PointX="11.875" PointY="12.875" />
+        <EntityTypeShape EntityType="mangoModel.Ward" Width="1.5" PointX="11.875" PointY="21.25" />
+        <AssociationConnector Association="mangoModel.FK__District__CityId__6754599E" />
+        <AssociationConnector Association="mangoModel.FK__Store__CityId__6D0D32F4" />
+        <AssociationConnector Association="mangoModel.FK__Street__CityId__68487DD7" />
+        <AssociationConnector Association="mangoModel.FK__Store__DistrictI__6E01572D" />
+        <AssociationConnector Association="mangoModel.FK__Street__District__693CA210" />
+        <AssociationConnector Association="mangoModel.FK__Ward__DistrictId__6A30C649" />
+        <AssociationConnector Association="mangoModel.FK__Store__StreetId__6EF57B66" />
+        <AssociationConnector Association="mangoModel.FK__Store__UserCreat__6FE99F9F" />
+        <AssociationConnector Association="mangoModel.FK__Store__WardId__6C190EBB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

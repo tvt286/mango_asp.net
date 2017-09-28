@@ -45,7 +45,7 @@
                             <div class="text-center account-logo-box">
                                 <h2 class="text-uppercase">
                                     <a href="index.html" class="text-success">
-                                        <span><img src="~/Content/Image/logo.png" alt="" height="36"></span>
+                                        <span><img src="~/Content/Admin/images/logo-shop.jpg" alt="" height="136"></span>
                                     </a>
                                 </h2>
                                 <!--<h4 class="text-uppercase font-bold m-b-0">Sign In</h4>-->
@@ -67,12 +67,12 @@
                                     @Html.ValidationSummary(true)
                                     <div class="form-group">
                                         <div class="col-xs-12">
-                                            @Html.TextBoxFor(m => m.UserName, "", new { @class = "form-control", @required = true, @placeholder = "Tên đăng nhập" })
+                                            @Html.TextBoxFor(m => m.UserName, "", new { @class = "form-control", @required = true, @placeholder = "Username" })
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-xs-12">
-                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control ", @required = true, @placeholder = "Mật khẩu" })
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control ", @required = true, @placeholder = "Password" })
                                         </div>
                                     </div>
 

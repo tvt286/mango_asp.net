@@ -58,6 +58,12 @@
     <Compile Include="Category.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
+    <Compile Include="City.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
+    <Compile Include="District.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Permission.cs" />
     <Compile Include="Enums\UploadFileStatus.cs" />
     <Compile Include="Extensions\MangoContextExtension.cs" />
@@ -87,6 +93,12 @@
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Store.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Street.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
@@ -94,6 +106,9 @@
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Permission.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ward.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
   </ItemGroup>

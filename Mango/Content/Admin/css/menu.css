@@ -142,7 +142,7 @@ body.fixed-left .side-menu.left {
   min-height: 80px;
   padding-top: 15px;
   position: relative;
-  background: url("../images/logo-small.jpg");
+  background: url("../images/logo-shop.jpg");
   background-size: cover;
 }
 .user-details img {
@@ -157,7 +157,7 @@ body.fixed-left .side-menu.left {
 .user-details a.dropdown-toggle {
   margin-top: 15px !important;
   color: #ffffff !important;
-  background-color: rgba(49, 58, 70, 0.5) !important;
+  background-color: rgba(49, 58, 70, 0.78) !important;
   display: block;
   font-weight: 600;
   padding: 6px 15px !important;
@@ -183,7 +183,7 @@ body.fixed-left .side-menu.left {
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: rgba(49, 58, 70, 0.65);
+  background-color: rgba(49, 58, 70, 0.12);
   left: 0;
   top: 0;
 }

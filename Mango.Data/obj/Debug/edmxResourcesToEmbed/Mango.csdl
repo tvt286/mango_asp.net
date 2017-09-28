@@ -17,6 +17,61 @@
       <End Role="Group" EntitySet="Groups" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="Categories" EntityType="mangoModel.Category" />
+    <AssociationSet Name="FK__Category__UserCr__49C3F6B7" Association="mangoModel.FK__Category__UserCr__49C3F6B7">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Category" EntitySet="Categories" />
+    </AssociationSet>
+    <EntitySet Name="Products" EntityType="mangoModel.Product" />
+    <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="mangoModel.FK__Product__Categor__47DBAE45">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__UserCre__48CFD27E" Association="mangoModel.FK__Product__UserCre__48CFD27E">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <EntitySet Name="Cities" EntityType="mangoModel.City" />
+    <EntitySet Name="Districts" EntityType="mangoModel.District" />
+    <EntitySet Name="Stores" EntityType="mangoModel.Store" />
+    <EntitySet Name="Streets" EntityType="mangoModel.Street" />
+    <EntitySet Name="Wards" EntityType="mangoModel.Ward" />
+    <AssociationSet Name="FK__District__CityId__6754599E" Association="mangoModel.FK__District__CityId__6754599E">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="District" EntitySet="Districts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Store__CityId__6D0D32F4" Association="mangoModel.FK__Store__CityId__6D0D32F4">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Street__CityId__68487DD7" Association="mangoModel.FK__Street__CityId__68487DD7">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Street" EntitySet="Streets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Store__DistrictI__6E01572D" Association="mangoModel.FK__Store__DistrictI__6E01572D">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Street__District__693CA210" Association="mangoModel.FK__Street__District__693CA210">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Street" EntitySet="Streets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ward__DistrictId__6A30C649" Association="mangoModel.FK__Ward__DistrictId__6A30C649">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Ward" EntitySet="Wards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Store__StreetId__6EF57B66" Association="mangoModel.FK__Store__StreetId__6EF57B66">
+      <End Role="Street" EntitySet="Streets" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Store__UserCreat__6FE99F9F" Association="mangoModel.FK__Store__UserCreat__6FE99F9F">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Store__WardId__6C190EBB" Association="mangoModel.FK__Store__WardId__6C190EBB">
+      <End Role="Ward" EntitySet="Wards" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
   </EntityContainer>
   <EnumType Name="UserStatus">
     <Member Name="Active" Value="1" />
@@ -61,6 +116,9 @@
     <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="mangoModel.FK__Category__UserCr__49C3F6B7" FromRole="User" ToRole="Category" />
+    <NavigationProperty Name="Products" Relationship="mangoModel.FK__Product__UserCre__48CFD27E" FromRole="User" ToRole="Product" />
+    <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__UserCreat__6FE99F9F" FromRole="User" ToRole="Store" />
   </EntityType>
   <EntityType Name="User_Permission">
     <Key>
@@ -98,5 +156,267 @@
   <Association Name="User_Group">
     <End Type="mangoModel.Group" Role="Group" Multiplicity="*" />
     <End Type="mangoModel.User" Role="User" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TimeUpdate" Type="DateTime" Precision="3" />
+    <Property Name="UserCreateId" Type="Int32" Nullable="false" />
+    <Property Name="TimeDeleted" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="mangoModel.FK__Category__UserCr__49C3F6B7" FromRole="Category" ToRole="User" />
+    <NavigationProperty Name="Products" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK__Category__UserCr__49C3F6B7">
+    <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+    <End Type="mangoModel.Category" Role="Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="UserCreateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="AmountAlertForStore" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="TimeDeleted" Type="DateTime" Precision="3" />
+    <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TimeUpdate" Type="DateTime" Precision="3" />
+    <Property Name="UserCreateId" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="User" Relationship="mangoModel.FK__Product__UserCre__48CFD27E" FromRole="Product" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Product__Categor__47DBAE45">
+    <End Type="mangoModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="mangoModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__UserCre__48CFD27E">
+    <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+    <End Type="mangoModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="UserCreateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Prefix" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Lat" Type="Double" Nullable="false" />
+    <Property Name="Lng" Type="Double" Nullable="false" />
+    <Property Name="Ordering" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Districts" Relationship="mangoModel.FK__District__CityId__6754599E" FromRole="City" ToRole="District" />
+    <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__CityId__6D0D32F4" FromRole="City" ToRole="Store" />
+    <NavigationProperty Name="Streets" Relationship="mangoModel.FK__Street__CityId__68487DD7" FromRole="City" ToRole="Street" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Prefix" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Lat" Type="Double" Nullable="false" />
+    <Property Name="Lng" Type="Double" Nullable="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="mangoModel.FK__District__CityId__6754599E" FromRole="District" ToRole="City" />
+    <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__DistrictI__6E01572D" FromRole="District" ToRole="Store" />
+    <NavigationProperty Name="Streets" Relationship="mangoModel.FK__Street__District__693CA210" FromRole="District" ToRole="Street" />
+    <NavigationProperty Name="Wards" Relationship="mangoModel.FK__Ward__DistrictId__6A30C649" FromRole="District" ToRole="Ward" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="DistrictId" Type="Int32" />
+    <Property Name="WardId" Type="Int32" />
+    <Property Name="StreetId" Type="Int32" />
+    <Property Name="NumberStreet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="TimeDeleted" Type="DateTime" Precision="3" />
+    <Property Name="UserCreateId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="mangoModel.FK__Store__CityId__6D0D32F4" FromRole="Store" ToRole="City" />
+    <NavigationProperty Name="District" Relationship="mangoModel.FK__Store__DistrictI__6E01572D" FromRole="Store" ToRole="District" />
+    <NavigationProperty Name="Street" Relationship="mangoModel.FK__Store__StreetId__6EF57B66" FromRole="Store" ToRole="Street" />
+    <NavigationProperty Name="User" Relationship="mangoModel.FK__Store__UserCreat__6FE99F9F" FromRole="Store" ToRole="User" />
+    <NavigationProperty Name="Ward" Relationship="mangoModel.FK__Store__WardId__6C190EBB" FromRole="Store" ToRole="Ward" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="mangoModel.FK__Street__CityId__68487DD7" FromRole="Street" ToRole="City" />
+    <NavigationProperty Name="District" Relationship="mangoModel.FK__Street__District__693CA210" FromRole="Street" ToRole="District" />
+    <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__StreetId__6EF57B66" FromRole="Street" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Ward">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Prefix" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Lat" Type="Double" Nullable="false" />
+    <Property Name="Lng" Type="Double" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="District" Relationship="mangoModel.FK__Ward__DistrictId__6A30C649" FromRole="Ward" ToRole="District" />
+    <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__WardId__6C190EBB" FromRole="Ward" ToRole="Store" />
+  </EntityType>
+  <Association Name="FK__District__CityId__6754599E">
+    <End Type="mangoModel.City" Role="City" Multiplicity="1" />
+    <End Type="mangoModel.District" Role="District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Store__CityId__6D0D32F4">
+    <End Type="mangoModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="mangoModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Street__CityId__68487DD7">
+    <End Type="mangoModel.City" Role="City" Multiplicity="1" />
+    <End Type="mangoModel.Street" Role="Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Street">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Store__DistrictI__6E01572D">
+    <End Type="mangoModel.District" Role="District" Multiplicity="0..1" />
+    <End Type="mangoModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Street__District__693CA210">
+    <End Type="mangoModel.District" Role="District" Multiplicity="1" />
+    <End Type="mangoModel.Street" Role="Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Street">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ward__DistrictId__6A30C649">
+    <End Type="mangoModel.District" Role="District" Multiplicity="1" />
+    <End Type="mangoModel.Ward" Role="Ward" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ward">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Store__StreetId__6EF57B66">
+    <End Type="mangoModel.Street" Role="Street" Multiplicity="0..1" />
+    <End Type="mangoModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="StreetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Store__UserCreat__6FE99F9F">
+    <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+    <End Type="mangoModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="UserCreateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Store__WardId__6C190EBB">
+    <End Type="mangoModel.Ward" Role="Ward" Multiplicity="0..1" />
+    <End Type="mangoModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ward">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="WardId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

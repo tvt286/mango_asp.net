@@ -14,6 +14,8 @@ namespace Mango.Data.Enums
         Store_View = 1001,
         [Description("Tạo tạo cửa hàng")]
         Store_Create = 1002,
+        [Description("Tạo tạo cửa hàng")]
+        Store_Deleted = 1003,
 
         [Description("Xem User")]
         User_View = 2001,

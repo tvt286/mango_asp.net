@@ -1,7 +1,102 @@
-﻿
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@model Mango.Areas.Admin.Models.ProductSearchModel
+<link href="~/Content/Admin/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Product";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var user = UserService.GetUserInfo();
 }
+<div class="row">
+    <div class="col-xs-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Product</h4>
+            <ol class="breadcrumb p-0 m-0">
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Mango</a>
+                </li>
+                <li class="active">
+                    <strong>Create Product</strong>
+                </li>
+            </ol>
 
-<h2>Index</h2>
+            <div class="clearfix"></div>
+            @if (UserPermission.Has(Permission.Product_Create) || user.IsAdminCompany)
+            {
+                <a class="btn btn-primary waves-effect waves-light m-t-sm" href="@Url.Action("Detail")">Create</a>
+            }
+        </div>
+    </div>
+</div>
+<!-- end row -->
 
+<div class="row animated fadeInRight">
+    <div class="col-sm-12">
+
+        <div class="card-box table-responsive">
+            <div>
+                <h5>Search</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Ajax.BeginForm("Index", null, new AjaxCommonOption() { UpdateTargetId = "content" }, new { id = "SearchForm" }))
+                {
+                    <div class="form-horizontal row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Code" })
+                                </div>
+                                <label class="col-md-2 control-label">Code</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @placeholder = "Name" })
+                                </div>
+                             
+                            </div>
+                            <div class="form-group">
+          
+                                <label class="control-label col-md-2">Category</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Danh mục --", new { @class = "form-control select2" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">Search</button>
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" id="btReset">Reset</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <h5>Kết quả tìm kiếm</h5>
+
+            <div class="ibox-content">
+                <div id="content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.keyTable.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
+}

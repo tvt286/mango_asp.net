@@ -151,8 +151,9 @@ namespace Mango.Areas.Admin.Controllers
         }
 
 
-        public ActionResult DeleteProduct(string productId)
+        public ActionResult Delete(string productId)
         {
+
             var result = ProductService.DeleteProduct(productId);
             if (result.Code == ResultCode.Success)
             {

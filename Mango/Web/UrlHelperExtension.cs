@@ -19,14 +19,24 @@ namespace Mango.Web
         }
 
 
-        //public static string ImageProduct(this UrlHelper url, Product product)
-        //{
-        //    if (string.IsNullOrEmpty(product.Image))
-        //    {
-        //        return url.Content("~/Content/Upload/noimage.png");
-        //    }
-        //    return url.Content(product.Image);
-        //}
+        public static string ImageProduct(this UrlHelper url, Product product)
+        {
+            if (string.IsNullOrEmpty(product.Image))
+            {
+                return url.Content("~/Content/Upload/noimage.png");
+            }
+            return url.Content(product.Image);
+        }
+
+        public static string ImageCategory(this UrlHelper url, Category category)
+        {
+            if (string.IsNullOrEmpty(category.Image))
+            {
+                return url.Content("~/Content/Upload/noimage.png");
+            }
+            return url.Content(category.Image);
+        }
+
 
         //public static string ImageCompany(this UrlHelper url, Company company)
         //{

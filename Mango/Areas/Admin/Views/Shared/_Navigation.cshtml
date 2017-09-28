@@ -15,7 +15,7 @@
             <div class="user-details">
                 <div class="overlay"></div>
                 <div class="text-center">
-                    <img src="@(user.Image.NotEmpty() ? Url.Content(user.Image) : Url.Content("~/Content/Upload/default.png"))" alt="user-img" class="thumb-md img-circle">
+                    <img src="@(user.Image.NotEmpty() ? Url.Content(user.Image) : Url.Content("~/Content/Upload/default-user.png"))" alt="user-img" class="thumb-md img-circle">
                 </div>
                 <div class="user-info">
                     <div>
@@ -36,33 +36,39 @@
 
              
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Quản trị viên </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Administrator </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
                         @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class=""><a href="@Url.Action("Index", "User")">Quản lý quản trị viên</a></li>
+                            <li class=""><a href="@Url.Action("Index,Detail", "User")">User</a></li>
                         }
                         @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class=""><a href="@Url.Action("Index", "GroupPermission")">Quản lý vai trò</a></li>
+                            <li class=""><a href="@Url.Action("Index,Create,Edit", "GroupPermission")">Role</a></li>
                         }
                     </ul>
                 </li>    
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Hàng hóa </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Merchandise </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
                         @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "Index", controller: "Category")"><a href="@Url.Action("Index", "Category")">Loại sản phẩm</a></li>
+                            <li class="@Html.IsSelected(action: "Index", controller: "Category")"><a href="@Url.Action("Index", "Category")">Category</a></li>
                         }
                         @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "Index, Detail", controller: "Product")"><a href="@Url.Action("Index", "Product")">Sản phẩm</a></li>
+                            <li class="@Html.IsSelected(action: "Index, Detail", controller: "Product")"><a href="@Url.Action("Index", "Product")">Product</a></li>
                         }
                     </ul>
-                </li>           
+                </li>     
+                @if (UserPermission.Has(Permission.Store_View)  || user.IsAdminCompany)
+                {
+                    <li class="@Html.IsSelected(action: "Index", controller: "Store") ">
+                        <a href="@Url.Action("Index", "Store")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Store </span></a>
+                    </li>  
+                }    
             </ul>
         </div>
         <!-- Sidebar -->

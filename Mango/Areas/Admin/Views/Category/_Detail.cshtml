@@ -1,1 +1,134 @@
-﻿
+﻿@using Mango.Data
+@using Mango.Client.Common
+@using Mango.Security
+@using Mango.Web
+@using Mango.Common
+@model Category
+
+@using (Ajax.BeginForm("Create", "Category", null, new AjaxCommonOption { OnSuccess = "CreateCategorySuccess" }, new { role = "form", id = "CreateCategoryForm", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">Code<span style="color: Red">*</span></label>
+                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">Name<span style="color: Red">*</span></label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="field-1" class="control-label">Description<span style="color: Red">*</span></label>
+                    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-4">Image<span style="color: Red">(*)</span></label>
+            <div class="col-md-8">
+                <input type="file" id="Image" name="fileAttach" />
+                <img src="@(Model.Image.NotEmpty() ? Url.Content(Model.Image) : "")" style="@(Model.Image.NotEmpty() ? "" : "display: none")" width="150" id="blah" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+    </div>
+}
+
+<script type="text/javascript">
+    jQuery.validator.unobtrusive.parse('#CreateCategoryForm');
+    $(function () {
+        //jQuery.validator.unobtrusive.parse('#CreateCompanyForm');
+    });
+
+    function CreateCategorySuccess(data) {
+        if (data.Code == 0) {
+            data.callFunc = function () {
+                $('#myModal').modal('hide');
+                $("#SearchForm").submit();
+            };
+        }
+        OnSuccessAjax(data);
+    }
+</script>
+
+<script>
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+   
+
+    $("#Image")
+          .change(function () {
+              readURL(this);
+              $('#blah').show();
+          });
+   
+    function inItUploadAjaxForm(successFunction) {
+        window.addEventListener("submit", function (e) {
+
+            OnBeginAjax();
+
+            if (!$('#CreateCategoryForm').valid()) {
+                OnCompleteAjax();
+                return false;
+            }
+
+            var form = e.target;
+            if (form.getAttribute("enctype") === "multipart/form-data") {
+                if (form.dataset.ajax) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(form.method, form.action);
+                    xhr.onreadystatechange = function (result) {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            if (successFunction)
+                                successFunction(xhr.responseText);
+                        }
+                        OnCompleteAjax();
+                    };
+                    xhr.send(new FormData(form));
+                }
+            }
+        }, true);
+    }
+
+    inItUploadAjaxForm(CreateSuccess);
+
+    function CreateSuccess(result) {
+        var data = JSON.parse(result);
+        OnSuccessAjax(data);
+    }
+
+</script>
+

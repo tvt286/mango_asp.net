@@ -49,12 +49,12 @@ namespace Mango.Areas.Admin.Controllers
         [AuthorizeAdmin(Permission = Permission.Category_Create)]
         public ActionResult Create(Category model, HttpPostedFileBase fileAttach)
         {
-            CommandResult result;
+            RedirectCommand result;
             var operation = String.Empty;
 
             if (model.Code != null && !model.Code.IsCode())
             {
-                return Json(new CommandResult
+                return Json(new RedirectCommand
                 {
                     Code = ResultCode.Fail,
                     Message = "Mã chỉ được nhập chữ, số và ký tự -_."
@@ -78,7 +78,7 @@ namespace Mango.Areas.Admin.Controllers
                 var checkFile = UploadHelper.CheckImageUpload(fileAttach);
                 if (checkFile == UploadFileStatus.NotSupportExtension)
                 {
-                    return Json(new CommandResult
+                    return Json(new RedirectCommand
                     {
                         Code = ResultCode.Fail,
                         Message = "Chỉ được up file hình!"
@@ -86,7 +86,7 @@ namespace Mango.Areas.Admin.Controllers
                 }
                 if (checkFile == UploadFileStatus.OverLimited)
                 {
-                    return Json(new CommandResult
+                    return Json(new RedirectCommand
                     {
                         Code = ResultCode.Fail,
                         Message = "Chỉ được up file 5MB!"
@@ -101,7 +101,10 @@ namespace Mango.Areas.Admin.Controllers
             {
                 model.Image = sourceFile;
                 result = CategoryService.Create(model);
-  
+                if (result.Code == ResultCode.Success)
+                {
+                    result.Url = Url.Action("Index");
+                }
                 return
                     Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -123,8 +126,22 @@ namespace Mango.Areas.Admin.Controllers
             }
             TryUpdateModel(data);
             result = CategoryService.Update(data);
+            if (result.Code == ResultCode.Success)
+            {
+                result.Url = Url.Action("Index");
+            }
             return
                     Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(string categoryId)
+        {
+            var result = CategoryService.DeleteCategory(categoryId);
+            if (result.Code == ResultCode.Success)
+            {
+                result.Url = Url.Action("Index");
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

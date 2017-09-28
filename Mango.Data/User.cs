@@ -21,6 +21,7 @@ namespace Mango.Data
             this.Groups = new HashSet<Group>();
             this.Categories = new HashSet<Category>();
             this.Products = new HashSet<Product>();
+            this.Stores = new HashSet<Store>();
         }
     
         public int Id { get; set; }
@@ -44,5 +45,7 @@ namespace Mango.Data
         public virtual ICollection<Category> Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Store> Stores { get; set; }
     }
 }
