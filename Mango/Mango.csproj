@@ -147,12 +147,16 @@
     </Compile>
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StoreOrderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StoreProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
     <Compile Include="Areas\Admin\Models\GroupPermissionModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\StoreModel.cs" />
+    <Compile Include="Areas\Admin\Models\StoreProductViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Areas\CustomMembershipProvider.cs" />
     <Compile Include="Common\AjaxCommonOption.cs" />
@@ -518,6 +522,11 @@
     <Content Include="Areas\Admin\Views\Store\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Store\_List.cshtml" />
     <Content Include="Areas\Admin\Views\Store\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Warehouse\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreProduct\_StoreProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreOrder\StoreOrderImport.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreOrder\_StoreOrderImportList.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreOrder\DetailStoreImport.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />

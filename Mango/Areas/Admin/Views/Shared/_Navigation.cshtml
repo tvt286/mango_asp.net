@@ -62,7 +62,30 @@
                             <li class="@Html.IsSelected(action: "Index, Detail", controller: "Product")"><a href="@Url.Action("Index", "Product")">Product</a></li>
                         }
                     </ul>
-                </li>     
+                </li>
+
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Warehouse transaction </span> <span class="menu-arrow"></span></a>
+
+                    <ul class="list-unstyled">
+                        @if (UserPermission.Has(Permission.WarehouseOrder_ViewImport) || user.IsAdminRoot || user.IsAdminCompany)
+                        {
+                            <li class="@Html.IsSelected(action: "StoreOrderImport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderImport", "StoreOrder")">Warehouse import</a></li>
+                        }
+                        @if (UserPermission.Has(Permission.WarehouseOrder_ViewExport) || !user.IsAdminRoot || user.IsAdminCompany)
+                        {
+                            <li class="@Html.IsSelected(action: "StoreOrderExport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderExport", "StoreOrder")">Warehouse export</a></li>
+                        }
+                    </ul>
+                </li>
+
+                @if (UserPermission.Has(Permission.Store_View) || user.IsAdminCompany)
+                {
+                    <li class="@Html.IsSelected(action: "Index", controller: "Warehouse") ">
+                        <a href="@Url.Action("Index", "Warehouse")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Warehouse </span></a>
+                    </li>
+                }
+        
                 @if (UserPermission.Has(Permission.Store_View)  || user.IsAdminCompany)
                 {
                     <li class="@Html.IsSelected(action: "Index, Detail", controller: "Store") ">

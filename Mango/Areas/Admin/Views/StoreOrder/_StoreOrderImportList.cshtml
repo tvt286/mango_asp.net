@@ -1,0 +1,126 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+@using Mango.Data
+
+@using PagedList.Mvc;
+@model Mango.Services.PagedSearchList<Mango.Data.StoreOrder>
+
+    @{
+        var user = UserService.GetUserInfo();
+    }
+
+
+    <div class="">
+        <h5 class="m-t-lg">Tìm thấy @Model.TotalItemCount</h5>
+    </div>
+    <table class="table table-striped table-colored table-info table-hover">
+        <thead>
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    Phiếu nhập
+                </th>
+
+                <th>
+                    NCC hoặc kho xuất
+                </th>
+                <th>
+                    Tên người nhập
+                </th>
+                <th>
+                    Kho nhập
+                </th>
+                <th>
+                    Ngày nhập
+                </th>
+                <th>Loại</th>
+                <th data-sorter="false">
+
+                </th>
+            </tr>
+        </thead>
+        @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
+        <tbody>
+            @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @(index++)
+                        </td>
+                        <td>
+                            @item.Code
+                        </td>
+                        <td>
+                            @if (item.RefStore != null)
+                            {
+                                @item.RefStore.Name
+                            }
+                        </td>
+                        <td>
+                            @if (item.UserImport != null)
+                            {
+                                @item.UserImport.FullName
+                            }
+
+                        </td>
+                        <td>
+                            @item.Store.Name
+                        </td>
+                        <td>
+                            @if (item.TimeImport.HasValue)
+                            {
+                                @item.TimeImport.Value.ToString("dd-MM-yyyy HH:mm")
+                            }
+
+                        </td>
+                        <td>
+                            @item.StoreImExTypeCode.GetString()
+                        </td>
+                        <td>
+                            @if (item.StoreImExTypeCode == StoreImExTypeCode.NhapTuKhoKhac)
+                            {
+                                <a href="@Url.Action("DetailWarehouseImport", new { id = item.Id })">Xem</a>
+                            }
+                            else
+                            {
+                                if (item.Status == StoreOrderStatus.Pending)
+                                {
+                                    if (UserPermission.Has(Permission.WarehouseOrder_ConfirmImport))
+                                    {
+                                        <a href="@Url.Action("ConfirmWarehouseOrderFromOtherWarehouse", new { id = item.Id})">Xác nhận nhập kho</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("ConfirmWarehouseOrderFromOtherWarehouse", new { id = item.Id })">Xem</a>
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page =>
+{
+    Model.SearchModel.PageIndex = page;
+    return Url.Action("StoreOrderImport", "StoreOrder", Model.SearchModel);
+},
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
+
+
+    <script type="text/javascript">
+        $(function () {
+            InitSortTable();
+        });
+
+    </script>

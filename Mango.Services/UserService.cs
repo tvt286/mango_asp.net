@@ -1,5 +1,6 @@
 ﻿using Mango.Common;
 using Mango.Data;
+using Mango.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -133,6 +134,14 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 return context.Users.FirstOrDefault(x => x.UserName == userName);
+            }
+        }
+
+        public static List<User> GetAll()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Users.AsNoTracking().ToList();
             }
         }
 

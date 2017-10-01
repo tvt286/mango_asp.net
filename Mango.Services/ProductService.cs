@@ -16,8 +16,16 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                var query = context.Products.Include(x => x.Category).Where(x => x.Id == id);
+                var query = context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Where(x => x.Id == id);
                 return query.First();
+            }
+        }
+
+        public static List<Product> GetAll()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).AsNoTracking().ToList();
             }
         }
 
@@ -83,26 +91,23 @@ namespace Mango.Services
             return result;
         }
 
-        public static string GetNewCode(string codeOld, int id, string table, bool hasPad = false, int? companyId = null)
+        public static string GetNewCode(string codeOld, int id, string table, bool hasPad = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                if (companyId == null)
-                {
-                    var user = UserService.GetUserInfo();
-                }
+               
                 List<string> listCode;
                 if (id == 0)
                 {
                     listCode =
                         context.Database.SqlQuery<string>(
-                            string.Format("select Code from {2} where CompanyId = {0} and Code like '{1}%'", companyId, codeOld, table)).ToList();
+                            string.Format("select Code from {0} where  Code like '{1}%'", codeOld, table)).ToList();
                 }
                 else
                 {
                     listCode =
                             context.Database.SqlQuery<string>(
-                                string.Format("select Code from {3} where CompanyId = {0} and Code like '{1}%' and Id != {2}", companyId, codeOld, id, table)).ToList();
+                                string.Format("select Code from {2} where  Code like '{0}%' and Id != {1}", codeOld, id, table)).ToList();
                 }
                 for (int i = 1; i < 1000; i++)
                 {

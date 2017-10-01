@@ -1,0 +1,98 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using PagedList.Mvc
+
+@model Mango.Services.PagedSearchList<Mango.Data.StoreProduct>
+    <div class="table-responsive">
+        <div class="">
+            <h5 class="m-t-lg">Has @Model.TotalItemCount product</h5>
+        </div>
+        <table class="table table-striped table-colored table-info table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Mã sản phẩm
+                    </th>
+                    <th>
+                        Tên sản phẩm
+                    </th>
+                    <th>
+                        Loại
+                    </th>
+                    <th>
+                        Tổng SL còn
+                    </th>
+                    <th>
+                        Mức tối thiểu
+                    </th>
+                    <th data-sorter="false"></th>
+                </tr>
+            </thead>
+            @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(index++)
+                        </td>
+                        <td>
+                            @item.Product.Code
+                        </td>
+                        <td>
+                            @item.Product.Name
+                        </td>
+                        <td>
+                            @item.Product.Category.Name
+                        </td>
+
+                        <td>
+                            @item.QuantityExchange
+                        </td>
+
+                        <td>
+                            @item.Product.AmountAlertForStore
+
+                        <td>
+                            @if (item.QuantityExchange > 0)
+                            {
+                                <a href="javascript:void(0)" onclick="ViewDetailProduct(@item.ProductId, @item.StoreId, '@item.Product.Name')">Chi tiết</a>
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        @Html.PagedListPager(Model, page =>
+{
+    Model.SearchModel.PageIndex = page;
+    return Url.Action("Index", "StoreProduct", Model.SearchModel);
+},
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
+    </div>
+
+    <script type="text/javascript">
+    $(function () {
+        InitSortTable();
+    });
+
+    function ViewDetailProduct(productId, warehouseId, productName) {
+        OnBeginAjax();
+        $.post('@Url.Action("DetailWarehouseProductForm", "WarehouseProduct")',
+            {
+                productId: productId,
+                warehouseId: warehouseId
+            },
+            function (data) {
+                $(".modal-title").html("Chi tiết tồn của " + productName);
+                $('#modal-content').html(data);
+                $('#myModal').modal('show');
+                OnCompleteAjax();
+            });
+    }
+    </script>

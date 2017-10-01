@@ -39,7 +39,9 @@ namespace Mango.Areas.Admin.Controllers
 
 
             ViewBag.CategoryId = new SelectList(CategoryService.GetAll(), "Id", "Name");
-            ViewBag.RedirectWarehouse = redirectWarehouse;
+            ViewBag.ProductId = new SelectList(ProductService.GetAll()
+                     .Select(x => new { x.Id, Name = x.Code + " - " + x.Name }).ToList(), "Id", "Name");
+            ViewBag.CategoryId = new SelectList(CategoryService.GetAll(), "Id", "Name");
             if (id.HasValue)
             {
                 model = StoreService.Get(id.Value);

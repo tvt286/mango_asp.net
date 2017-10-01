@@ -14,6 +14,14 @@ namespace Mango.Data
     
     public partial class Store
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Store()
+        {
+            this.StoreOrders = new HashSet<StoreOrder>();
+            this.StoreProducts = new HashSet<StoreProduct>();
+            this.StoreOrders1 = new HashSet<StoreOrder>();
+        }
+    
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -28,11 +36,18 @@ namespace Mango.Data
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> TimeDeleted { get; set; }
         public int UserCreateId { get; set; }
+        public bool IsRoot { get; set; }
     
         public virtual City City { get; set; }
         public virtual District District { get; set; }
         public virtual Street Street { get; set; }
         public virtual User User { get; set; }
         public virtual Ward Ward { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StoreOrder> StoreOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StoreProduct> StoreProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StoreOrder> StoreOrders1 { get; set; }
     }
 }

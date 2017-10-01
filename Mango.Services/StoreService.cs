@@ -21,12 +21,20 @@ namespace Mango.Services
             }
         }
 
+        public static Store GetStoreRoot()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var user = UserService.GetUserInfo();
+                return context.Stores.Include(x => x.StoreProducts).FirstOrDefault(x => x.IsRoot == true);
+            }
+        }
 
         public static List<Store> GetAll()
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Stores.AsNoTracking().ToList();
+                return context.Stores.Where(x=> x.IsRoot == false).AsNoTracking().ToList();
             }
         }
 

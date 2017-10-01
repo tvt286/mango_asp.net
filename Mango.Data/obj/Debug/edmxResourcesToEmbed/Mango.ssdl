@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="Id" />
@@ -57,6 +57,28 @@
     <Property Name="GroupId" Type="int" Nullable="false" />
     <Property Name="PermissionId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="int" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TotalAmount" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalAmount" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
@@ -93,6 +115,58 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="TimeDeleted" Type="datetime" />
     <Property Name="UserCreateId" Type="int" Nullable="false" />
+    <Property Name="IsRoot" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StoreOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="StoreImExTypeCode" Type="int" Nullable="false" />
+    <Property Name="TimeExport" Type="datetime" />
+    <Property Name="TimeImport" Type="datetime" />
+    <Property Name="UserExportId" Type="int" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="UserImportId" Type="int" Nullable="false" />
+    <Property Name="RefStoreId" Type="int" />
+  </EntityType>
+  <EntityType Name="StoreOrderExportDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreOrderId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="RefStoreOrderImportDetailId" Type="int" Nullable="false" />
+    <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MainSupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StoreOrderImportDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreOrderId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="RefStoreOrderExportDetailId" Type="int" Nullable="false" />
+    <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MainSupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StoreProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="QuantityExchange" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Street">
     <Key>
@@ -268,6 +342,150 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__StoreOrde__Produ__1CBC4616">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderImportDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__Produ__1F98B2C1">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderExportDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__RefSt__1DB06A4F">
+    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="1" />
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreOrderExportDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderImportDetail">
+        <PropertyRef Name="RefStoreOrderExportDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__RefSt__1EA48E88">
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="1" />
+    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreOrderImportDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderExportDetail">
+        <PropertyRef Name="RefStoreOrderImportDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__RefSt__245D67DE">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrder">
+        <PropertyRef Name="RefStoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__Store__1BC821DD">
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="1" />
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderImportDetail">
+        <PropertyRef Name="StoreOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__Store__208CD6FA">
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="1" />
+    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderExportDetail">
+        <PropertyRef Name="StoreOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__Store__236943A5">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrder">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__UserE__2180FB33">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrder">
+        <PropertyRef Name="UserExportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__UserI__22751F6C">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrder">
+        <PropertyRef Name="UserImportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreProd__Produ__19DFD96B">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StoreProduct" Type="Self.StoreProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreProd__Store__1AD3FDA4">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="StoreProduct" Type="Self.StoreProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreProduct">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Street__CityId__68487DD7">
     <End Role="City" Type="Self.City" Multiplicity="1" />
     <End Role="Street" Type="Self.Street" Multiplicity="*" />
@@ -346,8 +564,14 @@
     <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group_Permission" EntityType="Self.Group_Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreOrder" EntityType="Self.StoreOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreOrderExportDetail" EntityType="Self.StoreOrderExportDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreOrderImportDetail" EntityType="Self.StoreOrderImportDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreProduct" EntityType="Self.StoreProduct" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Group" EntityType="Self.User_Group" Schema="dbo" store:Type="Tables" />
@@ -392,6 +616,54 @@
     <AssociationSet Name="FK__Store__WardId__6C190EBB" Association="Self.FK__Store__WardId__6C190EBB">
       <End Role="Ward" EntitySet="Ward" />
       <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__Produ__1CBC4616" Association="Self.FK__StoreOrde__Produ__1CBC4616">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__Produ__1F98B2C1" Association="Self.FK__StoreOrde__Produ__1F98B2C1">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__RefSt__1DB06A4F" Association="Self.FK__StoreOrde__RefSt__1DB06A4F">
+      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
+      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__RefSt__1EA48E88" Association="Self.FK__StoreOrde__RefSt__1EA48E88">
+      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
+      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__RefSt__245D67DE" Association="Self.FK__StoreOrde__RefSt__245D67DE">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__Store__1BC821DD" Association="Self.FK__StoreOrde__Store__1BC821DD">
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__Store__208CD6FA" Association="Self.FK__StoreOrde__Store__208CD6FA">
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__Store__236943A5" Association="Self.FK__StoreOrde__Store__236943A5">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__UserE__2180FB33" Association="Self.FK__StoreOrde__UserE__2180FB33">
+      <End Role="User" EntitySet="User" />
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__UserI__22751F6C" Association="Self.FK__StoreOrde__UserI__22751F6C">
+      <End Role="User" EntitySet="User" />
+      <End Role="StoreOrder" EntitySet="StoreOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreProd__Produ__19DFD96B" Association="Self.FK__StoreProd__Produ__19DFD96B">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StoreProduct" EntitySet="StoreProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreProd__Store__1AD3FDA4" Association="Self.FK__StoreProd__Store__1AD3FDA4">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="StoreProduct" EntitySet="StoreProduct" />
     </AssociationSet>
     <AssociationSet Name="FK__Street__CityId__68487DD7" Association="Self.FK__Street__CityId__68487DD7">
       <End Role="City" EntitySet="City" />

@@ -12,4 +12,12 @@ namespace Mango.Areas.Admin.Models
         public string Name { get; set; }
         public int? CategoryId { get; set; }
     }
+
+    public class ProductInfo
+    {
+        public string CategoryName { get; set; }
+        public string Image { get; set; }
+        public string SupplierPrice { get; set; }
+        public string SellingPrice { get; set; }
+    }
 }

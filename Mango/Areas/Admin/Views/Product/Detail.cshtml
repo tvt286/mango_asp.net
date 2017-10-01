@@ -55,8 +55,6 @@
         @using (Ajax.BeginForm("Create", "Product", null, new AjaxCommonOption { OnSuccess = "CreateSuccess" }, new { role = "form", id = "CreateForm", enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.Id)
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
             <div class="col-lg-12">
                 <!--Box thông tin-->
                 <div class="ibox ">
@@ -91,22 +89,23 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Category<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Danh mục --", new { @class = "form-control select2", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Danh mục --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
                                 </div>
                                 <label class="control-label col-md-2">Supplier Price<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.SupplierPrice, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
-                                    @Html.ValidationMessageFor(model => model.SupplierPrice, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(x => x.SupplierPrice, null, new { @class = "form-control autoNumeric", data_val = "false", data_val_required = "Thông tin bắt buộc" })
+                                    @*@Html.ValidationMessageFor(model => model.SupplierPrice, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
                             <div class="form-group">
-                               
                                 <label class="control-label col-md-2">Selling Price<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.SellingPrice, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
-                                    @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(x => x.SellingPrice, null, new { @class = "form-control autoNumeric", data_val = "false", data_val_required = "Thông tin bắt buộc" })
+                                    @*@Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })*@
                                 </div>
+
+                            
                             </div>
                            
                             <div class="form-group">
@@ -138,8 +137,8 @@
 
 
 @section Styles {
-    <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
-
+   <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
+<link href="~/Content/Admin/plugin//iCheck/custom.css" rel="stylesheet" />
     <style>
         .input-validation-error {
             border: 1px solid red;

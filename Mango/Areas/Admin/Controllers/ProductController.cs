@@ -162,5 +162,32 @@ namespace Mango.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetInfoProduct(int? id)
+        {
+            ProductInfo model;
+            if (id.HasValue)
+            {
+                var product = ProductService.Get(id.Value);
+                model = new ProductInfo
+                {
+                    Image = Url.ImageProduct(product),
+                    CategoryName = product.Category.Name,
+                    SellingPrice = product.SellingPrice.MoneyToStringVN(),
+                    SupplierPrice = product.SupplierPrice.MoneyToStringVN()           
+                };
+            }
+            else
+            {
+                model = new ProductInfo
+                {
+                    Image = "",
+                    CategoryName = "",
+                    SellingPrice = "0",
+                    SupplierPrice = "0",
+                };
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
