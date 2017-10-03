@@ -104,114 +104,99 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                @if (Model.Id == 0)
+              
+            @if (Model.Id == 0)
                 {
-                    <div style="margin-bottom:10px">
-                        <button class="btn btn-primary" type="button" id="btAdd">
-                            <i class="fa fa-plus"></i>
-                            <span class="bold">Add product</span>
-                        </button>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.DropDownList("productIdTemp", (List<SelectListItem>)ViewBag.ProductSelect, "-- Sản phẩm --", new { @class = "form-control select2" })
+
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-primary m-b-sm" type="button" id="btAdd">
+                                <i class="fa fa-plus"></i>
+                                <span class="bold">Thêm sản phẩm</span>
+                            </button>
+                        </div>
                         <br style="clear: both" />
                     </div>
                 }
+             
                 <div>
-                    <table id="tableImportDetail" class="table table-striped table-colored table-info table-hover">
-                        <tr>
-                            <th>
-                                Image
-                            </th>
+                    <div class="table-responsive">
+                        <table id="tableExportDetail" class="table table-hover table-bordered table-striped">
+                            <tr class="tableHeader">
+                                <th>
+                                    Hình ảnh
+                                </th>
+                                <th>
+                                    Sản phẩm
+                                </th>
+                                <th>
+                                    Loại
+                                </th>                          
+                                <th>
+                                    Giá nhập <br />
+                                    theo ĐV nhập
+                                </th>                             
+                                <th>
+                                    SL còn
+                                </th>                           
+                                <th>
+                                    SL
+                                </th>
+                               
+                                @if (Model.Id == 0)
+                                        {
+                                    <th></th>
+                                        }
 
-                            <th>
-                                Product
-                            </th>
-
-                            <th>
-                                Category
-                            </th>
-
-                            <th style="width: 70px">
-                                Quantity Import
-                            </th>
-
-                            <th>
-                                Price
-                            </th>
-
-                            @if (Model.Id == 0)
-                            {
-                                <th></th>
-                            }
-
-                        </tr>
-                        @if (Model.Id != 0)
-                        {
-                            foreach (var item in Model.StoreOrderImportDetails)
-                            {
-                                <tr>
-                                    <td>
-                                        <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
-                                    </td>
-
-                                    <td>
-                                        @item.Product.Name
-                                    </td>
-                                    <td class="category">
-                                        @item.Product.Category.Name
-                                    </td>
-
-
-                                    <td>
-                                        @item.Quantity.ToString("0.##")
-                                    </td>
-
-                                    <td>
-                                        @item.MainSupplierPrice.MoneyToStringVN()
-                                    </td>
-
-
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DropDownList("productId", (List<SelectListItem>)ViewBag.ProductSelect, "-- Product --", new { @class = "form-control", onchange = "ChangeProduct(this)", style = "width:120px" })
-                                </td>
-                                <td>
-                                    <img class="imageProduct" style="display: none; width: 50px;" />
-                                </td>
-
-                                <td class="category"></td>
-
-                                <td style="text-align:center">
-                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport" onblur="CalculateExchange(this)" style="width: 70px" />
-                                </td>
-                                <td style="text-align:center">
-                                    <input type="text" placeholder="Price" class="form-control autoNumeric" name="mainSupplierPrice" />
-                                </td>
-
-                                <td>
-                                    <a href="javascript:void(0)" onclick="RemoveProduct(this)">
-                                        <i class="fa fa-times" style="color: red"></i>
-                                    </a>
-                                </td>
                             </tr>
-                        }
+                            @if (Model.Id != 0)
+                                    {
+                                        foreach (var item in Model.WarehouseOrderExportDetails)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
+                                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                                    @item.Product.Code - @item.Product.Name
+                                                </td>
+                                                <td class="category">
+                                                    @item.Product.Category.Name
+                                                </td>
+                          
+                                                <td>
+                                                    @item.StoreOrderImportDetail.MainSupplierPrice.MoneyToStringVN()
+                                                </td>
+                                             
+                                                <td>
+                                                    @item.StoreOrderImportDetail.Quantity.MoneyToStringVN()
+                                                </td>      
+                                                <td>
+                                                    @item.Quantity.MoneyToStringVN()
+                                                </td>
+ 
+                                            </tr>
+                                        }
+                                    }
+                        </table>
 
-                    </table>
-
-                </div>
+                    </div>
 
 
                 @if (Model.Id == 0)
                 {
                     <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
                 }
-                @Html.ActionLink("Cancel", "StoreOrderImport", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
+                @Html.ActionLink("Cancel", "StoreOrderExport", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
             </div>
         </div>
 
+    </div>
     </div>
 }
 
@@ -242,7 +227,11 @@
     else
     {
         <script type="text/javascript">
-            function InitFormImportDetail() {
+            function CreateStoreOrderExportSuccess(data) {    
+                OnSuccessAjax(data);
+            }
+
+            function InitFormExportDetail() {
                 $('#CreateForm .input-group.date').datetimepicker({
                     locale: 'vi',
                     format: 'DD/MM/YYYY',
@@ -250,54 +239,6 @@
                     defaultDate: null
                 });
 
-
-                $("input[name=quantityRequestImport]:last, " +
-                        "input[name=amountDateAlert]:last, " +
-                        "input[name=mainSupplierPrice]:last")
-                    .autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
-
-            }
-
-            function CalculateExchange(element) {
-                var exchange = $(element).closest("tr").find("select[name=unitDetailId]").find(":selected").attr("exchange");
-                var quantity = $(element).closest("tr").find("input[name=quantityRequestImport]").autoNumeric('get');
-                if (exchange == "0" || quantity == "" || quantity == "0") {
-                    $(element).closest("tr").find(".exchange").html("0");
-                } else {
-                    var number = parseInt(exchange) * parseInt(quantity);
-                    $(element).closest("tr").find(".exchange").html(number);
-
-                }
-            }
-
-            function ChangeProduct(element) {
-                OnBeginAjax();
-                var id = $(element).val();
-                var unitDetailSelect = $(element).closest("tr").find("select[name=unitDetailId]");
-                $(unitDetailSelect).find("option[value\!='']").remove();
-                $(unitDetailSelect).val("");
-                $.post('@Url.Action("GetInfoProduct","Product")',
-                    {
-                        id: id
-                    },
-                    function (data) {
-                        //$(element).closest("tr").find(".supplierPrice").html(data.SupplierPrice);
-                        //$(element).closest("tr").find(".sellingPrice").html(data.SellingPrice);
-
-                        $(element).closest("tr").find("input[name=mainSupplierPrice]").val(data.SupplierPrice.replace(".", ""));
-                        if (data.Image != "") {
-                            $(element).closest("tr").find(".imageProduct").attr("src", data.Image).show();
-                        } else {
-                            $(element).closest("tr").find(".imageProduct").hide();
-                        }
-                        $(element).closest("tr").find(".category").html(data.CategoryName);
-                        //for (var i = 0; i < data.UnitDetailList.length; i++) {
-                        //    var item = data.UnitDetailList[i];
-                        //    $(unitDetailSelect).append($('<option></option>').val(item.Id).html(item.Name).attr("exchange", item.UnitExchange));
-                        //}
-
-                        OnCompleteAjax();
-                    });
             }
 
             function RemoveProduct(element) {
@@ -308,7 +249,7 @@
 
             function validateFields() {
                 var submit = true;
-                $.each($("#CreateForm select[name='productId'], #CreateForm select[name='unitDetailId'], #CreateForm input[name='packages'], #CreateForm input[name='expireDate'], #CreateForm input[name='amountDateAlert'], #CreateForm input[name='quantityRequestImport'], #CreateForm input[name='mainSupplierPrice']"), function (i, element) {
+                $.each($("#CreateForm input[name='quantityRequestExport']"), function (i, element) {
                     if ($(element).val() == "") {
                         submit = false;
                         $(element).addClass("input-validation-error");
@@ -320,19 +261,61 @@
             }
 
             $(function () {
-                $("body").addClass("mini-navbar");
+                  $("body").addClass("mini-navbar");
 
-                var cloned = $("#tableImportDetail tr:last")[0].outerHTML;
+                $("#StoreId").change(function () {
+                    $("#tableExportDetail tr:not(.tableHeader)").remove();
 
-                $("body").addClass("mini-navbar");
-                $("input[name=mainSupplierPrice], input[name=quantityRequestImport]")
-                    .autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                    if ($(this).val() == "") {
+                        $("#productIdTemp").find("option").remove();
+                        $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
+                    } else {
+                        OnBeginAjax();
+                        var warehouseId = $(this).val();
+                        $("#productIdTemp").find("option").remove();
+                        $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
+                        $.post('@Url.Action("GetProductInStore", "StoreProduct")',
+                            { storeId: storeId },
+                            function (data) {
+                                $.each(data,
+                                    function (key, value) {
+                                        $("#productIdTemp").append($('<option></option>').val(value.Id).html(value.Name)).trigger('change');
+                                    });
+                                OnCompleteAjax();
+                            });
+                    }
+
+                });
+
+
 
                 $("#btAdd").click(function () {
-                    $("#tableImportDetail").append(cloned);
-                    $.removeData($('#CreateForm').get(0), 'validator');
-                    jQuery.validator.unobtrusive.parse('#CreateForm');
-                    InitFormImportDetail();
+                    if ($("#StoreId").val() == "") {
+                        AlertError("Vui lòng chọn kho xuất");
+                        return false;
+                    }
+                    if ($("#productIdTemp").val() == "") {
+                        AlertError("Vui lòng chọn sản phẩm");
+                        return false;
+                    }
+
+                    OnBeginAjax();
+
+                    $.post('@Url.Action("GetStoreOrderImportDetail", "StoreOrder")',
+                        {
+                            productId: $("#productIdTemp").val(),
+                            warehouseId: $("#StoreId").val()
+                        },
+                        function (data) {
+                            console.log(data);
+                            $(".product" + $("#productIdTemp").val()).remove();
+                            $("#tableExportDetail").append(data);
+
+                            OnCompleteAjax();
+                        });
+
+
+                    InitFormExportDetail();
                 });
 
                 $("#CreateForm")

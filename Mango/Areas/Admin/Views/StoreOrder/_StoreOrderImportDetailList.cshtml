@@ -1,0 +1,46 @@
+﻿@using Mango.Common
+@using Mango.Data
+@using Mango.Web
+@model List<StoreOrderImportDetail>
+  
+    @foreach (var item in Model)
+    {
+        <tr class="product@(item.ProductId)">
+            <td>
+                <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+            </td>
+            <td>
+                <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
+                <input type="hidden" name="productId" value="@item.ProductId" />
+                <input type="hidden" name="productName" value="@item.Product.Name" />
+
+                @item.Product.Code - @item.Product.Name
+            </td>
+            <td class="category">
+                @item.Product.Category.Name
+            </td>
+           
+            <td>
+                <input type="hidden" name="mainSupplierPrice" value="@item.MainSupplierPrice" />
+
+                @item.MainSupplierPrice.MoneyToStringVN()
+            </td>
+        
+            <td>
+                @Html.TextBox("quantityRequestExport", "", new { @class = "form-control autoNumeric", onblur = "CalculateExchange(this)", style = "width:80px" })
+            </td>
+
+            <td>
+                <a href="javascript:void(0)" onclick="RemoveProduct(this)">
+                    <i class="fa fa-times" style="color: red"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            $("input[name=quantityRequestExport]")
+                .autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+        });
+    </script>

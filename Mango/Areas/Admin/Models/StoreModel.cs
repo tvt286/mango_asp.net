@@ -18,7 +18,7 @@ namespace Mango.Areas.Admin.Models
     {
         public string Code { get; set; }
         public int? UserImport { get; set; }
-        public int? StoreId { get; set; }
+        public int? RefStoreId { get; set; }
         public DateTime? TimeImportFrom { get; set; }
         public DateTime? TimeImportTo { get; set; }
     }

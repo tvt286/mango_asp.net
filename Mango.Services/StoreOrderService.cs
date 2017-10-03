@@ -16,7 +16,7 @@ namespace Mango.Services
     {
 
          public static PagedSearchList<StoreOrder> SearchStoreOrderImport(string code,
-           int? userImport, int? storeId, DateTime? timeImportFrom, DateTime? timeImportTo,
+           int? userImport, int? refStoreId, DateTime? timeImportFrom, DateTime? timeImportTo,
            int pageSize, int pageIndex)
          {
              var listExTypeCode = new List<StoreImExTypeCode>
@@ -40,9 +40,9 @@ namespace Mango.Services
                      query = query.Where(x => x.UserImportId == userImport.Value);
                  }
 
-                 if (storeId.HasValue)
+                 if (refStoreId.HasValue)
                  {
-                     query = query.Where(x => x.StoreId == storeId.Value);
+                     query = query.Where(x => x.RefStoreId == refStoreId.Value);
                  }
 
                  if (timeImportFrom.HasValue)
@@ -167,18 +167,7 @@ namespace Mango.Services
            List<StoreOrderImportDetail> storeOrderImportDetailList)
          {
              var date = DateTime.Now;
-             //var warehouseTransaction = new WarehouseTransaction
-             //{
-             //    Code = warehouseOrder.Code,
-             //    CompanyId = warehouseOrder.CompanyId,
-             //    ImExTypeCode = warehouseOrder.ImExTypeCode,
-             //    Packages = warehouseOrder.Packages,
-             //    WarehouseID = warehouseOrder.WarehouseID,
-             //    WarehouseOrderId = warehouseOrder.Id,
-             //    SupplierId = warehouseOrder.SupplierId,
-             //    TimeCreate = date,
-             //    UserCreateId = warehouseOrder.UserImportId.GetValueOrDefault()
-             //};
+        
              var storeProductList = new List<StoreProduct>();
 
              using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
@@ -186,30 +175,20 @@ namespace Mango.Services
                  foreach (var storeOrderImportDetail in storeOrderImportDetailList)
                  {
                      if (!context.StoreProducts.Any(x => x.ProductId == storeOrderImportDetail.ProductId
-                                                             && x.StoreId == storeOrder.StoreId) &&
+                                                             && x.StoreId == storeOrder.RefStoreId.Value) &&
                          !storeProductList.Any(x => x.ProductId == storeOrderImportDetail.ProductId
-                                                        && x.StoreId == storeOrder.StoreId)
+                                                        && x.StoreId == storeOrder.RefStoreId.Value)
                      )
                      {
                          storeProductList.Add(new StoreProduct
                          {
                              ProductId = storeOrderImportDetail.ProductId,
                              QuantityExchange = 0,
-                             StoreId = storeOrder.StoreId
+                             StoreId = storeOrder.RefStoreId.Value
                          });
                      }
                      storeOrder.StoreOrderImportDetails.Add(storeOrderImportDetail);
-                     //warehouseTransaction.WarehouseTransactionDetails.Add(new WarehouseTransactionDetail
-                     //{
-                     //    ExpireDate = warehouseOrderImportDetail.ExpireDate,
-                     //    Packages = warehouseOrderImportDetail.Packages,
-                     //    ProductId = warehouseOrderImportDetail.ProductId,
-                     //    Position = warehouseOrderImportDetail.Position,
-                     //    QuantityChange = warehouseOrderImportDetail.Quantity,
-                     //    QuantityExchangeChange = warehouseOrderImportDetail.QuantityExchange,
-                     //    UnitDetailId = warehouseOrderImportDetail.UnitDetailId,
-                     //    SupplierPrice = warehouseOrderImportDetail.SupplierPrice
-                     //});
+      
                  }
 
                  storeOrder.TimeImport = storeOrder.TimeExport = date;
@@ -256,6 +235,95 @@ namespace Mango.Services
 
          }
 
+         public static RedirectCommand CreateStoreOrderExport(StoreOrder storeOrderExport,
+           List<StoreOrderExportDetail> storeOrderExportDetailList)
+         {
+             var result = new RedirectCommand
+             {
+                 Message = "Đã tạo lệnh xuất kho thành công!",
+                 Code = ResultCode.Success
+             };
+
+             var date = DateTime.Now;
+          
+             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+             {
+                 var refStore = context.Stores.AsNoTracking()
+                     .First(x => x.Id == storeOrderExport.RefStoreId);
+
+                 var storeOrderImport = new StoreOrder
+                 {
+                     Code =
+                         GenerateCode(StoreImExTypeCode.NhapTuKhoKhac, storeOrderExport.RefStoreId,
+                             storeOrderExport.StoreId),
+                     StoreId = storeOrderExport.StoreId,
+                     RefStoreId = storeOrderExport.RefStoreId.GetValueOrDefault(0),
+                     UserExportId = storeOrderExport.UserExportId,
+                     TimeImport = date,
+                     TimeExport = date,
+                     StoreImExTypeCode = StoreImExTypeCode.NhapTuKhoKhac,
+                     Status = StoreOrderStatus.Pending
+                 };
+                 var number = 1;
+                 foreach (var storeOrderExportDetail in storeOrderExportDetailList)
+                 {
+
+                     storeOrderExportDetail.Quantity = storeOrderExportDetail.Quantity;
+
+                     var refstoreOrderImportDetail =
+                         context.StoreOrderImportDetails.Include(x => x.Product).First(
+                             x => x.Id == storeOrderExportDetail.RefStoreOrderImportDetailId);
+
+                     if (refstoreOrderImportDetail.Quantity <
+                         storeOrderExportDetail.Quantity)
+                     {
+                         result.Message = string.Format("Dòng thứ {0} đã nhập quá số lượng còn lại {1}",
+                             number, refstoreOrderImportDetail.Product.Name);
+                         result.Code = ResultCode.Fail;
+                         return result;
+                     }
+                     number++;
+
+                     refstoreOrderImportDetail.Quantity -= storeOrderExportDetail.Quantity;
+
+                     storeOrderExport.StoreOrderExportDetails.Add(storeOrderExportDetail);
+
+                     var storeOrderImportDetail = new StoreOrderImportDetail
+                     {
+                         ProductId = storeOrderExportDetail.ProductId,
+                         Quantity = storeOrderExportDetail.Quantity,
+                      };
+
+                     storeOrderImportDetail.MainSupplierPrice = refstoreOrderImportDetail.MainSupplierPrice;
+                     storeOrderImportDetail.MainSupplierPrice = refstoreOrderImportDetail.MainSupplierPrice;
+                     storeOrderImport.StoreOrderImportDetails.Add(storeOrderImportDetail);
+                 }
+
+                 storeOrderImport.Status = StoreOrderStatus.Completed;
+
+                 context.StoreOrders.Add(storeOrderExport);
+                 context.StoreOrders.Add(storeOrderImport);
+                 context.SaveChanges();
+
+                 var listStoreExportDetail = storeOrderExport.StoreOrderExportDetails.ToList();
+                 var listStoreImportDetail = storeOrderImport.StoreOrderImportDetails.ToList();
+                 for (int i = 0; i < listStoreExportDetail.Count; i++)
+                 {
+                     listStoreImportDetail[i].RefStoreOrderExportDetailId = listStoreExportDetail[i].Id;
+                 }
+                 context.SaveChanges();
+             }
+
+             new Thread(() =>
+             {
+                 Thread.CurrentThread.IsBackground = true;
+                 UpdateQuantityStoreProduct(storeOrderExport.StoreId,storeOrderExportDetailList.Select(x => x.ProductId).Distinct().ToArray());
+                
+             }).Start();
+
+             return result;
+         }
+
          public static void UpdateQuantityStoreProduct(int storeId, int[] productIdList)
          {
              using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
@@ -267,6 +335,101 @@ namespace Mango.Services
                  }
              }
          }
+         public static List<StoreOrderImportDetail> GetStoreOrderImportDetail(int? productId, int storeId)
+         {
+             var imExTypeCodeList = new List<StoreImExTypeCode>
+            {
+                StoreImExTypeCode.NhapTuKhoKhac
+            };
+             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+             {
+                 IQueryable<StoreOrderImportDetail> query =
+                     context.StoreOrderImportDetails
+                         .Include(x => x.Product)
+                         .Include(x => x.Product.Category)
+                         .Where(x => x.StoreOrder.RefStoreId == storeId &&
+                                 imExTypeCodeList.Contains(x.StoreOrder.StoreImExTypeCode) && x.Quantity > 0);
+                 if (productId.HasValue)
+                 {
+                     query = query.Where(x => x.ProductId == productId.Value);
+                 }
+                 return query.AsNoTracking().ToList();
+             }
+         }
 
+         public static RedirectCommand ImportStoreOrderFromOtherStore(StoreOrder storeOrder,
+         int[] storeOrderImportDetailIdList, int[] quantityRequestImport, string[] note)
+         {
+             var result = new RedirectCommand
+             {
+                 Message = "Đã xác nhận nhập kho từ kho khác thành công!",
+                 Code = ResultCode.Success
+             };
+             var date = DateTime.Now;
+
+             var storeProductList = new List<StoreProduct>();
+
+             using (var context = new mangoEntities(IsolationLevel.ReadCommitted))
+             {
+                 for (int i = 0; i < storeOrderImportDetailIdList.Length; i++)
+                 {
+                     var storeOrderImportDetailId = storeOrderImportDetailIdList[i];
+
+                     var storeOrderImportDetail =
+                         context.StoreOrderImportDetails.Include(x => x.Product)
+                             .First(x => x.Id == storeOrderImportDetailId);
+                   
+                     if (storeOrderImportDetail.Quantity != quantityRequestImport[i] )
+                     {
+                         result.Code = ResultCode.Fail;
+                         result.Message = string.Format("Vui lòng kiểm tra số lượng nhập của sp: {0}",
+                             storeOrderImportDetail.Product.Name);
+                         return result;
+                     }
+                     storeOrderImportDetail.Quantity = quantityRequestImport[i];
+
+                     storeOrderImportDetail.Note = note[i];
+
+                     if (!context.StoreProducts.Any(x => x.ProductId == storeOrderImportDetail.ProductId
+                                                             && x.StoreId == storeOrder.RefStoreId) &&
+                         !storeProductList.Any(x => x.ProductId == storeOrderImportDetail.ProductId
+                                                        && x.StoreId == storeOrder.RefStoreId)
+                     )
+                     {
+                         storeProductList.Add(new StoreProduct
+                         {
+                             ProductId = storeOrderImportDetail.ProductId,
+                             QuantityExchange = 0,
+                             StoreId = storeOrder.RefStoreId.Value  
+                         });
+                     }
+
+                    
+                 }
+                 if (storeOrder.TimeImport.Value.ToString("dd-MM-yyyy").Contains(date.ToString("dd-MM-yyyy")))
+                     storeOrder.TimeImport = date;
+                 else
+                 {
+                     TimeSpan ts = new TimeSpan(date.Hour, date.Minute, 0);
+                     storeOrder.TimeImport = storeOrder.TimeImport.Value.Date + ts;
+                 }
+                 storeOrder.Status = StoreOrderStatus.Completed;
+                 context.StoreOrders.Attach(storeOrder);
+                 context.Entry(storeOrder).State = EntityState.Modified;
+                 context.Entry(storeOrder).Property(x => x.TimeExport).IsModified = false;
+                 context.Entry(storeOrder).Property(x => x.UserExport).IsModified = false;
+                 context.StoreProducts.AddRange(storeProductList);
+                 context.SaveChanges();
+             }
+
+             new Thread(() =>
+             {
+                 Thread.CurrentThread.IsBackground = true;
+                 UpdateQuantityStoreProduct(storeOrder.RefStoreId.Value,
+                 storeOrder.StoreOrderImportDetails.Select(x => x.ProductId).Distinct().ToArray());
+             }).Start();
+
+             return result;
+         }
     }
 }

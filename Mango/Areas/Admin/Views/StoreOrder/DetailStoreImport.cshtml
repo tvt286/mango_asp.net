@@ -73,8 +73,8 @@
                             </div>
                             <label class="control-label col-md-2">Kho nhập<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.StoreId, null, "-- Kho nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
-                                @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(x => x.RefStoreId, null, "-- Kho nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

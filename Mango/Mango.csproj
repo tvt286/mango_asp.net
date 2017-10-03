@@ -530,6 +530,7 @@
     <Content Include="Areas\Admin\Views\StoreOrder\StoreOrderExport.cshtml" />
     <Content Include="Areas\Admin\Views\StoreOrder\_StoreOrderExportList.cshtml" />
     <Content Include="Areas\Admin\Views\StoreOrder\DetailStoreExport.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreOrder\_StoreOrderImportDetailList.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />
