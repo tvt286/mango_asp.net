@@ -38,7 +38,7 @@ namespace Mango.Areas.Admin.Controllers
 
         [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewImport })]
         [HttpGet]
-        public ActionResult DetailStoreImport(string id)
+        public ActionResult DetailStoreImport(int? id)
         {
             var user = UserService.GetUserInfo();
             var data = new StoreOrder
@@ -48,10 +48,10 @@ namespace Mango.Areas.Admin.Controllers
                 TimeImport = DateTime.Now
             };
 
-            //if (id.NotEmpty())
-            //{
-            //    data = WarehouseOrderService.GetDetailWarehouseImport(int.Parse(SecurityHelper.Decrypt(id)));
-            //}
+            if (id.HasValue)
+            {
+                data = StoreOrderService.GetDetailStoreImport(id.Value);
+            }
 
             ViewBag.ProductSelect = ProductService.GetAll().Select(x => new SelectListItem
             {
@@ -71,6 +71,44 @@ namespace Mango.Areas.Admin.Controllers
 
             return View(data);
         }
+
+        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewExport })]
+        [HttpGet]
+        public ActionResult DetailStoreExport(int? id)
+        {
+            var user = UserService.GetUserInfo();
+            var data = new StoreOrder
+            {
+                StoreImExTypeCode = StoreImExTypeCode.XuatKhoKhac,
+                UserExportId = user.Id,
+                TimeExport = DateTime.Now
+            };
+
+            if (id.HasValue)
+            {
+                data = StoreOrderService.GetDetailStoreImport(id.Value);
+            }
+
+            var storeHasProductList = StoreService.GetStoreHasProduct().Select(x => x.Id).ToList();
+            ViewBag.ProductSelect = new List<SelectListItem>();
+
+            ViewBag.StoreId = new SelectList(StoreService.GetAll().Where(x => storeHasProductList.Contains(x.Id)).ToList(), "ID", "Name", data.StoreId);
+            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "ID", "Name", data.RefStoreId);
+
+
+            ViewBag.StoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.StoreId);
+            if (user.IsAdminCompany)
+            {
+                ViewBag.UserExportId = new SelectList(UserService.GetAll(), "Id", "FullName", data.UserExportId);
+            }
+            else
+            {
+                ViewBag.UserExportId = new SelectList(new List<User> { user }, "Id", "FullName", data.UserExportId);
+            }
+
+            return View(data);
+        }
+
 
 
         [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_CreateImport })]
@@ -95,6 +133,7 @@ namespace Mango.Areas.Admin.Controllers
                     ProductId = productId[i],
                     Quantity = quantityRequestImport[i],
                     MainSupplierPrice = mainSupplierPrice[i],
+                    SupplierPrice = mainSupplierPrice[i],
                 };
 
                 importDetailList.Add(storeOrderImportDetail);
@@ -118,6 +157,23 @@ namespace Mango.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewExport })]
+        public ActionResult StoreOrderExport(StoreOrderExportSearchModel searchModel)
+        {
+            if (Request.HttpMethod == "GET")
+            {
+                var user = UserService.GetUserInfo();
+
+                ViewBag.UserExport = new SelectList(UserService.GetAll(), "Id", "FullName", searchModel.UserExport);
+                ViewBag.StoreId = new SelectList(StoreService.GetAll(), "ID", "Name", searchModel.StoreId);
+                ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "ID", "Name", searchModel.RefStoreId);
+           
+                return View(searchModel);
+            }
+            var pagedList = StoreOrderService.SearchStoreOrderExport(searchModel.Code, searchModel.UserExport, searchModel.StoreId, searchModel.RefStoreId, searchModel.TimeExportFrom, searchModel.TimeExportTo, searchModel.PageSize, searchModel.PageIndex);
+            pagedList.SearchModel = searchModel;
+            return PartialView("_StoreOrderExportList", pagedList);
+        }
 
 	}
 }

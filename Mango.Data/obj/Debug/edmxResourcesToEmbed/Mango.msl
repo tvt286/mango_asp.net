@@ -193,20 +193,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreOrderImportDetails">
-      <EntityTypeMapping TypeName="mangoModel.StoreOrderImportDetail">
-        <MappingFragment StoreEntitySet="StoreOrderImportDetail">
-          <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
-          <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
-          <ScalarProperty Name="RefStoreOrderExportDetailId" ColumnName="RefStoreOrderExportDetailId" />
-          <ScalarProperty Name="Note" ColumnName="Note" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="StoreOrderId" ColumnName="StoreOrderId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="StoreProducts">
       <EntityTypeMapping TypeName="mangoModel.StoreProduct">
         <MappingFragment StoreEntitySet="StoreProduct">
@@ -234,6 +220,20 @@
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreOrderImportDetails">
+      <EntityTypeMapping TypeName="mangoModel.StoreOrderImportDetail">
+        <MappingFragment StoreEntitySet="StoreOrderImportDetail">
+          <ScalarProperty Name="RefStoreOrderExportDetailId" ColumnName="RefStoreOrderExportDetailId" />
+          <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
+          <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="StoreOrderId" ColumnName="StoreOrderId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

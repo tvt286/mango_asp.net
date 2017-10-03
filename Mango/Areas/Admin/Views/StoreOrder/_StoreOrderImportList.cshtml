@@ -15,7 +15,7 @@
 
 
     <div class="">
-        <h5 class="m-t-lg">Tìm thấy @Model.TotalItemCount</h5>
+        <h5 class="m-t-lg">Result @Model.TotalItemCount</h5>
     </div>
     <table class="table table-striped table-colored table-info table-hover">
         <thead>
@@ -24,22 +24,22 @@
                     STT
                 </th>
                 <th>
-                    Phiếu nhập
+                    Code
                 </th>
 
                 <th>
-                    NCC hoặc kho xuất
+                    Store export
                 </th>
                 <th>
-                    Tên người nhập
+                    User import
                 </th>
                 <th>
-                    Kho nhập
+                    Store import
                 </th>
                 <th>
-                    Ngày nhập
+                    Date import
                 </th>
-                <th>Loại</th>
+                <th>Type</th>
                 <th data-sorter="false">
 
                 </th>
@@ -86,7 +86,7 @@
                         <td>
                             @if (item.StoreImExTypeCode == StoreImExTypeCode.NhapTuKhoKhac)
                             {
-                                <a href="@Url.Action("DetailWarehouseImport", new { id = item.Id })">Xem</a>
+                                <a href="@Url.Action("DetailStoreImport", new { id = item.Id })">View</a>
                             }
                             else
                             {
@@ -94,12 +94,12 @@
                                 {
                                     if (UserPermission.Has(Permission.WarehouseOrder_ConfirmImport))
                                     {
-                                        <a href="@Url.Action("ConfirmWarehouseOrderFromOtherWarehouse", new { id = item.Id})">Xác nhận nhập kho</a>
+                                        <a href="@Url.Action("ConfirmStoreOrderFromOtherWarehouse", new { id = item.Id })">Confirm import</a>
                                     }
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("ConfirmWarehouseOrderFromOtherWarehouse", new { id = item.Id })">Xem</a>
+                                    <a href="@Url.Action("ConfirmStoreOrderFromOtherWarehouse", new { id = item.Id })">View</a>
                                 }
                             }
 

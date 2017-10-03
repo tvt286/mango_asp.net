@@ -119,6 +119,17 @@ namespace Mango.Services
             }
         }
 
-
+        public static List<Store> GetStoreHasProduct()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var ownStoreIdList = GetAll().Select(x => x.Id).ToList();
+                return
+                    context.StoreProducts.Where(x => ownStoreIdList.Contains(x.StoreId)
+                    && x.QuantityExchange > 0)
+                        .Select(x => x.Store)
+                        .ToList();
+            }
+        }
     }
 }

@@ -1,0 +1,107 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+@using Mango.Data
+
+@using PagedList.Mvc;
+@model Mango.Services.PagedSearchList<Mango.Data.StoreOrder>
+
+    @{
+        var user = UserService.GetUserInfo();
+    }
+
+
+    <div class="">
+        <h5 class="m-t-lg">Result @Model.TotalItemCount</h5>
+    </div>
+    <table class="table table-striped table-colored table-info table-hover">
+        <thead>
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    Code
+                </th>
+
+                <th>
+                    User export
+                </th>
+                <th>
+                    Store export
+                </th>
+                <th>
+                    Store import
+                </th>
+                <th>
+                    Time export
+                </th>
+                
+                <th data-sorter="false">
+
+                </th>
+            </tr>
+        </thead>
+        @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @(index++)
+                    </td>
+                    <td>
+                        @item.Code
+                    </td>
+                    <td>
+                        @if (item.UserExport != null)
+                        {
+                            @item.UserExport.FullName
+                        }
+                       
+                    </td>
+                    <td>
+                        @item.Store.Name
+                    </td>
+                    <td>
+                        @if (item.RefStore != null)
+                        {
+                            @item.RefStore.Name
+                        }
+                        
+                    </td>
+                    <td>
+                        @if (item.TimeExport.HasValue)
+                        {
+                            @item.TimeExport.Value.ToString("dd-MM-yyyy HH:mm")
+                        }
+
+                    </td>
+                    
+                    <td>
+                        <a href="@Url.Action("DetailStoreExport", new { id = item.Id })">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page =>
+{
+    Model.SearchModel.PageIndex = page;
+    return Url.Action("StoreOrderExport", "StoreOrder", Model.SearchModel);
+},
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
+
+
+    <script type="text/javascript">
+        $(function () {
+            InitSortTable();
+        });
+
+    </script>

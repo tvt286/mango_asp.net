@@ -8,16 +8,6 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Data\bin\De
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Data\obj\Debug\Mango.Data.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Data\obj\Debug\Mango.Data.pdb
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll.config
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache
 E:\asp.net\mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll.config
 E:\asp.net\mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll
 E:\asp.net\mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.pdb
@@ -28,3 +18,13 @@ E:\asp.net\mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.SqlServer.xm
 E:\asp.net\mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.dll
 E:\asp.net\mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.pdb
 E:\asp.net\mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll.config
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\Mango.Data.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache

@@ -101,7 +101,7 @@ namespace Mango.Services
                 {
                     listCode =
                         context.Database.SqlQuery<string>(
-                            string.Format("select Code from {0} where  Code like '{1}%'", codeOld, table)).ToList();
+                            string.Format("select Code from {0} where  Code like '{1}%'", table, codeOld)).ToList();
                 }
                 else
                 {

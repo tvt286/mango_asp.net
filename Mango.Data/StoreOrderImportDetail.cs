@@ -25,14 +25,14 @@ namespace Mango.Data
         public int ProductId { get; set; }
         public decimal Quantity { get; set; }
         public string Note { get; set; }
-        public int RefStoreOrderExportDetailId { get; set; }
         public decimal SupplierPrice { get; set; }
         public decimal MainSupplierPrice { get; set; }
+        public Nullable<int> RefStoreOrderExportDetailId { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual StoreOrder StoreOrder { get; set; }
-        public virtual StoreOrderExportDetail StoreOrderExportDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreOrderExportDetail> StoreOrderExportDetails { get; set; }
+        public virtual StoreOrderExportDetail StoreOrderExportDetail { get; set; }
     }
 }

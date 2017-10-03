@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="mangoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="Id" />
@@ -155,9 +155,9 @@
     <Property Name="ProductId" Type="int" Nullable="false" />
     <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" />
-    <Property Name="RefStoreOrderExportDetailId" Type="int" Nullable="false" />
     <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="MainSupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="RefStoreOrderExportDetailId" Type="int" />
   </EntityType>
   <EntityType Name="StoreProduct">
     <Key>
@@ -366,18 +366,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StoreOrde__RefSt__1DB06A4F">
-    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="1" />
-    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StoreOrderExportDetail">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StoreOrderImportDetail">
-        <PropertyRef Name="RefStoreOrderExportDetailId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__StoreOrde__RefSt__1EA48E88">
     <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="1" />
     <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="*" />
@@ -399,6 +387,18 @@
       </Principal>
       <Dependent Role="StoreOrder">
         <PropertyRef Name="RefStoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StoreOrde__RefSt__2A164134">
+    <End Role="StoreOrderExportDetail" Type="Self.StoreOrderExportDetail" Multiplicity="0..1" />
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreOrderExportDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreOrderImportDetail">
+        <PropertyRef Name="RefStoreOrderExportDetailId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -625,10 +625,6 @@
       <End Role="Product" EntitySet="Product" />
       <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__StoreOrde__RefSt__1DB06A4F" Association="Self.FK__StoreOrde__RefSt__1DB06A4F">
-      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
-      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
-    </AssociationSet>
     <AssociationSet Name="FK__StoreOrde__RefSt__1EA48E88" Association="Self.FK__StoreOrde__RefSt__1EA48E88">
       <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
       <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
@@ -636,6 +632,10 @@
     <AssociationSet Name="FK__StoreOrde__RefSt__245D67DE" Association="Self.FK__StoreOrde__RefSt__245D67DE">
       <End Role="Store" EntitySet="Store" />
       <End Role="StoreOrder" EntitySet="StoreOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StoreOrde__RefSt__2A164134" Association="Self.FK__StoreOrde__RefSt__2A164134">
+      <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
+      <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
     </AssociationSet>
     <AssociationSet Name="FK__StoreOrde__Store__1BC821DD" Association="Self.FK__StoreOrde__Store__1BC821DD">
       <End Role="StoreOrder" EntitySet="StoreOrder" />

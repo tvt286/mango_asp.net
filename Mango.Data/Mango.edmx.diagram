@@ -29,15 +29,10 @@
         <EntityTypeShape EntityType="mangoModel.OrderDetail" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="mangoModel.StoreOrder" Width="1.5" PointX="8" PointY="7.875" />
         <EntityTypeShape EntityType="mangoModel.StoreOrderExportDetail" Width="1.5" PointX="12.5" PointY="2.875" />
-        <EntityTypeShape EntityType="mangoModel.StoreOrderImportDetail" Width="1.5" PointX="10.25" PointY="2.875" />
         <EntityTypeShape EntityType="mangoModel.StoreProduct" Width="1.5" PointX="16.75" PointY="7.5" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1CBC4616" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1F98B2C1" />
         <AssociationConnector Association="mangoModel.FK__StoreProd__Produ__19DFD96B" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__1BC821DD" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__208CD6FA" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__1DB06A4F" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__1EA48E88" />
         <EntityTypeShape EntityType="mangoModel.Store" Width="1.5" PointX="14.125" PointY="9.625" />
         <AssociationConnector Association="mangoModel.FK__Store__CityId__6D0D32F4" />
         <AssociationConnector Association="mangoModel.FK__Store__DistrictI__6E01572D" />
@@ -49,6 +44,11 @@
         <AssociationConnector Association="mangoModel.FK__StoreOrde__UserE__2180FB33" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__UserI__22751F6C" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__245D67DE" />
+        <EntityTypeShape EntityType="mangoModel.StoreOrderImportDetail" Width="1.5" PointX="14.75" PointY="2.5" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1CBC4616" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__1BC821DD" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__1EA48E88" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__2A164134" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -64,6 +64,68 @@ namespace Mango.Services
              }
          }
 
+         public static PagedSearchList<StoreOrder> SearchStoreOrderExport(string code, int? userExport,
+           int? storeId, int? refstoreId, DateTime? timeExportFrom, DateTime? timeExportTo,
+           int pageSize, int pageIndex)
+         {
+             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+             {
+                 var user = UserService.GetUserInfo();
+                 IQueryable<StoreOrder> query =
+                     context.StoreOrders.Where(x => x.StoreImExTypeCode == StoreImExTypeCode.XuatKhoKhac).AsNoTracking();
+              
+                 if (code.NotEmpty())
+                 {
+                     query = query.Where(x => x.Code.Contains(code));
+                 }
+
+                 if (userExport.HasValue)
+                 {
+                     query = query.Where(x => x.UserExportId == userExport.Value);
+                 }
+
+                 if (storeId.HasValue)
+                 {
+                     query = query.Where(x => x.StoreId == storeId.Value);
+                 }
+
+                 if (refstoreId.HasValue)
+                 {
+                     query = query.Where(x => x.RefStoreId == refstoreId.Value);
+                 }
+
+                 if (timeExportFrom.HasValue)
+                 {
+                     query = query.Where(x => x.TimeExport >= timeExportFrom.Value);
+                 }
+
+                 if (timeExportTo.HasValue)
+                 {
+                     timeExportTo = timeExportTo.Value.AddDays(1).AddMinutes(-1);
+                     query = query.Where(x => x.TimeExport <= timeExportTo.Value);
+                 }
+
+                 query =
+                     query.Include(x => x.UserExport)
+                         .Include(x => x.Store)
+                         .Include(x => x.RefStore)
+                         .OrderByDescending(x => x.Id);
+                 pageIndex = pageIndex < 1 ? 1 : pageIndex;
+                 return new PagedSearchList<StoreOrder>(query, pageIndex, pageSize);
+             }
+         }
+
+
+         public static StoreOrder GetDetailStoreImport(int id)
+         {
+             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+             {
+                 return context.StoreOrders
+                     .Include(x => x.StoreOrderImportDetails.Select(d => d.Product.Category))
+                     .Include(x => x.StoreOrderImportDetails.Select(d => d.StoreOrderExportDetail))
+                     .First(x => x.Id == id);
+             }
+         }
 
          public static string GenerateCode(StoreImExTypeCode? type,  int? storeId, int? refStoreId, bool warehouseCheck = false)
          {
@@ -83,7 +145,7 @@ namespace Mango.Services
              else if (type == StoreImExTypeCode.NhapTuKhoKhac)
              {
                  var storeCode = StoreService.Get(storeId.GetValueOrDefault()).Code;
-                 var refStoreCode = StoreService.Get(refStoreId.GetValueOrDefault()).Code;
+                 var refStoreCode = "NCC";
 
                  code = string.Format("A.{0}.{1}.{2}", refStoreCode, storeCode, strDate);
              }
@@ -152,6 +214,8 @@ namespace Mango.Services
 
                  storeOrder.TimeImport = storeOrder.TimeExport = date;
                  //   warehouseOrder.TimeImport = date;
+                 var user = UserService.GetUserInfo();
+                 storeOrder.UserExportId = user.Id;
                  //storeOrder.UserCreateId = warehouseOrder.UserImportId.GetValueOrDefault();
                  storeOrder.Status = StoreOrderStatus.Completed;
 
