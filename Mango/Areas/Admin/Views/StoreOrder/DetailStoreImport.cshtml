@@ -4,12 +4,19 @@
 @using Mango.Security
 @using Mango.Data.Enums
 @using Mango.Web
-
+@using Mango.Data
 @model Mango.Data.StoreOrder
 
 @{
     ViewBag.Title = "Create Order Import";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var action = "CreateStoreOrderImport";
+    if (Model.Status == StoreOrderStatus.Pending)
+    {
+        ViewBag.Title = "Confirm Order Import";
+        action = "ImportStoreOrderFromOtherStore";
+    }
 }
 
 <div class="row">
@@ -21,7 +28,7 @@
                     <a href="@Url.Action("Index","Home")">Mango</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index")">Create Order Import</a>
+                    <a href="@Url.Action("StoreOrderImport")">Create Order Import</a>
                 </li>
                 <li class="active">
                     <strong>Create</strong>
@@ -29,13 +36,21 @@
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
-            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @if(Model.Id == 0)
+            {
+                <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>                
+            }
+            else if (Model.Status == StoreOrderStatus.Pending)
+            {
+                <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>                
+
+            }
+            @Html.ActionLink("Cancel", "StoreOrderImport", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
 </div>
 <!-- end row -->
-@using (Ajax.BeginForm("CreateStoreOrderImport", "StoreOrder", null, new AjaxCommonOption(), new { role = "form", id = "CreateForm" }))
+@using (Ajax.BeginForm(action, "StoreOrder", null, new AjaxCommonOption(), new { role = "form", id = "CreateForm" }))
 {
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.StoreImExTypeCode)
@@ -86,7 +101,6 @@
                             <div class="col-md-4">
                                 @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Note" })
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -109,20 +123,19 @@
                 }
                 <div>
                     <table id="tableImportDetail" class="table table-striped table-colored table-info table-hover">
-                        <tr>
+                        <tr style="background-color: #323f86; color: white; ">
+                            <th>
+                                Product
+                            </th>
                             <th>
                                 Image
                             </th>
 
                             <th>
-                                Product
-                            </th>
-                           
-                            <th>
                                 Category
                             </th>
 
-                            <th style="width: 70px">
+                            <th >
                                 Quantity Import
                             </th>
 
@@ -142,16 +155,16 @@
                             {
                                 <tr>
                                     <td>
+                                        @item.Product.Name
+                                    </td>
+                                    <td>
                                         <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
                                     </td>
 
-                                    <td>
-                                        @item.Product.Name
-                                    </td>
                                     <td class="category">
                                         @item.Product.Category.Name
                                     </td>
-                                   
+
 
                                     <td>
                                         @item.Quantity.ToString("0.##")
@@ -169,22 +182,22 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DropDownList("productId", (List<SelectListItem>)ViewBag.ProductSelect, "-- Product --", new { @class = "form-control", onchange = "ChangeProduct(this)", style = "width:120px" })
+                                    @Html.DropDownList("productId", (List<SelectListItem>)ViewBag.ProductSelect, "-- Product --", new { @class = "form-control", onchange = "ChangeProduct(this)" })
                                 </td>
                                 <td>
                                     <img class="imageProduct" style="display: none; width: 50px;" />
                                 </td>
 
                                 <td class="category"></td>
-                              
+
                                 <td style="text-align:center">
-                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport" onblur="CalculateExchange(this)" style="width: 70px" />
+                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport" onblur="CalculateExchange(this)"  />
                                 </td>
                                 <td style="text-align:center">
-                                    <input type="text" placeholder="Price" class="form-control autoNumeric" name="mainSupplierPrice"  />
+                                    <input type="text" placeholder="Price" class="form-control autoNumeric" name="mainSupplierPrice" />
                                 </td>
 
-                                <td >
+                                <td>
                                     <a href="javascript:void(0)" onclick="RemoveProduct(this)">
                                         <i class="fa fa-times" style="color: red"></i>
                                     </a>
@@ -200,6 +213,11 @@
                 @if (Model.Id == 0)
                 {
                     <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
+                }
+                else if (Model.Status == StoreOrderStatus.Pending)
+                {
+                    <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Confirm" />
+
                 }
                 @Html.ActionLink("Cancel", "StoreOrderImport", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
             </div>
@@ -220,15 +238,22 @@
 
 @section scripts
 {
+<script src="~/Scripts/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
     <script src="~/Scripts/Admin/chosen.jquery.js"></script>
+
     @if (Model.Id != 0)
     {
         <script type="text/javascript">
             $(function () {
-                $("input").attr("disabled", "disabled");
+                $("input").not("[type=submit]").attr("disabled", "disabled");
                 $("select").attr("disabled", "disabled");
-                //$("textarea").attr("disabled", "disabled");
-                $("body").addClass("mini-navbar");
+                $("textarea").attr("disabled", "disabled");
             })
         </script>
     }

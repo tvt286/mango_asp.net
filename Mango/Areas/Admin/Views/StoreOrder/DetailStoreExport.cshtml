@@ -30,7 +30,7 @@
 
             <div class="clearfix"></div>
             <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
-            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @Html.ActionLink("Cancel", "StoreOrderExport", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
 </div>
@@ -71,7 +71,7 @@
                                 @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                 @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
                             </div>
-                         
+
                             <label class="control-label col-md-2">Store import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
@@ -80,18 +80,18 @@
                         </div>
 
                         <div class="form-group">
-                          
+
                             <label class="control-label col-md-2">User export<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(x => x.UserExportId, null, "-- Người nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                 @Html.ValidationMessageFor(x => x.UserExportId, "", new { @class = "text-danger" })
                             </div>
-                         
+
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">Ghi chú</label>
+                            <label class="control-label col-md-2">Note</label>
                             <div class="col-md-4">
-                                @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Ghi chú" })
+                                @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Note" })
                             </div>
 
                         </div>
@@ -104,99 +104,98 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-              
-            @if (Model.Id == 0)
-                {
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            @Html.DropDownList("productIdTemp", (List<SelectListItem>)ViewBag.ProductSelect, "-- Sản phẩm --", new { @class = "form-control select2" })
+                <div class="ibox-content">
 
-                        </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-primary m-b-sm" type="button" id="btAdd">
-                                <i class="fa fa-plus"></i>
-                                <span class="bold">Thêm sản phẩm</span>
-                            </button>
-                        </div>
-                        <br style="clear: both" />
-                    </div>
-                }
-             
-                <div>
-                    <div class="table-responsive">
-                        <table id="tableExportDetail" class="table table-hover table-bordered table-striped">
-                            <tr class="tableHeader">
-                                <th>
-                                    Hình ảnh
-                                </th>
-                                <th>
-                                    Sản phẩm
-                                </th>
-                                <th>
-                                    Loại
-                                </th>                          
-                                <th>
-                                    Giá nhập <br />
-                                    theo ĐV nhập
-                                </th>                             
-                                <th>
-                                    SL còn
-                                </th>                           
-                                <th>
-                                    SL
-                                </th>
-                               
-                                @if (Model.Id == 0)
-                                        {
-                                    <th></th>
-                                        }
+                    @if (Model.Id == 0)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.DropDownList("productIdTemp", (List<SelectListItem>)ViewBag.ProductSelect, "-- Product --", new { @class = "form-control" })
 
-                            </tr>
-                            @if (Model.Id != 0)
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-primary m-b-sm" type="button" id="btAdd">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="bold">Add product</span>
+                                </button>
+                            </div>
+                            <br style="clear: both" />
+                        </div>
+                    }
+                    <div>
+                        <div class="table-responsive">
+                            <table id="tableExportDetail" class="table table-striped table-colored table-info table-hover">
+                                <tr class="tableHeader" style="background-color: #323f86; color: white; ">
+                                    <th>
+                                        Image
+                                    </th>
+                                    <th>
+                                        Product
+                                    </th>
+                                    <th>
+                                        Category
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Quantity remain
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+
+                                    @if (Model.Id == 0)
                                     {
-                                        foreach (var item in Model.WarehouseOrderExportDetails)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
-                                                    <input type="hidden" name="productId" value="@item.ProductId" />
-                                                    @item.Product.Code - @item.Product.Name
-                                                </td>
-                                                <td class="category">
-                                                    @item.Product.Category.Name
-                                                </td>
-                          
-                                                <td>
-                                                    @item.StoreOrderImportDetail.MainSupplierPrice.MoneyToStringVN()
-                                                </td>
-                                             
-                                                <td>
-                                                    @item.StoreOrderImportDetail.Quantity.MoneyToStringVN()
-                                                </td>      
-                                                <td>
-                                                    @item.Quantity.MoneyToStringVN()
-                                                </td>
- 
-                                            </tr>
-                                        }
+                                        <th></th>
                                     }
-                        </table>
 
+                                </tr>
+                                @if (Model.Id != 0)
+                                {
+                                    foreach (var item in Model.StoreOrderExportDetails)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
+                                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                                @item.Product.Code - @item.Product.Name
+                                            </td>
+                                            <td class="category">
+                                                @item.Product.Category.Name
+                                            </td>
+
+                                            <td>
+                                                @item.StoreOrderImportDetail.MainSupplierPrice.MoneyToStringVN()
+                                            </td>
+
+                                            <td>
+                                                @item.StoreOrderImportDetail.Quantity.MoneyToStringVN()
+                                            </td>
+                                            <td>
+                                                @item.Quantity.MoneyToStringVN()
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+
+
+                        @if (Model.Id == 0)
+                        {
+                            <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
+                        }
+                        @Html.ActionLink("Cancel", "StoreOrderExport", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
                     </div>
-
-
-                @if (Model.Id == 0)
-                {
-                    <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
-                }
-                @Html.ActionLink("Cancel", "StoreOrderExport", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     </div>
 }
 
@@ -212,6 +211,13 @@
 
 @section scripts
 {
+     <script src="~/Scripts/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.keyTable.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
     <script src="~/Scripts/Admin/chosen.jquery.js"></script>
     @if (Model.Id != 0)
     {
@@ -227,7 +233,7 @@
     else
     {
         <script type="text/javascript">
-            function CreateStoreOrderExportSuccess(data) {    
+            function CreateStoreOrderExportSuccess(data) {
                 OnSuccessAjax(data);
             }
 
@@ -261,7 +267,7 @@
             }
 
             $(function () {
-                  $("body").addClass("mini-navbar");
+                $("body").addClass("mini-navbar");
 
                 $("#StoreId").change(function () {
                     $("#tableExportDetail tr:not(.tableHeader)").remove();
@@ -271,7 +277,7 @@
                         $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
                     } else {
                         OnBeginAjax();
-                        var warehouseId = $(this).val();
+                        var storeId = $(this).val();
                         $("#productIdTemp").find("option").remove();
                         $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
                         $.post('@Url.Action("GetProductInStore", "StoreProduct")',
@@ -304,7 +310,7 @@
                     $.post('@Url.Action("GetStoreOrderImportDetail", "StoreOrder")',
                         {
                             productId: $("#productIdTemp").val(),
-                            warehouseId: $("#StoreId").val()
+                            storeId: $("#StoreId").val()
                         },
                         function (data) {
                             console.log(data);

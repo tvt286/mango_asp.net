@@ -65,12 +65,15 @@
                        
                     </td>
                     <td>
-                        @item.Store.Name
+                       @if (item.StoreExport != null)
+                        {
+                            @item.StoreExport.Name
+                        }
                     </td>
                     <td>
-                        @if (item.RefStore != null)
+                        @if (item.StoreImport != null)
                         {
-                            @item.RefStore.Name
+                            @item.StoreImport.Name
                         }
                         
                     </td>
@@ -90,7 +93,7 @@
         </tbody>
     </table>
 
-    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
     @Html.PagedListPager(Model, page =>
 {
     Model.SearchModel.PageIndex = page;

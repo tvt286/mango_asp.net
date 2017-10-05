@@ -2,7 +2,9 @@
 @using Mango.Data
 @using Mango.Web
 @model List<StoreOrderImportDetail>
-  
+  @{
+      var fromCreateExport = @ViewBag.fromCreateExport;
+  }
     @foreach (var item in Model)
     {
         <tr class="product@(item.ProductId)">
@@ -25,7 +27,12 @@
 
                 @item.MainSupplierPrice.MoneyToStringVN()
             </td>
-        
+            @if (fromCreateExport)
+            {
+             <td >
+                 @item.Quantity.MoneyToStringVN()
+            </td>
+            }
             <td>
                 @Html.TextBox("quantityRequestExport", "", new { @class = "form-control autoNumeric", onblur = "CalculateExchange(this)", style = "width:80px" })
             </td>

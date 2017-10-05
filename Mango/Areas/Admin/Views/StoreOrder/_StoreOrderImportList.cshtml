@@ -87,7 +87,7 @@
                             @item.StoreImExTypeCode.GetString()
                         </td>
                         <td>
-                            @if (item.StoreImExTypeCode == StoreImExTypeCode.NhapTuKhoKhac)
+                            @if (item.StoreImExTypeCode == StoreImExTypeCode.NhapTuNCC)
                             {
                                 <a href="@Url.Action("DetailStoreImport", new { id = item.Id })">View</a>
                             }
@@ -97,12 +97,12 @@
                                 {
                                     if (UserPermission.Has(Permission.WarehouseOrder_ConfirmImport))
                                     {
-                                        <a href="@Url.Action("ConfirmStoreOrderFromOtherWarehouse", new { id = item.Id })">Confirm import</a>
+                                        <a href="@Url.Action("DetailStoreImport", new { id = item.Id })">Confirm import</a>
                                     }
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("ConfirmStoreOrderFromOtherWarehouse", new { id = item.Id })">View</a>
+                                    <a href="@Url.Action("DetailStoreImport", new { id = item.Id })">View</a>
                                 }
                             }
 

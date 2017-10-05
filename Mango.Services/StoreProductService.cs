@@ -34,5 +34,15 @@ namespace Mango.Services
             }
         }
 
+
+        public static List<Product> GetStockProductInStore(int storeId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.StoreProducts.Where(x =>x.QuantityExchange > 0 && x.StoreId == storeId)
+                    .Select(x => x.Product).Distinct().AsNoTracking().ToList();
+            }
+        }
+
     }
 }

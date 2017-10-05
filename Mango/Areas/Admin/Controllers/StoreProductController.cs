@@ -17,5 +17,11 @@ namespace Mango.Areas.Admin.Controllers
             return PartialView("_StoreProduct", pagedList);
         }
 
+        public ActionResult GetProductInStore(int storeId)
+        {
+            var data = StoreProductService.GetStockProductInStore(storeId)
+                .Select(x => new { x.Id, Name = x.Code + " - " + x.Name }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

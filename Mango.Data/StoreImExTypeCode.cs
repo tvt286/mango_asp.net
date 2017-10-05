@@ -14,6 +14,8 @@ namespace Mango.Data
     public enum StoreImExTypeCode : int
     {
         NhapTuKhoKhac = 0,
-        XuatKhoKhac = 1
+        XuatKhoKhac = 1,
+        NhapTuNCC = 2,
+
     }
 }

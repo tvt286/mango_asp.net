@@ -42,7 +42,7 @@ namespace Mango.Areas.Admin.Controllers
             var user = UserService.GetUserInfo();
             var data = new StoreOrder
             {
-                StoreImExTypeCode = StoreImExTypeCode.NhapTuKhoKhac,
+                StoreImExTypeCode = StoreImExTypeCode.NhapTuNCC,
                 UserImportId = user.Id,
                 TimeImport = DateTime.Now
             };
@@ -57,7 +57,7 @@ namespace Mango.Areas.Admin.Controllers
                 Value = x.Id.ToString(),
                 Text = x.Code + " - " + x.Name
             }).ToList();
-
+            var ss = UserService.GetAll();
             ViewBag.RefStoreId = new SelectList(StoreService.GetAll(true), "Id", "Name", data.RefStoreId);
             if (user.IsAdminCompany)
             {
@@ -88,14 +88,12 @@ namespace Mango.Areas.Admin.Controllers
                 data = StoreOrderService.GetDetailStoreImport(id.Value);
             }
 
-            var storeHasProductList = StoreService.GetStoreHasProduct().Select(x => x.Id).ToList();
+            var storeHasProductList = StoreService.GetStoreHasProduct(true).Select(x => x.Id).ToList();
             ViewBag.ProductSelect = new List<SelectListItem>();
 
-            ViewBag.StoreId = new SelectList(StoreService.GetAll().Where(x => storeHasProductList.Contains(x.Id)).ToList(), "ID", "Name", data.StoreId);
-            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "ID", "Name", data.RefStoreId);
+            ViewBag.StoreId = new SelectList(StoreService.GetAll(true).Where(x => storeHasProductList.Contains(x.Id)).ToList(), "Id", "Name", data.StoreId);
+            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.RefStoreId);
 
-
-            ViewBag.StoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.StoreId);
             if (user.IsAdminCompany)
             {
                 ViewBag.UserExportId = new SelectList(UserService.GetAll(), "Id", "FullName", data.UserExportId);
@@ -108,42 +106,42 @@ namespace Mango.Areas.Admin.Controllers
             return View(data);
         }
 
+        //[AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ConfirmImport })]
+        //public ActionResult ConfirmStoreOrderFromOtherStore(int? id, bool confirmImport = false)
+        //{
+        //    var user = UserService.GetUserInfo();
+        //    var data = StoreOrderService.GetDetailStoreImport(id.Value);
+        //    var userId = data.UserExportId;
+        //    if (data.UserImportId != null)
+        //        userId = data.UserImportId;
+
+        //    data.TimeImport = DateTime.Now;
+        //    ViewBag.StoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.StoreId);
+        //    ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.RefStoreId);
+        //    if (user.IsAdminCompany)
+        //    {
+        //        ViewBag.UserImportId = new SelectList(UserService.GetAll(), "Id", "FullName", user.Id);
+        //    }
+        //    else
+        //    {
+        //        ViewBag.UserImportId = new SelectList(new List<User> { user }, "Id", "FullName", user.Id);
+        //    }
+
+        //    ViewBag.confirmImport = confirmImport;
+        //    return View(data);
+        //}
+
+
         [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ConfirmImport })]
-        public ActionResult ConfirmStoreOrderFromOtherWarehouse(int? id, bool confirmImport = false)
-        {
-            var user = UserService.GetUserInfo();
-            var data = StoreOrderService.GetDetailStoreImport(id.Value);
-            var userId = data.UserExportId;
-            if (data.UserImportId != null)
-                userId = data.UserImportId;
-
-            data.TimeImport = DateTime.Now;
-            ViewBag.StoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.StoreId);
-            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.RefStoreId);
-            if (user.IsAdminCompany)
-            {
-                ViewBag.UserImportId = new SelectList(UserService.GetAll(), "Id", "FullName", user.Id);
-            }
-            else
-            {
-                ViewBag.UserImportId = new SelectList(new List<User> { user }, "Id", "FullName", user.Id);
-            }
-
-            ViewBag.confirmImport = confirmImport;
-            return View(data);
-        }
-
-
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ConfirmImport })]
-        public ActionResult ImportWarehouseOrderFromOtherWarehouse(StoreOrder storeOrder,
-            int[] storeOrderImportDetailId, int[] quantityRequestImport, string[] note)
+        public ActionResult ImportStoreOrderFromOtherStore(StoreOrder model)
         {
 
-
-            var result = StoreOrderService.ImportStoreOrderFromOtherStore(storeOrder, storeOrderImportDetailId, quantityRequestImport, note);
+            var result = StoreOrderService.ImportStoreOrderFromOtherStore(model, model.StoreOrderImportDetails.Select(x => x.Id).ToArray(),
+                model.StoreOrderImportDetails.Select(x => x.Quantity).ToArray(),
+                model.StoreOrderImportDetails.Select(x => x.Note).ToArray());
             if (result.Code == ResultCode.Success)
             {
-                result.Url = Url.Action("StoreOrderImport", new { storeOrder.Code, storeOrder.RefStoreId });
+                result.Url = Url.Action("StoreOrderImport", new { model.Code, model.RefStoreId });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -186,7 +184,7 @@ namespace Mango.Areas.Admin.Controllers
             }
 
 
-            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuKhoKhac,null,storeOrder.RefStoreId);
+            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuNCC, null, storeOrder.RefStoreId);
             StoreOrderService.CreateWarehouseOrderImport(storeOrder, importDetailList);
             result.Message = "Đã tạo lệnh nhập hàng thành công!";
             result.Url = Url.Action("StoreOrderImport", new { storeOrder.Code});
@@ -202,7 +200,7 @@ namespace Mango.Areas.Admin.Controllers
                 var user = UserService.GetUserInfo();
 
                 ViewBag.UserExport = new SelectList(UserService.GetAll(), "Id", "FullName", searchModel.UserExport);
-                ViewBag.StoreId = new SelectList(StoreService.GetAll(), "ID", "Name", searchModel.StoreId);
+                ViewBag.StoreId = new SelectList(StoreService.GetAll(true), "ID", "Name", searchModel.StoreId);
                 ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "ID", "Name", searchModel.RefStoreId);
            
                 return View(searchModel);
@@ -219,8 +217,7 @@ namespace Mango.Areas.Admin.Controllers
         public ActionResult CreateStoreOrderExport(StoreOrder storeOrder, int[] productId, string[] productName,
             int[] quantityRequestExport, int[] refStoreOrderImportDetailId)
         {
-        
-
+       
             var result = new RedirectCommand();
             if (storeOrder.RefStoreId == storeOrder.StoreId)
             {
@@ -242,6 +239,7 @@ namespace Mango.Areas.Admin.Controllers
                 result.Message = "Vui lòng nhập sản phẩm xuất";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
+
             var exportDetailList = new List<StoreOrderExportDetail>();
             for (int i = 0; i < productId.Length; i++)
             {
@@ -277,7 +275,7 @@ namespace Mango.Areas.Admin.Controllers
         {
             var user = UserService.GetUserInfo();
             var data = StoreOrderService.GetStoreOrderImportDetail(productId, storeId);
-
+            ViewBag.fromCreateExport = true;
             return PartialView("_StoreOrderImportDetailList", data);
         }
 

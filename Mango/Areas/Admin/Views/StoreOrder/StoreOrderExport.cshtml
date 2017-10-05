@@ -50,19 +50,19 @@
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @placeholder = "Code" })
                                 </div>
-                                <label class="col-md-2 control-label">User Import</label>
+                                <label class="col-md-2 control-label">User Export</label>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.UserExport, null, "-- User Import --", new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.UserExport, null, "-- User export --", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Store Import</label>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.StoreId, null, "-- Store Import --", new { @class = "form-control" })
-                                </div>
                                 <label class="col-md-2 control-label">Store Export</label>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store Export --", new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control" })
+                                </div>
+                                <label class="col-md-2 control-label">Store Import</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,7 +97,7 @@
 
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h5>Kết quả tìm kiếm</h5>
+            <h5>List order export</h5>
 
             <div class="ibox-content">
                 <div id="content">
