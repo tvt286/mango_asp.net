@@ -58,9 +58,9 @@
                             @item.Code
                         </td>
                         <td>
-                            @if (item.RefStore != null)
+                            @if (item.StoreExport != null)
                             {
-                                @item.RefStore.Name
+                                @item.StoreExport.Name
                             }
                         </td>
                         <td>
@@ -71,7 +71,10 @@
 
                         </td>
                         <td>
-                            @item.Store.Name
+                            @if (item.StoreImport != null)
+                            {
+                                @item.StoreImport.Name
+                            }
                         </td>
                         <td>
                             @if (item.TimeImport.HasValue)

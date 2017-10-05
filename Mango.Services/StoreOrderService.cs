@@ -56,8 +56,8 @@ namespace Mango.Services
                      query = query.Where(x => x.TimeImport <= timeImportTo.Value);
                  }
 
-                 query = query.Include(x => x.UserImport).Include(x => x.Store)
-                     .Include(x => x.RefStore)
+                 query = query.Include(x => x.UserImport).Include(x => x.StoreImport)
+                     .Include(x => x.StoreExport)
                      .OrderByDescending(x => x.Id);
                  pageIndex = pageIndex < 1 ? 1 : pageIndex;
                  return new PagedSearchList<StoreOrder>(query, pageIndex, pageSize);
@@ -107,8 +107,8 @@ namespace Mango.Services
 
                  query =
                      query.Include(x => x.UserExport)
-                         .Include(x => x.Store)
-                         .Include(x => x.RefStore)
+                         .Include(x => x.StoreImport)
+                         .Include(x => x.StoreExport)
                          .OrderByDescending(x => x.Id);
                  pageIndex = pageIndex < 1 ? 1 : pageIndex;
                  return new PagedSearchList<StoreOrder>(query, pageIndex, pageSize);
@@ -144,10 +144,10 @@ namespace Mango.Services
 
              else if (type == StoreImExTypeCode.NhapTuKhoKhac)
              {
-                 var storeCode = StoreService.Get(storeId.GetValueOrDefault()).Code;
-                 var refStoreCode = "NCC";
+                 var refstoreCode = StoreService.Get(refStoreId.GetValueOrDefault()).Code;
+                 var storeCode = "NCC";
 
-                 code = string.Format("A.{0}.{1}.{2}", refStoreCode, storeCode, strDate);
+                 code = string.Format("A.{0}.{1}.{2}", storeCode, refstoreCode, strDate);
              }
 
              else if (type == StoreImExTypeCode.XuatKhoKhac)
@@ -155,7 +155,7 @@ namespace Mango.Services
                  var storeCode = StoreService.Get(storeId.GetValueOrDefault()).Code;
                  var refStoreCode = StoreService.Get(refStoreId.GetValueOrDefault()).Code;
 
-                 code = string.Format("X.{0}.{1}.{2}", refStoreCode, storeCode, strDate);
+                 code = string.Format("X.{0}.{1}.{2}", storeCode,refStoreCode, strDate);
              }
      
              code = ProductService.GetNewCode(code, 0, tableName, true);
@@ -191,44 +191,40 @@ namespace Mango.Services
       
                  }
 
-                 storeOrder.TimeImport = storeOrder.TimeExport = date;
-                 //   warehouseOrder.TimeImport = date;
+                 storeOrder.TimeImport = date;
                  var user = UserService.GetUserInfo();
-                 storeOrder.UserExportId = user.Id;
-                 //storeOrder.UserCreateId = warehouseOrder.UserImportId.GetValueOrDefault();
+                 storeOrder.UserImportId = user.Id;
                  storeOrder.Status = StoreOrderStatus.Completed;
-
                  context.StoreOrders.Add(storeOrder);
-                 //context.WarehouseTransactions.Add(warehouseTransaction);
                  context.StoreProducts.AddRange(storeProductList);
-                 //context.SaveChanges();
-                 try
-                 {
-                     context.SaveChanges();
-                 }
-                 catch (DbEntityValidationException e)
-                 {
-                     var strError = new StringBuilder();
-                     foreach (var eve in e.EntityValidationErrors)
-                     {
-                         strError.AppendFormat(
-                             "Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                             eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                         foreach (var ve in eve.ValidationErrors)
-                         {
-                             strError.AppendFormat("- Property: \"{0}\", Error: \"{1}\"",
-                                 ve.PropertyName, ve.ErrorMessage);
-                         }
-                     }
-                     var temp = strError.ToString();
-                     throw e;
-                 }
+                 context.SaveChanges();
+                 //try
+                 //{
+                 //    context.SaveChanges();
+                 //}
+                 //catch (DbEntityValidationException e)
+                 //{
+                 //    var strError = new StringBuilder();
+                 //    foreach (var eve in e.EntityValidationErrors)
+                 //    {
+                 //        strError.AppendFormat(
+                 //            "Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                 //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                 //        foreach (var ve in eve.ValidationErrors)
+                 //        {
+                 //            strError.AppendFormat("- Property: \"{0}\", Error: \"{1}\"",
+                 //                ve.PropertyName, ve.ErrorMessage);
+                 //        }
+                 //    }
+                 //    var temp = strError.ToString();
+                 //    throw e;
+                 //}
              }
 
              new Thread(() =>
              {
                  Thread.CurrentThread.IsBackground = true;
-                 UpdateQuantityStoreProduct(storeOrder.StoreId,
+                 UpdateQuantityStoreProduct(storeOrder.RefStoreId.Value,
                  storeOrderImportDetailList.Select(x => x.ProductId).Distinct().ToArray());
 
              }).Start();
@@ -317,7 +313,7 @@ namespace Mango.Services
              new Thread(() =>
              {
                  Thread.CurrentThread.IsBackground = true;
-                 UpdateQuantityStoreProduct(storeOrderExport.StoreId,storeOrderExportDetailList.Select(x => x.ProductId).Distinct().ToArray());
+                 UpdateQuantityStoreProduct(storeOrderExport.StoreId.Value,storeOrderExportDetailList.Select(x => x.ProductId).Distinct().ToArray());
                 
              }).Start();
 

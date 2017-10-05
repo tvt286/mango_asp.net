@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="page-title-box">
-            <h4 class="page-title">Store</h4>
+            <h4 class="page-title">Warehouse</h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>
                     <a href="@Url.Action("Index","Home")">Mango</a>
@@ -29,8 +29,8 @@
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
-            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @*<a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })*@
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
                 <!--Box thông tin-->
                 <div class="ibox ">
                     <div>
-                        <h5>Store Info</h5>
+                        <h5>Warehouse Info</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="form-horizontal">
@@ -136,13 +136,12 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <h5> Info Product</h5>
+                <h5>Product info </h5>
 
                 <div class="ibox-content">
-                    <div id="content">
                         @using (Ajax.BeginForm("Index", "StoreProduct", null, new AjaxCommonOption() { UpdateTargetId = "content" }, new { id = "SearchForm" }))
                         {
-                            <input type="hidden" name="Id" value="@Model.Id" />
+                            <input type="hidden" name="StoreId" value="@Model.Id" />
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="control-label col-md-2">
@@ -170,7 +169,6 @@
                         }
                         <div id="content" class="table-responsive">
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

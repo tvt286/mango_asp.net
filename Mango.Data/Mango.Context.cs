@@ -37,10 +37,10 @@ namespace Mango.Data
         public virtual DbSet<Ward> Wards { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<StoreOrder> StoreOrders { get; set; }
         public virtual DbSet<StoreOrderExportDetail> StoreOrderExportDetails { get; set; }
         public virtual DbSet<StoreProduct> StoreProducts { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<StoreOrderImportDetail> StoreOrderImportDetails { get; set; }
+        public virtual DbSet<StoreOrder> StoreOrders { get; set; }
     }
 }

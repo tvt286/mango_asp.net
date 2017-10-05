@@ -27,28 +27,28 @@
         <AssociationConnector Association="mangoModel.FK__Ward__DistrictId__6A30C649" />
         <EntityTypeShape EntityType="mangoModel.Order" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="mangoModel.OrderDetail" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="mangoModel.StoreOrder" Width="1.5" PointX="8" PointY="7.875" />
         <EntityTypeShape EntityType="mangoModel.StoreOrderExportDetail" Width="1.5" PointX="12.5" PointY="2.875" />
         <EntityTypeShape EntityType="mangoModel.StoreProduct" Width="1.5" PointX="16.75" PointY="7.5" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1F98B2C1" />
         <AssociationConnector Association="mangoModel.FK__StoreProd__Produ__19DFD96B" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__208CD6FA" />
         <EntityTypeShape EntityType="mangoModel.Store" Width="1.5" PointX="14.125" PointY="9.625" />
         <AssociationConnector Association="mangoModel.FK__Store__CityId__6D0D32F4" />
         <AssociationConnector Association="mangoModel.FK__Store__DistrictI__6E01572D" />
         <AssociationConnector Association="mangoModel.FK__Store__StreetId__6EF57B66" />
         <AssociationConnector Association="mangoModel.FK__Store__UserCreat__6FE99F9F" />
         <AssociationConnector Association="mangoModel.FK__Store__WardId__6C190EBB" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__236943A5" />
         <AssociationConnector Association="mangoModel.FK__StoreProd__Store__1AD3FDA4" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__UserE__2180FB33" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__UserI__22751F6C" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__245D67DE" />
         <EntityTypeShape EntityType="mangoModel.StoreOrderImportDetail" Width="1.5" PointX="14.75" PointY="2.5" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1CBC4616" />
-        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__1BC821DD" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__1EA48E88" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__2A164134" />
+        <EntityTypeShape EntityType="mangoModel.StoreOrder" Width="1.5" PointX="19.375" PointY="5.5" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__RefSt__245D67DE" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__2B0A656D" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__1BC821DD" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__208CD6FA" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__UserE__2CF2ADDF" />
+        <AssociationConnector Association="mangoModel.FK__StoreOrde__UserI__2BFE89A6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

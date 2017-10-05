@@ -123,15 +123,16 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="StoreId" Type="int" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
     <Property Name="StoreImExTypeCode" Type="int" Nullable="false" />
     <Property Name="TimeExport" Type="datetime" />
     <Property Name="TimeImport" Type="datetime" />
-    <Property Name="UserExportId" Type="int" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" />
-    <Property Name="UserImportId" Type="int" Nullable="false" />
     <Property Name="RefStoreId" Type="int" />
+    <Property Name="RefStoreOrderId" Type="int" />
+    <Property Name="UserImportId" Type="int" />
+    <Property Name="UserExportId" Type="int" />
+    <Property Name="StoreId" Type="int" />
   </EntityType>
   <EntityType Name="StoreOrderExportDetail">
     <Key>
@@ -426,8 +427,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StoreOrde__Store__236943A5">
-    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+  <Association Name="FK__StoreOrde__Store__2B0A656D">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
     <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Store">
@@ -438,8 +439,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StoreOrde__UserE__2180FB33">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
+  <Association Name="FK__StoreOrde__UserE__2CF2ADDF">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -450,8 +451,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StoreOrde__UserI__22751F6C">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
+  <Association Name="FK__StoreOrde__UserI__2BFE89A6">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="StoreOrder" Type="Self.StoreOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -645,15 +646,15 @@
       <End Role="StoreOrder" EntitySet="StoreOrder" />
       <End Role="StoreOrderExportDetail" EntitySet="StoreOrderExportDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__StoreOrde__Store__236943A5" Association="Self.FK__StoreOrde__Store__236943A5">
+    <AssociationSet Name="FK__StoreOrde__Store__2B0A656D" Association="Self.FK__StoreOrde__Store__2B0A656D">
       <End Role="Store" EntitySet="Store" />
       <End Role="StoreOrder" EntitySet="StoreOrder" />
     </AssociationSet>
-    <AssociationSet Name="FK__StoreOrde__UserE__2180FB33" Association="Self.FK__StoreOrde__UserE__2180FB33">
+    <AssociationSet Name="FK__StoreOrde__UserE__2CF2ADDF" Association="Self.FK__StoreOrde__UserE__2CF2ADDF">
       <End Role="User" EntitySet="User" />
       <End Role="StoreOrder" EntitySet="StoreOrder" />
     </AssociationSet>
-    <AssociationSet Name="FK__StoreOrde__UserI__22751F6C" Association="Self.FK__StoreOrde__UserI__22751F6C">
+    <AssociationSet Name="FK__StoreOrde__UserI__2BFE89A6" Association="Self.FK__StoreOrde__UserI__2BFE89A6">
       <End Role="User" EntitySet="User" />
       <End Role="StoreOrder" EntitySet="StoreOrder" />
     </AssociationSet>

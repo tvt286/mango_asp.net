@@ -162,23 +162,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreOrders">
-      <EntityTypeMapping TypeName="mangoModel.StoreOrder">
-        <MappingFragment StoreEntitySet="StoreOrder">
-          <ScalarProperty Name="RefStoreId" ColumnName="RefStoreId" />
-          <ScalarProperty Name="UserImportId" ColumnName="UserImportId" />
-          <ScalarProperty Name="Note" ColumnName="Note" />
-          <ScalarProperty Name="UserExportId" ColumnName="UserExportId" />
-          <ScalarProperty Name="TimeImport" ColumnName="TimeImport" />
-          <ScalarProperty Name="TimeExport" ColumnName="TimeExport" />
-          <ScalarProperty Name="StoreImExTypeCode" ColumnName="StoreImExTypeCode" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="StoreOrderExportDetails">
       <EntityTypeMapping TypeName="mangoModel.StoreOrderExportDetail">
         <MappingFragment StoreEntitySet="StoreOrderExportDetail">
@@ -234,6 +217,24 @@
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="StoreOrderId" ColumnName="StoreOrderId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreOrders">
+      <EntityTypeMapping TypeName="mangoModel.StoreOrder">
+        <MappingFragment StoreEntitySet="StoreOrder">
+          <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+          <ScalarProperty Name="UserExportId" ColumnName="UserExportId" />
+          <ScalarProperty Name="UserImportId" ColumnName="UserImportId" />
+          <ScalarProperty Name="RefStoreOrderId" ColumnName="RefStoreOrderId" />
+          <ScalarProperty Name="RefStoreId" ColumnName="RefStoreId" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="TimeImport" ColumnName="TimeImport" />
+          <ScalarProperty Name="TimeExport" ColumnName="TimeExport" />
+          <ScalarProperty Name="StoreImExTypeCode" ColumnName="StoreImExTypeCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

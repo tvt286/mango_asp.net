@@ -14,7 +14,7 @@ namespace Mango.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var model = new Mango.Data.Store();
-            //model = StoreService.GetStoreRoot();
+            model = StoreService.GetStoreRoot();
             ViewBag.CityId = new SelectList(LocationService.GetAllCity(), "Id", "Name", model.CityId);
             ViewBag.DistrictId = new SelectList(LocationService.GetDistrictByCity(model.CityId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.DistrictId);
             ViewBag.WardId = new SelectList(LocationService.GetWardByDistrict(model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.WardId);

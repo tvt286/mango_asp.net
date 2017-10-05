@@ -42,21 +42,23 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box animated fadeInRight">
-
+                <div>
+                    <h5>Order import info</h5>
+                </div>
                 <div class="row">
 
                     <div class="form-horizontal">
                         <div class="form-group">
                             @if (Model.Id != 0)
                             {
-                                <label class="control-label col-md-2">Phiếu nhập<span style="color: Red">(*)</span></label>
+                                <label class="control-label col-md-2">Code<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", disabled = "disabled", placeholder = "Mã tự động" })
+                                    @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", disabled = "disabled", placeholder = "Auto create" })
                                     @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
                                 </div>
                             }
 
-                            <label class="control-label col-md-2">Ngày nhập<span style="color: Red">(*)</span></label>
+                            <label class="control-label col-md-2">Date import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 <div class="input-group date">
                                     @Html.TextBoxFor(x => x.TimeImport, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
@@ -66,23 +68,23 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2">Người nhập<span style="color: Red">(*)</span></label>
+                            <label class="control-label col-md-2">User import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.UserImportId, null, "-- Người nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.DropDownListFor(x => x.UserImportId, null, "-- User import --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                 @Html.ValidationMessageFor(x => x.UserImportId, "", new { @class = "text-danger" })
                             </div>
-                            <label class="control-label col-md-2">Kho nhập<span style="color: Red">(*)</span></label>
+                            <label class="control-label col-md-2">Store import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.RefStoreId, null, "-- Kho nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                 @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
 
                         <div class="form-group">
-                            <label class="control-label col-md-2">Ghi chú</label>
+                            <label class="control-label col-md-2">Note</label>
                             <div class="col-md-4">
-                                @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Ghi chú" })
+                                @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Note" })
                             </div>
 
                         </div>

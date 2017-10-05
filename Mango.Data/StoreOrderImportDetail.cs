@@ -30,9 +30,9 @@ namespace Mango.Data
         public Nullable<int> RefStoreOrderExportDetailId { get; set; }
     
         public virtual Product Product { get; set; }
-        public virtual StoreOrder StoreOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreOrderExportDetail> StoreOrderExportDetails { get; set; }
         public virtual StoreOrderExportDetail StoreOrderExportDetail { get; set; }
+        public virtual StoreOrder StoreOrder { get; set; }
     }
 }

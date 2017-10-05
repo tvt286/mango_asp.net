@@ -58,6 +58,7 @@ E:\asp.net\mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Depl
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll.config
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.pdb
@@ -85,6 +86,5 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Man
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.xml
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb

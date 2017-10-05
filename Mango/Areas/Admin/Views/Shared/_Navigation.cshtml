@@ -65,16 +65,16 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Warehouse transaction </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Transaction </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
                         @if (UserPermission.Has(Permission.WarehouseOrder_ViewImport) || user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "StoreOrderImport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderImport", "StoreOrder")">Warehouse import</a></li>
+                            <li class="@Html.IsSelected(action: "StoreOrderImport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderImport", "StoreOrder")">Store import</a></li>
                         }
                         @if (UserPermission.Has(Permission.WarehouseOrder_ViewExport) || !user.IsAdminRoot || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "StoreOrderExport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderExport", "StoreOrder")">Warehouse export</a></li>
+                            <li class="@Html.IsSelected(action: "StoreOrderExport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderExport", "StoreOrder")">Store export</a></li>
                         }
                     </ul>
                 </li>

@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="page-title-box">
-            <h4 class="page-title">Store</h4>
+            <h4 class="page-title">Create Store</h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>
                     <a href="@Url.Action("Index","Home")">Mango</a>
@@ -61,7 +61,7 @@
                 <!--Box thông tin-->
                 <div class="ibox ">
                     <div>
-                        <h5>Store Info</h5>
+                        <h5>Store info</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="form-horizontal">
@@ -128,7 +128,7 @@
 
                                 <label class="control-label col-md-2">Phone<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control ", @placeholder = "Street Number", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control ", @placeholder = "Phone", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -146,50 +146,51 @@
         }
     </div>
 </div>
+@if(Model.Id != 0)
+{ 
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <h5>Product info </h5>
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card-box table-responsive">
-            <h5> Info Product</h5>
-
-            <div class="ibox-content">
-                <div id="content">
-                    @using (Ajax.BeginForm("Index", "StoreProduct", null, new AjaxCommonOption() { UpdateTargetId = "content" }, new { id = "SearchForm" }))
-                    {
-                        <input type="hidden" name="Id" value="@Model.Id" />
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Product
-                                </label>
-                                <div class="col-md-4">
-                                    @Html.DropDownList("ProductId", null, "-- Product --", new { @class = "form-control" })
-                                </div>
-                                <label class="control-label col-md-2">
-                                    Category
-                                </label>
-                                <div class="col-md-4">
-                                    @Html.DropDownList("CategoryId", null, "-- Category --", new { @class = "form-control" })
+                <div class="ibox-content">
+                    <div id="content">
+                        @using (Ajax.BeginForm("Index", "StoreProduct", null, new AjaxCommonOption() { UpdateTargetId = "content" }, new { id = "SearchForm" }))
+                        {
+                            <input type="hidden" name="Id" value="@Model.Id" />
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        Product
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownList("ProductId", null, "-- Product --", new { @class = "form-control" })
+                                    </div>
+                                    <label class="control-label col-md-2">
+                                        Category
+                                    </label>
+                                    <div class="col-md-4">
+                                        @Html.DropDownList("CategoryId", null, "-- Category --", new { @class = "form-control" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <input class="btn btn-primary" type="submit" id="btSearch" value="Search" />
-                                <button class="btn btn-primary" type="button" id="btResetProductVending">
-                                    Reset
-                                </button>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <input class="btn btn-primary" type="submit" id="btSearch" value="Search" />
+                                    <button class="btn btn-primary" type="button" id="btResetProductVending">
+                                        Reset
+                                    </button>
+                                </div>
                             </div>
+                        }
+                        <div id="content" class="table-responsive">
                         </div>
-                    }
-                    <div id="content" class="table-responsive">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 
 
 @section Styles {
@@ -204,6 +205,13 @@
 
 @section scripts
 {
+<script src="~/Scripts/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
     <script type="text/javascript">
 
         //$("#btResetProductVending").click(function () {

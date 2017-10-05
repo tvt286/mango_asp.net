@@ -30,10 +30,12 @@ namespace Mango.Services
             }
         }
 
-        public static List<Store> GetAll()
+        public static List<Store> GetAll(bool includeRoot = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
+                if(includeRoot)
+                    return context.Stores.AsNoTracking().ToList();
                 return context.Stores.Where(x=> x.IsRoot == false).AsNoTracking().ToList();
             }
         }

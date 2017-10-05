@@ -1,7 +1,7 @@
 ﻿@using Mango.Common
 @using Mango.Client.Common
 @using PagedList.Mvc
-
+@using Mango.Web
 @model Mango.Services.PagedSearchList<Mango.Data.StoreProduct>
     <div class="table-responsive">
         <div class="">
@@ -14,19 +14,23 @@
                         STT
                     </th>
                     <th>
-                        Mã sản phẩm
+                        Image
+                    </th>
+                   
+                    <th>
+                        Code
                     </th>
                     <th>
-                        Tên sản phẩm
+                        Name
                     </th>
                     <th>
-                        Loại
+                        Category
                     </th>
                     <th>
-                        Tổng SL còn
+                        Quantity 
                     </th>
                     <th>
-                        Mức tối thiểu
+                        Quantity alert 
                     </th>
                     <th data-sorter="false"></th>
                 </tr>
@@ -38,6 +42,9 @@
                     <tr>
                         <td>
                             @(index++)
+                        </td>
+                        <td>
+                            @*<img style="width: 70px;" src="@Url.ImageProduct(item)" />*@
                         </td>
                         <td>
                             @item.Product.Code
@@ -59,7 +66,7 @@
                         <td>
                             @if (item.QuantityExchange > 0)
                             {
-                                <a href="javascript:void(0)" onclick="ViewDetailProduct(@item.ProductId, @item.StoreId, '@item.Product.Name')">Chi tiết</a>
+                                <a href="javascript:void(0)" onclick="ViewDetailProduct(@item.ProductId, @item.StoreId, '@item.Product.Name')">Detail</a>
 
                             }
                         </td>
@@ -67,7 +74,7 @@
                 }
             </tbody>
         </table>
-        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
         @Html.PagedListPager(Model, page =>
 {
     Model.SearchModel.PageIndex = page;

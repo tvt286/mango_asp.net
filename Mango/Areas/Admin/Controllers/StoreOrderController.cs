@@ -58,7 +58,7 @@ namespace Mango.Areas.Admin.Controllers
                 Text = x.Code + " - " + x.Name
             }).ToList();
 
-            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(), "Id", "Name", data.RefStoreId);
+            ViewBag.RefStoreId = new SelectList(StoreService.GetAll(true), "Id", "Name", data.RefStoreId);
             if (user.IsAdminCompany)
             {
                 ViewBag.UserImportId = new SelectList(UserService.GetAll(), "Id", "FullName", data.UserImportId);
@@ -186,7 +186,7 @@ namespace Mango.Areas.Admin.Controllers
             }
 
 
-            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuKhoKhac, storeOrder.StoreId, null);
+            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuKhoKhac,null,storeOrder.RefStoreId);
             StoreOrderService.CreateWarehouseOrderImport(storeOrder, importDetailList);
             result.Message = "Đã tạo lệnh nhập hàng thành công!";
             result.Url = Url.Action("StoreOrderImport", new { storeOrder.Code});
