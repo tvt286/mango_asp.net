@@ -145,28 +145,14 @@
                                     <td>
                                         @item.MainSupplierPrice.MoneyToStringVN()
                                     </td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="RemoveProduct(this)">
+                                            <i class="fa fa-times" style="color: red"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             }
-                       
-                       
-                            <tr>
-                               
-                              
-                               
-                                <td style="text-align:center">
-                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport" onblur="CalculateExchange(this)" />
-                                </td>
-                                <td style="text-align:center">
-                                    <input type="text" placeholder="Price" class="form-control autoNumeric" name="mainSupplierPrice" />
-                                </td>
-
-                                <td>
-                                    <a href="javascript:void(0)" onclick="RemoveProduct(this)">
-                                        <i class="fa fa-times" style="color: red"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                     
+                      
                     </table>
 
                 </div>
@@ -206,5 +192,7 @@
                 return false;
             }
         });
+
+
     </script>
 }

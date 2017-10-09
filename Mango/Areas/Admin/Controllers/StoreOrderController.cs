@@ -50,6 +50,11 @@ namespace Mango.Areas.Admin.Controllers
             if (id.HasValue)
             {
                 data = StoreOrderService.GetDetailStoreImport(id.Value);
+                if(data.Status == StoreOrderStatus.Pending)
+                {
+                    ViewBag.StoreId = new SelectList(StoreService.GetAll(true), "Id", "Name", data.StoreId);
+
+                }
             }
 
             ViewBag.ProductSelect = ProductService.GetAll().Select(x => new SelectListItem
@@ -57,15 +62,15 @@ namespace Mango.Areas.Admin.Controllers
                 Value = x.Id.ToString(),
                 Text = x.Code + " - " + x.Name
             }).ToList();
-            var ss = UserService.GetAll();
+
             ViewBag.RefStoreId = new SelectList(StoreService.GetAll(true), "Id", "Name", data.RefStoreId);
             if (user.IsAdminCompany)
             {
-                ViewBag.UserImportId = new SelectList(UserService.GetAll(), "Id", "FullName", data.UserImportId);
+                ViewBag.UserImportId = new SelectList(UserService.GetAll(), "Id", "FullName", data.UserImportId.HasValue ? data.UserImportId : user.Id);
             }
             else
             {
-                ViewBag.UserImportId = new SelectList(new List<User> { user }, "Id", "FullName", data.UserImportId);
+                ViewBag.UserImportId = new SelectList(new List<User> { user }, "Id", "FullName", data.UserImportId.HasValue ? data.UserImportId : user.Id);
             }
 
             return View(data);
@@ -133,12 +138,12 @@ namespace Mango.Areas.Admin.Controllers
 
 
         [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ConfirmImport })]
-        public ActionResult ImportStoreOrderFromOtherStore(StoreOrder model)
+        public ActionResult ImportStoreOrderFromOtherStore(StoreOrder model, int[] storeOrderImportDetailId, int[] quantityRequestImport
+            , string[] noteImport)
         {
-
-            var result = StoreOrderService.ImportStoreOrderFromOtherStore(model, model.StoreOrderImportDetails.Select(x => x.Id).ToArray(),
-                model.StoreOrderImportDetails.Select(x => x.Quantity).ToArray(),
-                model.StoreOrderImportDetails.Select(x => x.Note).ToArray());
+            var result = StoreOrderService.ImportStoreOrderFromOtherStore(model, storeOrderImportDetailId,
+                quantityRequestImport,
+                noteImport);
             if (result.Code == ResultCode.Success)
             {
                 result.Url = Url.Action("StoreOrderImport", new { model.Code, model.RefStoreId });

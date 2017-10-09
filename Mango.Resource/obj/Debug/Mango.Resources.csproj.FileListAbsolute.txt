@@ -19,3 +19,11 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Man
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resources.csproj.GenerateResource.Cache
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resource.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resource.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\bin\Debug\Mango.Resource.dll.config
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\bin\Debug\Mango.Resource.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\bin\Debug\Mango.Resource.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resources.csprojResolveAssemblyReference.cache
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resource.EnumText.resources
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resources.csproj.GenerateResource.Cache
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resource.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Resource\obj\Debug\Mango.Resource.pdb

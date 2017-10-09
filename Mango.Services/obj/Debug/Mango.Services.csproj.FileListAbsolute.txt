@@ -88,3 +88,33 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Man
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll.config
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\PagedList.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\log4net.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\PagedList.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\log4net.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.pdb
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
+E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb

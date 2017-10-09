@@ -68,7 +68,7 @@
                             {
                                 <label class="control-label col-md-2">Code<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", disabled = "disabled", placeholder = "Auto create" })
+                                    @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", placeholder = "Auto create" })
                                     @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
                                 </div>
                             }
@@ -94,7 +94,17 @@
                                 @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
+                        @if(Model.Id != 0 && Model.Status == StoreOrderStatus.Pending)
+                        {
+                            <div class="form-group">
+                           
+                                <label class="control-label col-md-2">Order export<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
 
                         <div class="form-group">
                             <label class="control-label col-md-2">Note</label>
@@ -142,7 +152,9 @@
                             <th>
                                 Price
                             </th>
-
+                            <th>
+                                Note
+                            </th>
                             @if (Model.Id == 0)
                             {
                                 <th></th>
@@ -155,6 +167,7 @@
                             {
                                 <tr>
                                     <td>
+                                        <input type="hidden" name="storeOrderImportDetailId" value="@item.Id" />
                                         @item.Product.Name
                                     </td>
                                     <td>
@@ -167,13 +180,16 @@
 
 
                                     <td>
+                                        <input type="hidden" type="text" name="quantityRequestImport" class="form-control autoNumeric" value="@item.Quantity.ToString("0.##")" />
                                         @item.Quantity.ToString("0.##")
                                     </td>
 
                                     <td>
                                         @item.MainSupplierPrice.MoneyToStringVN()
                                     </td>
-
+                                    <th>
+                                        <input type="text" name="noteImport" class="form-control" value="@item.Note" />
+                                    </th>
 
                                 </tr>
                             }
@@ -249,13 +265,13 @@
 
     @if (Model.Id != 0)
     {
-        <script type="text/javascript">
+        @*<script type="text/javascript">
             $(function () {
                 $("input").not("[type=submit]").attr("disabled", "disabled");
                 $("select").attr("disabled", "disabled");
                 $("textarea").attr("disabled", "disabled");
             })
-        </script>
+        </script>*@
     }
     else
     {

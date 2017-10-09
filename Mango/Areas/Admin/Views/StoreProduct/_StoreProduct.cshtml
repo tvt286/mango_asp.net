@@ -84,10 +84,7 @@
     </div>
 
     <script type="text/javascript">
-    $(function () {
-        InitSortTable();
-    });
-
+  
     function ViewDetailProduct(productId, warehouseId, productName) {
         OnBeginAjax();
         $.post('@Url.Action("DetailWarehouseProductForm", "WarehouseProduct")',

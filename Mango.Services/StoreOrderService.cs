@@ -332,6 +332,7 @@ namespace Mango.Services
         {
             var imExTypeCodeList = new List<StoreImExTypeCode>
             {
+                StoreImExTypeCode.NhapTuNCC,
                 StoreImExTypeCode.NhapTuKhoKhac
             };
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
@@ -351,7 +352,7 @@ namespace Mango.Services
         }
 
         public static RedirectCommand ImportStoreOrderFromOtherStore(StoreOrder storeOrder,
-        int[] storeOrderImportDetailIdList, decimal[] quantityRequestImport, string[] note)
+        int[] storeOrderImportDetailIdList, int[] quantityRequestImport, string[] note)
         {
             var result = new RedirectCommand
             {
@@ -410,7 +411,7 @@ namespace Mango.Services
                 context.StoreOrders.Attach(storeOrder);
                 context.Entry(storeOrder).State = EntityState.Modified;
                 context.Entry(storeOrder).Property(x => x.TimeExport).IsModified = false;
-                context.Entry(storeOrder).Property(x => x.UserExport).IsModified = false;
+                //context.Entry(storeOrder).Property(x => x.UserExport).IsModified = false;
                 context.StoreProducts.AddRange(storeProductList);
                 context.SaveChanges();
             }
