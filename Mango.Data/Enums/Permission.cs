@@ -60,7 +60,9 @@ namespace Mango.Data.Enums
         WarehouseOrder_CreateExport = 7005,
 
         [Description("Xem đơn hàng")]
-        Order_ViewWholeSale = 12001,
+        Order_View = 12001,
+        [Description("Xem đơn hàng")]
+        Order_Create = 12002,
   
     }
 }

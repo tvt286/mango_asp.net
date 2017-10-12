@@ -7,6 +7,7 @@ using Mango.Services;
 using Mango.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -42,7 +43,6 @@ namespace Mango.Areas.Admin.Controllers
             ViewBag.User = user;
             var data = new Product();
 
-
             if (id.HasValue)
             {
                 data = ProductService.Get(id.Value);
@@ -54,8 +54,9 @@ namespace Mango.Areas.Admin.Controllers
         }
 
         [AuthorizeAdmin(Permission = Permission.Product_Create)]
-        public ActionResult Create(Product data, HttpPostedFileBase fileAttach)
+        public ActionResult Create(Product data, string fileUploadImage, HttpPostedFileBase fileAttach)
         {
+           
 
             if (data.SellingPrice < 500)
             {
@@ -68,7 +69,6 @@ namespace Mango.Areas.Admin.Controllers
 
 
             string sourceFile = "";
-            var operation = String.Empty;
             if (data.Code != null && !data.Code.IsCode())
             {
                 return Json(new CommandResult
@@ -77,71 +77,96 @@ namespace Mango.Areas.Admin.Controllers
                     Message = "Mã chỉ được nhập chữ, số và ký tự -_."
                 }, JsonRequestBehavior.AllowGet);
             }
-            if (fileAttach != null)
-            {
-                if (!Directory.Exists(Server.MapPath("~/content/Upload/Product")))
-                {
-                    Directory.CreateDirectory(Server.MapPath("~/content/Upload/Product"));
-                }
 
-                var fileName = Utility.ConvertToUnsign(Path.GetFileNameWithoutExtension(fileAttach.FileName))
-                        .Replace("&", "")
-                        .Replace("?", "")
-                        .Replace(" ", "-") + "-" + Guid.NewGuid() + Path.GetExtension(fileAttach.FileName);
-                sourceFile = string.Format("~/content/Upload/Product/{0}", fileName);
-                var pathFile = Server.MapPath(sourceFile);
-                var checkFile = UploadHelper.CheckImageUpload(fileAttach);
-                if (checkFile == UploadFileStatus.NotSupportExtension)
-                {
+            if (data.Id == 0 && fileUploadImage == "")
+            {
+                
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file hình!"
+                        Message = "Vui lòng chọn hình ảnh cho product!"
                     }, JsonRequestBehavior.AllowGet);
-                }
-                if (checkFile == UploadFileStatus.OverLimited)
+               
+            }
+            else
+            {
+                if (data.Image == null && fileUploadImage == "")
                 {
+
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file 5MB!"
+                        Message = "Vui lòng chọn hình ảnh cho product!"
                     }, JsonRequestBehavior.AllowGet);
+
                 }
-                fileAttach.SaveAs(pathFile);
-                //  Bitmap bitmap = (Bitmap)Bitmap.FromStream(fileAttach.InputStream, true);
-                // ImageUtils.RewriteImageFix(bitmap, 500, 500, pathFile);
             }
 
+            // nếu chưa có thư mục thì tạo
+            if (!Directory.Exists(Server.MapPath(string.Format("~/content/Upload/Product"))))
+            {
+                Directory.CreateDirectory(
+                    Server.MapPath(string.Format("~/content/Upload/Product")));
+            }
+
+            // nếu có file up len thì lưu lại
+            if (fileUploadImage != "")
+            {
+                var pathFile = "";
+
+                string[] files = fileUploadImage.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", "").Split(' ');
+
+                for (int i = 0; i < files.Length; i++)
+                {
+                    var fileName =
+                    Utility.ConvertToUnsign(Path.GetFileNameWithoutExtension(data.Code + i + DateTime.Now))
+                        .Replace("&", "")
+                        .Replace("?", "")
+                        .Replace(" ", "-") + "-" + Guid.NewGuid() + Path.GetExtension(data.Code + i + DateTime.Now) + ".jpg";
+                    sourceFile += string.Format("~/content/Upload/Product/{0}", fileName) + ";";
+                    pathFile = Server.MapPath(string.Format("~/content/Upload/Product/{0}", fileName));
+
+                    Byte[] bytes = Convert.FromBase64String(files[i]);
+
+                    using (var imageFile = new FileStream(pathFile, FileMode.Create))
+                    {
+                        imageFile.Write(bytes, 0, bytes.Length);
+                        imageFile.Flush();
+                    }
+                }
+             
+            }
+
+            /// nếu tạo mới thì lưu lại
             if (data.Id == 0)
             {
                 data.Image = sourceFile;
-                var result = ProductService.Create(data);
 
+                var result = ProductService.Create(data);
                 if (result.Code == ResultCode.Success)
                 {
                     result.Url = Url.Action("Index");
                 }
                 return Json(result, JsonRequestBehavior.AllowGet);
+              
             }
+
+            // nếu như chỉnh sửa
             var dataItem = ProductService.Get(data.Id);
-
-            if (sourceFile.NotEmpty())
+            try
             {
-                if (dataItem.Image.NotEmpty())
-                {
-                    try
-                    {
-                        System.IO.File.Delete(Server.MapPath(dataItem.Image));
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-
-                }
-                dataItem.Image = sourceFile;
+                TryUpdateModel(dataItem);
             }
-            TryUpdateModel(dataItem);
+            catch (Exception ex)
+            {
+                var mess = ex.Message;
+            }
+            dataItem.Image = data.Image;
+
+            dataItem.Image += sourceFile;
+
             var resultEdit = ProductService.Update(dataItem);
+                        data.Image += sourceFile;
 
             if (resultEdit.Code == ResultCode.Success)
             {

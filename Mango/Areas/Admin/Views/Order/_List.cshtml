@@ -1,0 +1,93 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+
+@using PagedList.Mvc;
+@model Mango.Services.PagedSearchList<mango.data.store>
+
+    @{
+        var user = UserService.GetUserInfo();
+    }
+
+
+    <div class="">
+        <h5 class="m-t-lg">Result @Model.TotalItemCount</h5>
+    </div>
+    <table class="table table-striped table-colored table-info table-hover">
+        <thead>
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    Code
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Total price
+                </th>
+                <th>
+                    Date create
+                </th>
+                @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
+                {
+                    <th data-sorter="false">
+                    </th>
+                }
+               
+            </tr>
+        </thead>
+        @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(index++)
+                    </td>
+
+                    <td>
+                        @item.Code
+                    </td>
+                    <td>
+                        @item.Customer.Name
+                    </td>
+                    <td>
+                        @item.TotalAmount.MoneyToStringVN()
+                    </td>
+                    @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
+                    {
+                        <td>
+                            <a href="@Url.Action("Detail", new {id = item.Id})">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                    }
+
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page =>
+{
+    Model.SearchModel.PageIndex = page;
+    return Url.Action("Index", "Order", Model.SearchModel);
+},
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
+
+
+    <script type="text/javascript">
+        $(function () {
+            InitSortTable();
+        });
+
+   
+    </script>

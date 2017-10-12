@@ -14,11 +14,24 @@ namespace Mango.Data
     
     public partial class Order
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            this.OrderDetails = new HashSet<OrderDetail>();
+        }
+    
         public int Id { get; set; }
         public System.DateTime TimeCreate { get; set; }
-        public Nullable<int> Status { get; set; }
         public int StoreId { get; set; }
         public string Code { get; set; }
         public long TotalAmount { get; set; }
+        public int CustomerId { get; set; }
+        public string Note { get; set; }
+        public OrderStatus Status { get; set; }
+    
+        public virtual User Customer { get; set; }
+        public virtual Store Store { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace Mango.Data
             this.Stores = new HashSet<Store>();
             this.StoreOrders = new HashSet<StoreOrder>();
             this.StoreOrders1 = new HashSet<StoreOrder>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int Id { get; set; }
@@ -38,6 +39,7 @@ namespace Mango.Data
         public string Image { get; set; }
         public string Phone { get; set; }
         public bool IsDeleted { get; set; }
+        public Nullable<UserType> Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Permission> User_Permission { get; set; }
@@ -53,5 +55,7 @@ namespace Mango.Data
         public virtual ICollection<StoreOrder> StoreOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreOrder> StoreOrders1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

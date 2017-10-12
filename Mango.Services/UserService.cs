@@ -137,11 +137,14 @@ namespace Mango.Services
             }
         }
 
-        public static List<User> GetAll()
+        public static List<User> GetAll(bool fromFrontEnd = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Users.AsNoTracking().ToList();
+                if (fromFrontEnd)
+                    return context.Users.Where(x => x.IsDeleted == false && x.Type == UserType.FrontEnd).AsNoTracking().ToList();
+
+                return context.Users.Where(x => x.IsDeleted == false && x.Type == UserType.BackEnd).AsNoTracking().ToList();
             }
         }
 

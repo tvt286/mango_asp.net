@@ -25,8 +25,6 @@
         <AssociationConnector Association="mangoModel.FK__Street__CityId__68487DD7" />
         <AssociationConnector Association="mangoModel.FK__Street__District__693CA210" />
         <AssociationConnector Association="mangoModel.FK__Ward__DistrictId__6A30C649" />
-        <EntityTypeShape EntityType="mangoModel.Order" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="mangoModel.OrderDetail" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="mangoModel.StoreOrderExportDetail" Width="1.5" PointX="12.5" PointY="2.875" />
         <EntityTypeShape EntityType="mangoModel.StoreProduct" Width="1.5" PointX="16.75" PointY="7.5" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1F98B2C1" />
@@ -49,6 +47,12 @@
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Store__208CD6FA" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__UserE__2CF2ADDF" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__UserI__2BFE89A6" />
+        <EntityTypeShape EntityType="mangoModel.Order" Width="1.5" PointX="16.375" PointY="10.5" />
+        <EntityTypeShape EntityType="mangoModel.OrderDetail" Width="1.5" PointX="21.625" PointY="6.75" />
+        <AssociationConnector Association="mangoModel.FK__Order__CustomerI__3C34F16F" />
+        <AssociationConnector Association="mangoModel.FK__Order__StoreId__3D2915A8" />
+        <AssociationConnector Association="mangoModel.FK__OrderDeta__Order__3B40CD36" />
+        <AssociationConnector Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

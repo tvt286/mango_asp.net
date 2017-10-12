@@ -7,17 +7,20 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Entity;
 using Mango.Common;
+using System.Data.Entity.Validation;
 
 namespace Mango.Services
 {
     public class ProductService
     {
-        public static Product Get(int id)
+        public static Product Get(int id, bool includeDetail = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                var query = context.Products.Where(x => x.IsDeleted == false).Include(x => x.Category).Where(x => x.Id == id);
-                return query.First();
+                if(!includeDetail)
+                    return context.Products.First(x => x.IsDeleted == false && x.Id == id);
+
+                return context.Products.Include(x => x.Category).First(x => x.IsDeleted == false && x.Id == id);
             }
         }
 
@@ -86,7 +89,27 @@ namespace Mango.Services
                 context.Entry(data).State = EntityState.Modified;
                 context.Entry(data).Property(x => x.TimeCreate).IsModified = false;
                 context.Entry(data).Property(x => x.UserCreateId).IsModified = false;
-                context.SaveChanges();
+              //  context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    var strError = new StringBuilder();
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        strError.AppendFormat(
+                            "Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            strError.AppendFormat("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    var temp = strError.ToString();
+                }
             }
             return result;
         }

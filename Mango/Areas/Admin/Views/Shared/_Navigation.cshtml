@@ -78,7 +78,12 @@
                         }
                     </ul>
                 </li>
-
+                @if (UserPermission.Has(Permission.Store_View) || user.IsAdminCompany)
+                {
+                    <li class="@Html.IsSelected(action: "Index", controller: "Order") ">
+                        <a href="@Url.Action("Index", "Order")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Order </span></a>
+                    </li>
+                }
                 @if (UserPermission.Has(Permission.Store_View) || user.IsAdminCompany)
                 {
                     <li class="@Html.IsSelected(action: "Index", controller: "Warehouse") ">

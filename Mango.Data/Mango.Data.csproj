@@ -94,6 +94,9 @@
     <Compile Include="OrderDetail.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderStatus.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Partials\MangoContext.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Mango.tt</DependentUpon>
@@ -127,6 +130,9 @@
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
     <Compile Include="UserStatus.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserType.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Permission.cs">

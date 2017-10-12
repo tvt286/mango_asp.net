@@ -145,6 +145,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreOrderController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
     <Compile Include="Areas\Admin\Models\GroupPermissionModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\OrderViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\StoreModel.cs" />
     <Compile Include="Areas\Admin\Models\StoreProductViewModel.cs" />
@@ -532,6 +534,8 @@
     <Content Include="Areas\Admin\Views\StoreOrder\DetailStoreExport.cshtml" />
     <Content Include="Areas\Admin\Views\StoreOrder\_StoreOrderImportDetailList.cshtml" />
     <Content Include="Areas\Admin\Views\StoreOrder\ConfirmStoreOrderFromOtherStore.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\_List.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />

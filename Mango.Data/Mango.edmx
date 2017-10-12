@@ -68,10 +68,12 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TimeCreate" Type="datetime" Nullable="false" />
-          <Property Name="Status" Type="int" />
           <Property Name="StoreId" Type="int" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="TotalAmount" Type="bigint" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -82,7 +84,6 @@
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="TotalAmount" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -199,6 +200,7 @@
           <Property Name="Image" Type="nvarchar" MaxLength="300" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Type" Type="int" />
         </EntityType>
         <EntityType Name="User_Group">
           <Key>
@@ -261,6 +263,54 @@
             </Principal>
             <Dependent Role="Group_Permission">
               <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__CustomerI__3C34F16F">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__StoreId__3D2915A8">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__3B40CD36">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Produ__3A4CA8FD">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -595,6 +645,22 @@
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Permission" EntitySet="Group_Permission" />
           </AssociationSet>
+          <AssociationSet Name="FK__Order__CustomerI__3C34F16F" Association="Self.FK__Order__CustomerI__3C34F16F">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__StoreId__3D2915A8" Association="Self.FK__Order__StoreId__3D2915A8">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__3B40CD36" Association="Self.FK__OrderDeta__Order__3B40CD36">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Produ__3A4CA8FD" Association="Self.FK__OrderDeta__Produ__3A4CA8FD">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="Self.FK__Product__Categor__47DBAE45">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
@@ -751,8 +817,6 @@
             <End Role="District" EntitySet="Districts" />
             <End Role="Ward" EntitySet="Wards" />
           </AssociationSet>
-          <EntitySet Name="Orders" EntityType="mangoModel.Order" />
-          <EntitySet Name="OrderDetails" EntityType="mangoModel.OrderDetail" />
           <EntitySet Name="StoreOrderExportDetails" EntityType="mangoModel.StoreOrderExportDetail" />
           <EntitySet Name="StoreProducts" EntityType="mangoModel.StoreProduct" />
           <AssociationSet Name="FK__StoreOrde__Produ__1F98B2C1" Association="mangoModel.FK__StoreOrde__Produ__1F98B2C1">
@@ -826,6 +890,24 @@
             <End Role="User" EntitySet="Users" />
             <End Role="StoreOrder" EntitySet="StoreOrders" />
           </AssociationSet>
+          <EntitySet Name="Orders" EntityType="mangoModel.Order" />
+          <EntitySet Name="OrderDetails" EntityType="mangoModel.OrderDetail" />
+          <AssociationSet Name="FK__Order__CustomerI__3C34F16F" Association="mangoModel.FK__Order__CustomerI__3C34F16F">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__StoreId__3D2915A8" Association="mangoModel.FK__Order__StoreId__3D2915A8">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__3B40CD36" Association="mangoModel.FK__OrderDeta__Order__3B40CD36">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Produ__3A4CA8FD" Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EnumType Name="UserStatus">
           <Member Name="Active" Value="1" />
@@ -875,6 +957,8 @@
           <NavigationProperty Name="Stores" Relationship="mangoModel.FK__Store__UserCreat__6FE99F9F" FromRole="User" ToRole="Store" />
           <NavigationProperty Name="StoreOrders" Relationship="mangoModel.FK__StoreOrde__UserE__2CF2ADDF" FromRole="User" ToRole="StoreOrder" />
           <NavigationProperty Name="StoreOrders1" Relationship="mangoModel.FK__StoreOrde__UserI__2BFE89A6" FromRole="User" ToRole="StoreOrder" />
+          <NavigationProperty Name="Orders" Relationship="mangoModel.FK__Order__CustomerI__3C34F16F" FromRole="User" ToRole="Order" />
+          <Property Name="Type" Type="mangoModel.UserType" />
         </EntityType>
         <EntityType Name="User_Permission">
           <Key>
@@ -964,6 +1048,7 @@
           <NavigationProperty Name="StoreOrderExportDetails" Relationship="mangoModel.FK__StoreOrde__Produ__1F98B2C1" FromRole="Product" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreProducts" Relationship="mangoModel.FK__StoreProd__Produ__19DFD96B" FromRole="Product" ToRole="StoreProduct" />
           <NavigationProperty Name="StoreOrderImportDetails" Relationship="mangoModel.FK__StoreOrde__Produ__1CBC4616" FromRole="Product" ToRole="StoreOrderImportDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK__Product__Categor__47DBAE45">
           <End Type="mangoModel.Category" Role="Category" Multiplicity="1" />
@@ -1094,28 +1179,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="StoreId" Type="Int32" Nullable="false" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TotalAmount" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="Int64" Nullable="false" />
-        </EntityType>
         <EntityType Name="StoreOrderExportDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -1195,6 +1258,7 @@
           <NavigationProperty Name="StoreProducts" Relationship="mangoModel.FK__StoreProd__Store__1AD3FDA4" FromRole="Store" ToRole="StoreProduct" />
           <NavigationProperty Name="StoreOrders" Relationship="mangoModel.FK__StoreOrde__RefSt__245D67DE" FromRole="Store" ToRole="StoreOrder" />
           <NavigationProperty Name="StoreOrders1" Relationship="mangoModel.FK__StoreOrde__Store__2B0A656D" FromRole="Store" ToRole="StoreOrder" />
+          <NavigationProperty Name="Orders" Relationship="mangoModel.FK__Order__StoreId__3D2915A8" FromRole="Store" ToRole="Order" />
         </EntityType>
         <Association Name="FK__Store__CityId__6D0D32F4">
           <End Type="mangoModel.City" Role="City" Multiplicity="0..1" />
@@ -1425,6 +1489,91 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalAmount" Type="Int64" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="mangoModel.FK__Order__CustomerI__3C34F16F" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Store" Relationship="mangoModel.FK__Order__StoreId__3D2915A8" FromRole="Order" ToRole="Store" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="Order" ToRole="OrderDetail" />
+          <Property Name="Status" Type="mangoModel.OrderStatus" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Order__CustomerI__3C34F16F">
+          <End Type="mangoModel.User" Role="User" Multiplicity="1" />
+          <End Type="mangoModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__StoreId__3D2915A8">
+          <End Type="mangoModel.Store" Role="Store" Multiplicity="1" />
+          <End Type="mangoModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__3B40CD36">
+          <End Type="mangoModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Produ__3A4CA8FD">
+          <End Type="mangoModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="OrderStatus">
+          <Member Name="Confirm" Value="0" />
+          <Member Name="Pending" Value="1" />
+          <Member Name="Complete" Value="2" />
+        </EnumType>
+        <EnumType Name="UserType">
+          <Member Name="BackEnd" Value="0" />
+          <Member Name="FrontEnd" Value="1" />
+        </EnumType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1453,6 +1602,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="mangoModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
@@ -1568,30 +1718,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="mangoModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="mangoModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetail">
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StoreOrderExportDetails">
             <EntityTypeMapping TypeName="mangoModel.StoreOrderExportDetail">
               <MappingFragment StoreEntitySet="StoreOrderExportDetail">
@@ -1665,6 +1791,31 @@
                 <ScalarProperty Name="StoreImExTypeCode" ColumnName="StoreImExTypeCode" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="mangoModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="mangoModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
