@@ -4,9 +4,10 @@
 @using Mango.Security
 @using Mango.Data.Enums
 @using Mango.Web
+@using Mango.Data
 
 @using PagedList.Mvc;
-@model Mango.Services.PagedSearchList<mango.data.store>
+@model Mango.Services.PagedSearchList<Order>
 
     @{
         var user = UserService.GetUserInfo();
@@ -27,14 +28,20 @@
                 </th>
                 <th>
                     Customer
+                </th> 
+                <th>
+                    Store
+                </th>       
+                <th>
+                    Revenue
                 </th>
                 <th>
-                    Total price
+                    Date Sale
                 </th>
                 <th>
-                    Date create
+                    Satus
                 </th>
-                @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
+                @if (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany)
                 {
                     <th data-sorter="false">
                     </th>
@@ -55,20 +62,52 @@
                         @item.Code
                     </td>
                     <td>
-                        @item.Customer.Name
+                        @item.Customer.FullName
+                    </td>
+                    <td>
+                        @item.Store.Name
                     </td>
                     <td>
                         @item.TotalAmount.MoneyToStringVN()
                     </td>
-                    @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
+                   
+                    <td>
+                        @item.TimeCreate.ToString("dd-MM-yyyy")
+                    </td>
+                    <td>
+                        @if (item.Status == OrderStatus.Confirm)
+                        {
+                            <label style="color:orange">Confirm</label>
+                        }
+                        else if (item.Status == OrderStatus.Pending)
+                        {
+                            <label style="color:green">Pending</label>
+                        }
+                        else 
+                        {
+                            <label style="color:green">Comleted</label>
+                        }
+                    </td>
+
+
+                    @if (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany)
                     {
                         <td>
-                            <a href="@Url.Action("Detail", new {id = item.Id})">
-                                <i class="fa fa-pencil"></i>
-                            </a>
+
+                            @if (item.Status == OrderStatus.Confirm)
+                            {
+                                <a href="@Url.Action("Detail", new { id = item.Id })">Confirm</a>
+                            }
+                            else if (item.Status == OrderStatus.Pending)
+                            {
+                                <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
+                            }
                         </td>
                     }
-
                    
                 </tr>
             }

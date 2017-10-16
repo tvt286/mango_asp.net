@@ -84,6 +84,9 @@
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RefStoreOrderImportDetailId" Type="int" Nullable="false" />
+          <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MainSupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -311,6 +314,18 @@
             </Principal>
             <Dependent Role="OrderDetail">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__RefSt__4D5F7D71">
+          <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreOrderImportDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="RefStoreOrderImportDetailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -661,6 +676,10 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__RefSt__4D5F7D71" Association="Self.FK__OrderDeta__RefSt__4D5F7D71">
+            <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="Self.FK__Product__Categor__47DBAE45">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
@@ -906,6 +925,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__OrderDeta__Produ__3A4CA8FD" Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD">
             <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__RefSt__4D5F7D71" Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71">
+            <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetails" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
           </EntityContainer>
@@ -1340,6 +1363,8 @@
         <EnumType Name="StoreImExTypeCode">
           <Member Name="NhapTuKhoKhac" Value="0" />
           <Member Name="XuatKhoKhac" Value="1" />
+          <Member Name="NhapTuNCC" Value="2" />
+          <Member Name="XuatBanKhachHang" Value="3" />
         </EnumType>
         <EntityType Name="StoreOrderImportDetail">
           <Key>
@@ -1357,6 +1382,7 @@
           <NavigationProperty Name="StoreOrderExportDetails" Relationship="mangoModel.FK__StoreOrde__RefSt__1EA48E88" FromRole="StoreOrderImportDetail" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreOrderExportDetail" Relationship="mangoModel.FK__StoreOrde__RefSt__2A164134" FromRole="StoreOrderImportDetail" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreOrder" Relationship="mangoModel.FK__StoreOrde__Store__1BC821DD" FromRole="StoreOrderImportDetail" ToRole="StoreOrder" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="StoreOrderImportDetail" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK__StoreOrde__Produ__1CBC4616">
           <End Type="mangoModel.Product" Role="Product" Multiplicity="1" />
@@ -1516,6 +1542,10 @@
           <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Order" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="OrderDetail" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="OrderDetail" ToRole="Product" />
+          <Property Name="RefStoreOrderImportDetailId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StoreOrderImportDetail" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="OrderDetail" ToRole="StoreOrderImportDetail" />
+          <Property Name="SupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MainSupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK__Order__CustomerI__3C34F16F">
           <End Type="mangoModel.User" Role="User" Multiplicity="1" />
@@ -1574,6 +1604,18 @@
           <Member Name="BackEnd" Value="0" />
           <Member Name="FrontEnd" Value="1" />
         </EnumType>
+        <Association Name="FK__OrderDeta__RefSt__4D5F7D71">
+          <End Type="mangoModel.StoreOrderImportDetail" Role="StoreOrderImportDetail" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreOrderImportDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="RefStoreOrderImportDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1812,6 +1854,9 @@
           <EntitySetMapping Name="OrderDetails">
             <EntityTypeMapping TypeName="mangoModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
+                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+                <ScalarProperty Name="RefStoreOrderImportDetailId" ColumnName="RefStoreOrderImportDetailId" />
                 <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />

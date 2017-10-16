@@ -1,0 +1,41 @@
+﻿@using Mango.Common
+@using Mango.Data
+@using Mango.Web
+@model List<StoreOrderImportDetail>
+  
+    @foreach (var item in Model)
+    {
+        <tr class="product@(item.ProductId)">
+            <td>
+                <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
+                <input type="hidden" name="productId" value="@item.ProductId" />
+                @item.Product.Code - @item.Product.Name
+            </td>
+            <td class="category">
+                @item.Product.Category.Name
+            </td>
+            <td>
+                <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+            </td>
+            <td>
+                @item.MainSupplierPrice.MoneyToStringVN()
+            </td>
+           
+            <td>
+                @item.Quantity.MoneyToStringVN()
+            </td>
+         
+            <td>
+                @Html.TextBox("quantityRequestExport", "", new { @class = "form-control", style = "width:80px" })
+            </td>
+            <td>
+                <input type="text" name="sellingPrice" class="form-control" value="@item.Product.SellingPrice.ToString("0.##")" style="width: 70px" />
+            </td>
+  
+            <td>
+                <a href="javascript:void(0)" onclick="RemoveProduct(this)">
+                    <i class="fa fa-times" style="color: red"></i>
+                </a>
+            </td>
+        </tr>
+    }

@@ -46,14 +46,14 @@ namespace Mango.Areas.Admin.Controllers
                 UserImportId = user.Id,
                 TimeImport = DateTime.Now
             };
-
+            ViewBag.IsConfirm = false;
             if (id.HasValue)
             {
                 data = StoreOrderService.GetDetailStoreImport(id.Value);
                 if(data.Status == StoreOrderStatus.Pending)
                 {
                     ViewBag.StoreId = new SelectList(StoreService.GetAll(true), "Id", "Name", data.StoreId);
-
+                    ViewBag.IsConfirm = true;
                 }
             }
 
@@ -189,7 +189,7 @@ namespace Mango.Areas.Admin.Controllers
             }
 
 
-            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuNCC, null, storeOrder.RefStoreId);
+            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuNCC, null, storeOrder.RefStoreId,null);
             StoreOrderService.CreateWarehouseOrderImport(storeOrder, importDetailList);
             result.Message = "Đã tạo lệnh nhập hàng thành công!";
             result.Url = Url.Action("StoreOrderImport", new { storeOrder.Code});
@@ -265,7 +265,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
-            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.XuatKhoKhac, storeOrder.RefStoreId, storeOrder.StoreId);
+            storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.XuatKhoKhac, storeOrder.RefStoreId, storeOrder.StoreId, null);
             result = StoreOrderService.CreateStoreOrderExport(storeOrder, exportDetailList);
             if (result.Code == ResultCode.Success)
             {
@@ -282,6 +282,13 @@ namespace Mango.Areas.Admin.Controllers
             var data = StoreOrderService.GetStoreOrderImportDetail(productId, storeId);
             ViewBag.fromCreateExport = true;
             return PartialView("_StoreOrderImportDetailList", data);
+        }
+
+        public ActionResult GetStoreOrderImportDetailToCreateOrder(int? productId, int storeId)
+        {
+            var user = UserService.GetUserInfo();
+            var data = StoreOrderService.GetStoreOrderImportDetail(productId, storeId);
+            return PartialView("_StoreOrderImportDetailToCreateOrder", data);
         }
 
 	}

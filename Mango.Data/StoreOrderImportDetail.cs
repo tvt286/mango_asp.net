@@ -18,6 +18,7 @@ namespace Mango.Data
         public StoreOrderImportDetail()
         {
             this.StoreOrderExportDetails = new HashSet<StoreOrderExportDetail>();
+            this.OrderDetails = new HashSet<OrderDetail>();
         }
     
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace Mango.Data
         public virtual ICollection<StoreOrderExportDetail> StoreOrderExportDetails { get; set; }
         public virtual StoreOrderExportDetail StoreOrderExportDetail { get; set; }
         public virtual StoreOrder StoreOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

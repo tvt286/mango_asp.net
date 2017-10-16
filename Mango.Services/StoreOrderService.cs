@@ -129,7 +129,7 @@ namespace Mango.Services
             }
         }
 
-        public static string GenerateCode(StoreImExTypeCode? type, int? storeId, int? refStoreId, bool warehouseCheck = false)
+        public static string GenerateCode(StoreImExTypeCode? type, int? storeId, int? refStoreId, int? customerId, bool warehouseCheck = false)
         {
             var code = string.Empty;
             var tableName = "StoreOrder";
@@ -159,7 +159,18 @@ namespace Mango.Services
 
                 code = string.Format("X.{0}.{1}.{2}", storeCode, refStoreCode, strDate);
             }
-
+            else
+            if (type == StoreImExTypeCode.XuatBanKhachHang && storeId.HasValue)
+            {
+                tableName = "[Order]";
+                var store = StoreService.Get(storeId.Value);
+                var customer = new User();
+                if (customerId.HasValue)
+                {
+                    customer = UserService.Get(customerId.Value);
+                }
+                code = string.Format("B.{0}.{1}.{2}", store.Code, customerId.HasValue ? customer.UserName : "KH", strDate);
+            }
             code = ProductService.GetNewCode(code, 0, tableName, true);
             return code;
         }
@@ -185,7 +196,7 @@ namespace Mango.Services
                         storeProductList.Add(new StoreProduct
                         {
                             ProductId = storeOrderImportDetail.ProductId,
-                            QuantityExchange = 0,
+                            QuantityExchange = (int)storeOrderImportDetail.Quantity,
                             StoreId = storeOrder.RefStoreId.Value
                         });
                     }
@@ -250,7 +261,7 @@ namespace Mango.Services
                 var storeOrderImport = new StoreOrder
                 {
                     Code = GenerateCode(StoreImExTypeCode.NhapTuKhoKhac, storeOrderExport.StoreId,
-                            storeOrderExport.RefStoreId),
+                            storeOrderExport.RefStoreId, null),
                     StoreId = storeOrderExport.StoreId,
                     RefStoreId = storeOrderExport.RefStoreId.GetValueOrDefault(0),
                     UserExportId = storeOrderExport.UserExportId,

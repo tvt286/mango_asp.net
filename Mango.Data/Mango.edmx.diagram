@@ -53,6 +53,7 @@
         <AssociationConnector Association="mangoModel.FK__Order__StoreId__3D2915A8" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Order__3B40CD36" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" />
+        <AssociationConnector Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

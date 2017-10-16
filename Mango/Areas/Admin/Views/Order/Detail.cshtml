@@ -1,0 +1,382 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+@using Mango.Data
+
+@model Mango.Data.Order
+
+@{
+    
+    ViewBag.Title = "Create Order";
+    var action = "CreateOrder";
+    if(Model.Id != 0 && Model.Status == OrderStatus.Confirm)
+    {
+        ViewBag.Title = "Confirm";
+        action = "ChangeStatus";
+    }
+    else if (Model.Id != 0 && Model.Status == OrderStatus.Pending)
+    {
+        ViewBag.Title = "Pending";
+        action = "ChangeStatus";
+    }
+    else if (Model.Id != 0 && Model.Status == OrderStatus.Complete)
+    {
+        ViewBag.Title = "Completed";
+    }
+    
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Create Order</h4>
+            <ol class="breadcrumb p-0 m-0">
+                <li>
+                    <a href="@Url.Action("Index","Home")">Mango</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index")">Create Order</a>
+                </li>
+                <li class="active">
+                    <strong>Create</strong>
+                </li>
+            </ol>
+
+            <div class="clearfix"></div>
+            @if(Model.Id != 0 && Model.Status == OrderStatus.Confirm)
+            {
+                <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>
+            }
+            else if (Model.Id != 0 && Model.Status == OrderStatus.Pending)
+            {
+                 <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Complete</a>
+            }
+            else if(Model.Id == 0)
+            {
+                <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            }
+            
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+        </div>
+    </div>
+</div>
+<!-- end row -->
+@using (Ajax.BeginForm(action, "Order", null, new AjaxCommonOption(), new { role = "form", id = "CreateForm" }))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Status)
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box animated fadeInRight">
+
+                <div class="row">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @if (Model.Id != 0)
+                            {
+                                <label class="control-label col-md-2">Code<span style="color: Red">(*)</span></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", disabled = "disabled", placeholder = "Code auto" })
+                                    @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
+                                </div>
+                                
+                            }
+
+                            <label class="control-label col-md-2">Time export<span style="color: Red">(*)</span></label>
+                            <div class="col-md-4">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(x => x.TimeCreate, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.TimeCreate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Store<span style="color: Red">(*)</span></label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.StoreId, null, "-- Store --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-md-2">Customer<span style="color: Red">(*)</span></label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.CustomerId, null, "-- Customer--", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.ValidationMessageFor(x => x.CustomerId, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Note</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(x => x.Note, new { @class = "form-control", @placeholder = "Note" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <div class="ibox-content">
+
+                    @if (Model.Id == 0)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.DropDownList("productIdTemp", (List<SelectListItem>)ViewBag.ProductSelect, "-- Product --", new { @class = "form-control" })
+
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-primary m-b-sm" type="button" id="btAdd">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="bold">Add product</span>
+                                </button>
+                            </div>
+                            <br style="clear: both" />
+                        </div>
+                    }
+                    <div>
+                        <div class="table-responsive">
+                            <table id="tableExportDetail" class="table table-striped table-colored table-info table-hover">
+                                <tr class="tableHeader" style="background-color: #323f86; color: white; ">
+                                        <th>
+                                            Image
+                                        </th>
+                                        <th>
+                                            Product
+                                        </th>
+                                        <th>
+                                            Category
+                                        </th> 
+                                        <th>
+                                            Supplier price
+                                        </th>
+                                     
+                                        <th>
+                                            Quantity remain
+                                        </th>
+                                    
+                                        <th>
+                                            Quantity export
+                                        </th>
+                                      
+                                        <th>
+                                            Selling Price
+                                        </th>
+  
+                                        @if (Model.Id == 0)
+                                        {
+                                            <th></th>
+                                        }
+
+                                </tr>
+                                @if (Model.Id != 0)
+                                {
+                                    foreach (var item in Model.OrderDetails)
+                                    {
+                                        <tr>
+                                                <td>
+                                                    <input type="hidden" name="refStoreOrderImportDetailId" value="@item.Id" />
+                                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                                    @item.Product.Code - @item.Product.Name
+                                                </td>
+                                                <td class="category">
+                                                    @item.Product.Category.Name
+                                                </td>
+                                                <td>
+                                                    <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+                                                </td>
+                                                <td>
+                                                    @item.StoreOrderImportDetail.MainSupplierPrice.MoneyToStringVN()
+                                                </td>
+                                               
+                                                <td>
+                                                    @item.StoreOrderImportDetail.Quantity.MoneyToStringVN()
+                                                </td>
+                                              
+                                                <td>
+                                                    @item.Quantity.MoneyToStringVN()
+                                                </td>
+                                              
+                                                <td>                                                 
+                                                    @item.Product.SellingPrice.MoneyToStringVN()   
+                                                </td>
+                                            </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+
+
+                        @if (Model.Id == 0)
+                        {
+                            <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
+                        }
+                        @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@section Styles {
+    <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
+
+    <style>
+        .input-validation-error {
+            border: 1px solid red;
+        }
+    </style>
+}
+
+@section scripts
+{
+    <script src="~/Scripts/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.keyTable.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
+    <script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
+    <script src="~/Scripts/Admin/chosen.jquery.js"></script>
+    @if (Model.Id != 0)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $("input").attr("disabled", "disabled");
+                $("select").attr("disabled", "disabled");
+                //$("textarea").attr("disabled", "disabled");
+                $("body").addClass("mini-navbar");
+            })
+        </script>
+    }
+    else
+    {
+       <script type="text/javascript">
+            function InitFormExportDetail() {
+                $('#CreateForm .input-group.date').datetimepicker({
+                    locale: 'vi',
+                    format: 'DD/MM/YYYY',
+                    extraFormats: ["MM/YYYY"],
+                    defaultDate: null
+                });
+
+            }
+
+          
+
+            function RemoveProduct(element) {
+                if (confirm("Xác nhận xóa!")) {
+                    $(element).closest("tr").remove();
+                }
+            }
+
+            function validateFields() {
+                var submit = true;
+                $.each($("#CreateForm input[name='quantityRequestExport']"), function (i, element) {
+                    if ($(element).val() == "") {
+                        submit = false;
+                        $(element).addClass("input-validation-error");
+                    } else {
+                        $(element).removeClass("input-validation-error");
+                    }
+                });
+                return submit;
+            }
+
+            $(function () {
+                //$("#TimeCreate").val("");
+                //$('.select2').removeAttr('style');
+                $("body").addClass("mini-navbar");
+
+                $("#StoreId").change(function () {
+                    $("#tableExportDetail tr:not(.tableHeader)").remove();
+
+                    if ($(this).val() == "") {
+                        $("#productIdTemp").find("option").remove();
+                        $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
+                    } else {
+                        OnBeginAjax();
+                        var storeId = $(this).val();
+                        $("#productIdTemp").find("option").remove();
+                        $("#productIdTemp").append($('<option></option>').val("").html("-- Product --"));
+                        $.post('@Url.Action("GetProductInStore", "StoreProduct")',
+                            { storeId: storeId },
+                            function (data) {
+                                $.each(data,
+                                    function (key, value) {
+                                        $("#productIdTemp").append($('<option></option>').val(value.Id).html(value.Name)).trigger('change');
+                                    });
+                                OnCompleteAjax();
+                            });
+                    }
+
+                });
+
+
+
+                $("#btAdd").click(function () {
+                    if ($("#storeId").val() == "") {
+                        AlertError("Vui lòng chọn kho xuất");
+                        return false;
+                    }
+                    if ($("#productIdTemp").val() == "") {
+                        AlertError("Vui lòng chọn sản phẩm");
+                        return false;
+                    }
+
+                    OnBeginAjax();
+
+                    $.post('@Url.Action("GetStoreOrderImportDetailToCreateOrder","StoreOrder")',
+                        {
+                            productId: $("#productIdTemp").val(),
+                            storeId: $("#StoreId").val()
+                        },
+                        function (data) {
+                            $(".product" + $("#productIdTemp").val()).remove();
+                            $("#tableExportDetail").append(data);
+                            $("input[name=quantityRequestExport]").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                            $("input[name=sellingPrice]").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+
+                            OnCompleteAjax();
+                        });
+
+
+                    InitFormExportDetail();
+                });
+
+                $("#CreateForm")
+                    .submit(function () {
+                        if (validateFields() == false) {
+                            return false;
+                        }
+
+                        $('input[name=quantityRequestExport],  input[name=sellingPrice]').each(function (i) {
+                            var self = $(this);
+                            try {
+                                var v = self.autoNumeric('get');
+                                //self.autoNumeric('destroy');
+                                self.val(v);
+                            } catch (err) {
+                                self.val(0);
+                            }
+                        });
+                    });
+
+            });
+
+        </script>
+    }
+
+}

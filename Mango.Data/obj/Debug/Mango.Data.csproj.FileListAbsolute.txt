@@ -37,4 +37,3 @@ E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Data\bin\Debug\EntityFramewor
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.dll
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Data\obj\Debug\Mango.Data.csprojResolveAssemblyReference.cache

@@ -192,7 +192,7 @@ namespace Mango.Areas.Admin.Controllers
             ProductInfo model;
             if (id.HasValue)
             {
-                var product = ProductService.Get(id.Value);
+                var product = ProductService.Get(id.Value,true);
                 model = new ProductInfo
                 {
                     Image = Url.ImageProduct(product),

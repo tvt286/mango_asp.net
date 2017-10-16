@@ -12,7 +12,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
     var action = "CreateStoreOrderImport";
-    if (Model.Status == StoreOrderStatus.Pending)
+    if (ViewBag.IsConfirm)
     {
         ViewBag.Title = "Confirm Order Import";
         action = "ImportStoreOrderFromOtherStore";
@@ -40,7 +40,7 @@
             {
                 <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>                
             }
-            else if (Model.Status == StoreOrderStatus.Pending)
+            else if (ViewBag.IsConfirm)
             {
                 <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>                
 
@@ -94,7 +94,7 @@
                                 @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        @if(Model.Id != 0 && Model.Status == StoreOrderStatus.Pending)
+                        @if (Model.Id != 0 && ViewBag.IsConfirm)
                         {
                             <div class="form-group">
                            
@@ -230,7 +230,7 @@
                 {
                     <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
                 }
-                else if (Model.Status == StoreOrderStatus.Pending)
+                else if (ViewBag.IsConfirm)
                 {
                     <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Confirm" />
 
@@ -286,30 +286,16 @@
 
 
                 $("input[name=quantityRequestImport]:last, " +
-                        "input[name=amountDateAlert]:last, " +
                         "input[name=mainSupplierPrice]:last")
                     .autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
 
             }
 
-            function CalculateExchange(element) {
-                var exchange = $(element).closest("tr").find("select[name=unitDetailId]").find(":selected").attr("exchange");
-                var quantity = $(element).closest("tr").find("input[name=quantityRequestImport]").autoNumeric('get');
-                if (exchange == "0" || quantity == "" || quantity == "0") {
-                    $(element).closest("tr").find(".exchange").html("0");
-                } else {
-                    var number = parseInt(exchange) * parseInt(quantity);
-                    $(element).closest("tr").find(".exchange").html(number);
-
-                }
-            }
+          
 
             function ChangeProduct(element) {
                 OnBeginAjax();
                 var id = $(element).val();
-                var unitDetailSelect = $(element).closest("tr").find("select[name=unitDetailId]");
-                $(unitDetailSelect).find("option[value\!='']").remove();
-                $(unitDetailSelect).val("");
                 $.post('@Url.Action("GetInfoProduct","Product")',
                     {
                         id: id
@@ -342,7 +328,7 @@
 
             function validateFields() {
                 var submit = true;
-                $.each($("#CreateForm select[name='productId'], #CreateForm select[name='unitDetailId'], #CreateForm input[name='packages'], #CreateForm input[name='expireDate'], #CreateForm input[name='amountDateAlert'], #CreateForm input[name='quantityRequestImport'], #CreateForm input[name='mainSupplierPrice']"), function (i, element) {
+                $.each($("#CreateForm select[name='productId'],   #CreateForm input[name='quantityRequestImport'], #CreateForm input[name='mainSupplierPrice']"), function (i, element) {
                     if ($(element).val() == "") {
                         submit = false;
                         $(element).addClass("input-validation-error");

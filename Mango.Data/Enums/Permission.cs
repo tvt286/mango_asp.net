@@ -61,7 +61,7 @@ namespace Mango.Data.Enums
 
         [Description("Xem đơn hàng")]
         Order_View = 12001,
-        [Description("Xem đơn hàng")]
+        [Description("Tạo đơn hàng")]
         Order_Create = 12002,
   
     }

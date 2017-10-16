@@ -224,6 +224,7 @@ namespace Mango.Services
                 }
 
                 data.TimeCreate = DateTime.Now;
+                data.Type = UserType.FrontEnd;
                 context.Users.Add(data);
                 //context.SaveChanges();
                 try
