@@ -39,25 +39,25 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Administrator </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
-                        @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.User_View) || UserPermission.Has(Permission.User_Create) || user.IsAdminCompany)
                         {
                             <li class="@Html.IsSelected(action: "Index, Detail", controller: "User")"><a href="@Url.Action("Index", "User")">User</a></li>
                         }
-                        @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.GroupPermission_View) || UserPermission.Has(Permission.GroupPermission_Create)  || user.IsAdminCompany)
                         {
                             <li class="@Html.IsSelected(action: "Index,Create,Edit", controller: "GroupPermission")"><a href="@Url.Action("Index", "GroupPermission")">Role</a></li>
                         }
                     </ul>
                 </li>    
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Merchandise </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-multiple"></i> <span> Merchandise </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
-                        @if (UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.Category_View) || UserPermission.Has(Permission.Category_Create) || user.IsAdminCompany)
                         {
                             <li class="@Html.IsSelected(action: "Index", controller: "Category")"><a href="@Url.Action("Index", "Category")">Category</a></li>
                         }
-                        @if (UserPermission.Has(Permission.GroupPermission_View) || !user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.Product_Create) || UserPermission.Has(Permission.Product_View) || user.IsAdminCompany)
                         {
                             <li class="@Html.IsSelected(action: "Index, Detail", controller: "Product")"><a href="@Url.Action("Index", "Product")">Product</a></li>
                         }
@@ -65,36 +65,36 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-multiple"></i> <span> Transaction </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-transfer"></i> <span> Transaction </span> <span class="menu-arrow"></span></a>
 
                     <ul class="list-unstyled">
-                        @if (UserPermission.Has(Permission.WarehouseOrder_ViewImport) || user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.StoreOrder_ViewImport) || UserPermission.Has(Permission.StoreOrder_CreateImport) || UserPermission.Has(Permission.StoreOrder_ConfirmImport) || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "StoreOrderImport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderImport", "StoreOrder")">Store import</a></li>
+                            <li class="@Html.IsSelected(action: "StoreOrderImport,DetailStoreImport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderImport", "StoreOrder")">Store import</a></li>
                         }
-                        @if (UserPermission.Has(Permission.WarehouseOrder_ViewExport) || !user.IsAdminRoot || user.IsAdminCompany)
+                        @if (UserPermission.Has(Permission.StoreOrder_ViewExport) || UserPermission.Has(Permission.StoreOrder_CreateExport) || user.IsAdminCompany)
                         {
-                            <li class="@Html.IsSelected(action: "StoreOrderExport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderExport", "StoreOrder")">Store export</a></li>
+                            <li class="@Html.IsSelected(action: "StoreOrderExportDetailStoreExport", controller: "StoreOrder")"><a href="@Url.Action("StoreOrderExport", "StoreOrder")">Store export</a></li>
                         }
                     </ul>
                 </li>
-                @if (UserPermission.Has(Permission.Store_View) || user.IsAdminCompany)
+                @if (UserPermission.Has(Permission.Order_View) || UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany)
                 {
-                    <li class="@Html.IsSelected(action: "Index", controller: "Order") ">
-                        <a href="@Url.Action("Index", "Order")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Order </span></a>
+                    <li class="@Html.IsSelected(action: "Index, Detail", controller: "Order") ">
+                        <a href="@Url.Action("Index", "Order")" class="waves-effect"><i class="mdi mdi-package"></i><span> Order </span></a>
                     </li>
                 }
-                @if (UserPermission.Has(Permission.Store_View) || user.IsAdminCompany)
+                @if (UserPermission.Has(Permission.Warehouse_View) || user.IsAdminCompany)
                 {
                     <li class="@Html.IsSelected(action: "Index", controller: "Warehouse") ">
-                        <a href="@Url.Action("Index", "Warehouse")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Warehouse </span></a>
+                        <a href="@Url.Action("Index", "Warehouse")" class="waves-effect"><i class="mdi mdi-bank"></i><span> Warehouse </span></a>
                     </li>
                 }
         
-                @if (UserPermission.Has(Permission.Store_View)  || user.IsAdminCompany)
+                @if (UserPermission.Has(Permission.Store_View) || UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
                 {
                     <li class="@Html.IsSelected(action: "Index, Detail", controller: "Store") ">
-                        <a href="@Url.Action("Index", "Store")" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Store </span></a>
+                        <a href="@Url.Action("Index", "Store")" class="waves-effect"><i class="mdi mdi-home"></i><span> Store </span></a>
                     </li>  
                 }    
             </ul>

@@ -23,7 +23,8 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 var user = GetUserInfo();
-                IQueryable<User> query = context.Users.AsNoTracking();
+                IQueryable<User> query = context.Users.Where(x => x.IsAdminCompany == false && x.IsDeleted == false
+                    && x.Status == UserStatus.Active).AsNoTracking();
                 //if (user.IsAdminRoot == false)
                 //{
                 //    query = query.Where(x => x.CompanyId == user.CompanyId);

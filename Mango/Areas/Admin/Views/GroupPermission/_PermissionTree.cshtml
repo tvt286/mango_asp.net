@@ -7,215 +7,159 @@
 @using Mango.Data
 
 @model List<Permission>
-@{
-    var allPermissions = EnumUtil.GetListPermission().ToList();
-    var dic = new Dictionary<Permission, EnumUtil.NodeStatus>();
-    foreach (var permission in allPermissions)
-    {
-        dic.Add(permission, new EnumUtil.NodeStatus()
+    @{
+        ViewBag.disabled = ViewData["Disabled"];
+
+        var allPermissions = EnumUtil.GetListPermission().ToList();
+        var dic = new Dictionary<Permission, EnumUtil.NodeStatus>();
+        foreach (var permission in allPermissions)
         {
-            Selected = Model.Any(x => x == permission),
-            Showed = false
-        });
+            dic.Add(permission, new EnumUtil.NodeStatus()
+            {
+                Selected = Model.Any(x => x == permission),
+                Showed = false
+            });
+        }
     }
-}
-<link href="~/Content/Admin/plugin/JsTree/style.css" rel="stylesheet" />
-<div id="jstree2"></div>
+    <link href="~/Content/Admin/plugin/JsTree/style.css" rel="stylesheet" />
+    <div id="jstree2"></div>
 
-<script src="~/Scripts/Admin/jsTree3/jstree.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#jstree2').jstree({
-            'plugins': ["checkbox"],
-            'core': {
-                'data': [
-                   
-                    {
-                        "text": "Quản trị viên",
-                        "icon": "fa fa-user",
-                        "state": { "opened": false },
-                        "children": [
-                            {
-                                "text": "Quản lý quản trị viên",
-                                "children": [
-                                    @EnumUtil.ToTreeNode(Permission.User_View, dic),
-                                    @EnumUtil.ToTreeNode(Permission.User_Create, dic),
-                                    @EnumUtil.ToTreeNode(Permission.User_Delete, dic)
+    <script src="~/Scripts/Admin/jsTree3/jstree.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var disabled = '@ViewBag.disabled';
 
-                                ]
-                            },
+            $('#jstree2').jstree({
+                'plugins': ["checkbox"],
+                'core': {
+                    'data': [
+                        {
+                            "text": "All",
+                            "icon": "fa fa-list",
+                            "state": { "opened": true, "disabled": (disabled == "True") ? true : false },
+                            "children": [
                             {
-                                "text": "Quản lý vai trò",
+                                "text": "Administrator",
+                                "icon": "fa fa-user",
+                                "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
                                 "children": [
-                                    @EnumUtil.ToTreeNode(Permission.GroupPermission_View, dic),
-                                    @EnumUtil.ToTreeNode(Permission.GroupPermission_Create, dic),
-                                    @EnumUtil.ToTreeNode(Permission.GroupPermission_Delete, dic)
-                                ]
-                            }
-                        ]
-                    },
+                                    {
+                                        "text": "Staff",
+                                        "children": [
+                                            @EnumUtil.ToTreeNode(Permission.User_View, dic),
+                                            @EnumUtil.ToTreeNode(Permission.User_Create, dic),
+                                            @EnumUtil.ToTreeNode(Permission.User_Delete, dic)
 
-                    @*{
-                        "text": "Học viên",
-                        "icon": "mdi mdi-tag-faces",
-                        "state": { "opened": false },
-                        "children": [
-                            {
-                                "text": "Học viên Khu A",
-                                "children": [
-                                    @EnumUtil.ToTreeNode(Permission.StudentKA_View, dic),
-                                    @EnumUtil.ToTreeNode(Permission.StudentKA_Create, dic),
-                                    @EnumUtil.ToTreeNode(Permission.StudentKA_Delete, dic)        
+                                        ]
+                                    },
+                                    {
+                                        "text": "Role",
+                                        "children": [
+                                            @EnumUtil.ToTreeNode(Permission.GroupPermission_View, dic),
+                                            @EnumUtil.ToTreeNode(Permission.GroupPermission_Create, dic),
+                                            @EnumUtil.ToTreeNode(Permission.GroupPermission_Delete, dic)
+                                        ]
+                                    }
                                 ]
                             },
 
-                            {
-                                "text": "Học viên Khu B",
-                                "children": [
-                                    @EnumUtil.ToTreeNode(Permission.StudentKB_View, dic),
-                                    @EnumUtil.ToTreeNode(Permission.StudentKB_Create, dic),
-                                    @EnumUtil.ToTreeNode(Permission.StudentKB_Delete, dic)
-                             
-                                ]
-                            },
+                         {
+                             "text": "Merchandise",
+                             "icon": "mdi mdi-book-multiple",
+                             "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
+                             "children": [
+                                 {
+                                     "text": "Category",
+                                     "children": [
+                                         @EnumUtil.ToTreeNode(Permission.Category_View, dic),
+                                         @EnumUtil.ToTreeNode(Permission.Category_Create, dic),
+                                         @EnumUtil.ToTreeNode(Permission.Category_Delete, dic)
 
-                              {
-                                  "text": "Học viên Nông Lâm",
-                                  "children": [
-                                      @EnumUtil.ToTreeNode(Permission.StudentNL_View, dic),
-                                      @EnumUtil.ToTreeNode(Permission.StudentNL_Create, dic),
-                                      @EnumUtil.ToTreeNode(Permission.StudentNL_Delete, dic)
-                                     
-                                  ]
-                              },
-                        ]
-                    },
+                                     ]
+                                 },
+                                 {
+                                     "text": "Product",
+                                     "children": [
+                                         @EnumUtil.ToTreeNode(Permission.Product_View, dic),
+                                         @EnumUtil.ToTreeNode(Permission.Product_Create, dic),
+                                         @EnumUtil.ToTreeNode(Permission.Product_Delete, dic)
+                                     ]
+                                 }
+                             ]
+                         },
 
-                     {
-                         "text": "Học phí",
-                         "icon": "mdi mdi-cash-usd",
-                         "state": { "opened": false },
-                         "children": [
+                           {
+                               "text": "Transaction",
+                               "icon": "mdi mdi-transfer",
+                               "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
+                               "children": [
+                                   {
+                                       "text": "Order import",
+                                       "children": [
+                                           @EnumUtil.ToTreeNode(Permission.StoreOrder_ViewImport, dic),
+                                           @EnumUtil.ToTreeNode(Permission.StoreOrder_CreateImport, dic),
+                                           @EnumUtil.ToTreeNode(Permission.StoreOrder_ConfirmImport, dic)
+
+                                       ]
+                                   },
+                                   {
+                                       "text": "Order export",
+                                       "children": [
+                                           @EnumUtil.ToTreeNode(Permission.StoreOrder_ViewExport, dic),
+                                           @EnumUtil.ToTreeNode(Permission.StoreOrder_CreateExport, dic)
+                                       ]
+                                   }
+                               ]
+                           },
                              {
-                                 "text": "Học phí Khu A",
+                                 "text": "Order",
+                                 "icon": "mdi mdi-package",
+                                 "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
                                  "children": [
-                                     @EnumUtil.ToTreeNode(Permission.TuitionKA_View, dic),
-                                     @EnumUtil.ToTreeNode(Permission.TuitionKA_Edit, dic)
+                                        @EnumUtil.ToTreeNode(Permission.Order_View, dic),
+                                        @EnumUtil.ToTreeNode(Permission.Order_Create, dic),
+                                        @EnumUtil.ToTreeNode(Permission.Order_Confirm, dic)
+                                 ]
+                             },
+                             {
+                                 "text": "Warehouse root",
+                                 "icon": "mdi mdi-bank",
+                                 "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
+                                 "children": [
+                                        @EnumUtil.ToTreeNode(Permission.Warehouse_View, dic)
                                  ]
                              },
 
                              {
-                                 "text": "Học phí Khu B",
+                                 "text": "Store",
+                                 "icon": "mdi mdi-home",
+                                 "state": { "opened": false, "disabled": (disabled == "True") ? true : false },
                                  "children": [
-                                   @EnumUtil.ToTreeNode(Permission.TuitionKB_View, dic),
-                                     @EnumUtil.ToTreeNode(Permission.TuitionKB_Edit, dic)
+                                        @EnumUtil.ToTreeNode(Permission.Store_View, dic),
+                                        @EnumUtil.ToTreeNode(Permission.Store_Create, dic),
+                                        @EnumUtil.ToTreeNode(Permission.Store_Deleted, dic)
+
                                  ]
                              },
+                            ]
+                        }
+                    ]
+                }
 
-                               {
-                                   "text": "Học phí Nông Lâm",
-                                   "children": [
-                                      @EnumUtil.ToTreeNode(Permission.TuitionNL_View, dic),
-                                       @EnumUtil.ToTreeNode(Permission.TuitionNL_View, dic)
-                                   ]
-                               },
-                         ]
-                     },
-
-                    {
-                        "text": "Khóa thi",
-                        "icon": "mdi mdi-account-circle",
-                        "state": { "opened": false },
-                        "children": [
-                            {
-                                "text": "Danh sách khóa thi",
-                                "children": [
-
-                                    @EnumUtil.ToTreeNode(Permission.ChamThi_ViewCompete, dic),
-                                    @EnumUtil.ToTreeNode(Permission.ChamThi_ExportCompete, dic)
-
-                                ]
-                            },
-                            {
-                                "text": "Danh sách đối kháng",
-                                "children": [
-
-                                    @EnumUtil.ToTreeNode(Permission.ChamThi_ViewCompete, dic),
-                                    @EnumUtil.ToTreeNode(Permission.ChamThi_ExportCompete, dic)
-
-                                ]
-                            }
-                        ]
-                    },
-                     {
-                         "text": "Chấm thi",
-                         "icon": "mdi mdi-account-location",
-                         "state": { "opened": false },
-                         "children": [
-                             {
-                                 "text": "Tự vệ",
-                                 "children": [
-                                     @EnumUtil.ToTreeNode(Permission.TuVe_CoBan, dic),
-                                     @EnumUtil.ToTreeNode(Permission.TuVe_Quyen, dic),
-                                     @EnumUtil.ToTreeNode(Permission.TuVe_VoDao, dic),
-                                     @EnumUtil.ToTreeNode(Permission.TuVe_TheLuc, dic)
-                                 ]
-                             },
-                             {
-                                 "text": "Lam đai",
-                                 "children": [
-                                     @EnumUtil.ToTreeNode(Permission.LamDai_CoBan, dic),
-                                     @EnumUtil.ToTreeNode(Permission.LamDai_Quyen, dic),
-                                     @EnumUtil.ToTreeNode(Permission.LamDai_VoDao, dic),
-                                     @EnumUtil.ToTreeNode(Permission.LamDai_DoiKhang, dic)
-                                 ]
-                             },
-                              {
-                                  "text": "Lam đai I",
-                                  "children": [
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiI_CoBan, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiI_Quyen, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiI_VoDao, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiI_DoiKhang, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiI_SongLuyen, dic)
-
-                                  ]
-                              },
-                             {
-                                 "text": "Lam đai II",
-                                 "children": [
-                                     @EnumUtil.ToTreeNode(Permission.LamDaiII_CoBan, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiII_Quyen, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiII_VoDao, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiII_DoiKhang, dic),
-                                      @EnumUtil.ToTreeNode(Permission.LamDaiII_SongLuyen, dic)
-                                 ]
-                             }
-                         ]
-                     },
-                    {
-                        "text": "Lịch sử",
-                        "icon": "fa fa-institution",
-                        "state": { "opened": false },
-                        "children": [
-                            @EnumUtil.ToTreeNode(Permission.History_View, dic)
-                        ]
-                    },*@
-                ]
-            }
+            });
         });
-    });
-
-    function GetSelectedPermisison() {
-        var checked = [];
-        var selelected = $("#jstree2").jstree("get_checked", true);
-        $.each(selelected, function () {
-            if (this.original.id) {
-                checked.push(this.original.id);
-            }
-        });
-        return checked;
-    }
 
 
-</script>
+        function GetSelectedPermisison() {
+            var checked = [];
+            var selelected = $("#jstree2").jstree("get_checked", true);
+            $.each(selelected, function () {
+                if (this.original.id) {
+                    checked.push(this.original.id);
+                }
+            });
+            return checked;
+        }
+
+
+    </script>

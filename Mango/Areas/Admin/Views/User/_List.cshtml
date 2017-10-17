@@ -11,37 +11,36 @@
 }
 
 <div class="">
-    <h5 class="m-t-lg">Tìm thấy @Model.TotalItemCount</h5>
+    <h5 class="m-t-lg">Has @Model.TotalItemCount item</h5>
 </div>
 <table class="table table-striped table-colored table-info table-hover">
     <thead>
         <tr>
             <th>#</th>
             <th>
-                Hình ảnh
+                Image
             </th>
             <th>
-                Tên
+                Name
             </th>
             <th>
-                Tên đăng nhập
+                Username
             </th>
             <th>
-                Vai trò
+                Role
             </th>
             <th>
-                Số điện thoại
+                Phone
             </th>
             <th>
-                Trạng thái
+                Status
             </th>
             <th>
-                Ngày tạo
+                Date create
             </th>
-            @if (UserPermission.Has(Permission.User_Create) || user.IsAdminCompany || user.IsAdminRoot)
-            {
+           
                 <th data-sorter="false"></th>
-            }
+          
             @if (UserPermission.Has(Permission.User_Delete) || user.IsAdminCompany)
             {
                 <th data-sorter="false">
@@ -84,16 +83,14 @@
                 <td>
                     @item.TimeCreate.ToString("dd-MM-yyyy")
                 </td>
-                @if (UserPermission.Has(Permission.User_Create) || user.IsAdminRoot)
-                {
-                    <td>
-                        <a href="@Url.Action("Detail", new {id = item.Id})">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-
-                    </td>
-                }
-                @if (UserPermission.Has(Permission.User_Delete) || user.IsAdminRoot)
+               
+                <td>
+                    <a href="@Url.Action("Detail", new {id = item.Id})">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                
+                @if (UserPermission.Has(Permission.User_Delete) || user.IsAdminCompany)
                 {
                     <td>
                         <input type="checkbox" name="deleteUserId" value="@item.Id" />

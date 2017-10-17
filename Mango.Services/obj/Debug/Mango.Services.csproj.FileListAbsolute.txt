@@ -58,36 +58,6 @@ E:\asp.net\mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Depl
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
 E:\asp.net\mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll.config
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\PagedList.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\log4net.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\PagedList.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\log4net.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.pdb
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.xml
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
-C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll.config
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.pdb
@@ -118,3 +88,33 @@ E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\bin\Debug\System.Web
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
 E:\asp.net\mango\mango_asp.net\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll.config
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Services.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\PagedList.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\log4net.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Common.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Data.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\PagedList.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\log4net.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Mvc.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\Mango.Resource.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.Razor.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.csprojResolveAssemblyReference.cache
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango.Services\obj\Debug\Mango.Services.pdb

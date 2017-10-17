@@ -29,7 +29,10 @@
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            @if (Model.Id == 0)
+            {
+                <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            }
             @Html.ActionLink("Cancel", "StoreOrderExport", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
@@ -59,7 +62,7 @@
                             <label class="control-label col-md-2">Time export<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 <div class="input-group date">
-                                    @Html.TextBoxFor(x => x.TimeExport, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(x => x.TimeExport, new { @class = "form-control", data_val = "false", data_val_required = "Thông tin bắt buộc" })
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.TimeExport, "", new { @class = "text-danger" })

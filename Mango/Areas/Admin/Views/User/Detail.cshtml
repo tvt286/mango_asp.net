@@ -3,40 +3,48 @@
 @using Mango.Data.Enums
 @using Mango.Client.Common
 @using Mango.Web
-
+@using Mango.Security
 @model User
 
 @{
-    ViewBag.Title = Model.Id == 0 ? "Tạo mới nhân viên" : "Chỉnh sửa nhân viên";
+    ViewBag.Title = Model.Id == 0 ? "Create" : "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var user = (User)ViewBag.User;
+    var disabled = false;
+    if (Model.Id != 0 && !UserPermission.Has(Permission.User_Create) && !user.IsAdminCompany)
+    {
+        disabled = true;
+    }
 }
 <div class="row">
     <div class="col-xs-12">
         <div class="page-title-box">
-            <h4 class="page-title">Quản lý nhân viên</h4>
+            <h4 class="page-title">Staff</h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>
-                    <a href="@Url.Action("Index","Home")">Vovinam</a>
+                    <a href="@Url.Action("Index","Home")">Mango</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index","User")">Quản lý nhân viên</a>
+                    <a href="@Url.Action("Index","User")">Staff</a>
                 </li>
                 <li class="active">
                     @if (Model.Id == 0)
                     {
-                        <strong>Tạo mới</strong>
+                        <strong>Create</strong>
                     }
                     else
                     {
-                        <strong>Sửa</strong>
+                        <strong>Edit</strong>
                     }
                 </li>
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Lưu</a>
-            @Html.ActionLink("Thoát", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @if (UserPermission.Has(Permission.User_Create) || user.IsAdminCompany)
+            {
+               <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            }
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
 </div>
@@ -52,7 +60,7 @@
                 <!--Box thông tin-->
                 <div class="ibox ">
                     <div>
-                        <h5>Thông tin nhân viên</h5>
+                        <h5>Info</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="form-horizontal">
@@ -61,7 +69,7 @@
                             @Html.ValidationSummary(true)
 
                             <div class="form-group">
-                                <label class="control-label col-md-2">Tên<span style="color: Red">*</span></label>
+                                <label class="control-label col-md-2">Name<span style="color: Red">*</span></label>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(model => model.FullName, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
@@ -76,7 +84,7 @@
                             <div class="form-group">
                                 @if (Model.Id == 0)
                                 {
-                                    <label class="control-label col-md-2">Tên đăng nhập<span style="color: Red">*</span></label>
+                                    <label class="control-label col-md-2">Username<span style="color: Red">*</span></label>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
@@ -84,53 +92,48 @@
                                 }
                                 else
                                 {
-                                    <label class="control-label col-md-2">Tên đăng nhập</label>
+                                    <label class="control-label col-md-2">Username</label>
                                     <div class="col-md-4">
                                         @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @disabled = "disabled" })
                                     </div>
                                 }
-                                <label class="control-label col-md-2">Điện thoại</label>
+                                <label class="control-label col-md-2">Phone</label>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(model => model.Phone, new { @class = "form-control " })
                                 </div>
                             </div>
-
+                            @if(Model.Id == 0)
+                            { 
                             <div class="form-group">
 
                                 <label class="control-label col-md-2">
-                                    Mật khẩu
-                                    @if (Model.Id == 0)
-                                    {
-                                        <span style="color: Red">*</span>
-                                    }
+                                    Password                             
+                                        <span style="color: Red">*</span>      
                                 </label>
                                 <div class="col-md-4">
                                     <input class="form-control" id="Password" name="Password" type="password">
                                 </div>
                                 <label class="control-label col-md-2">
-                                    Xác nhận mật khẩu
-                                    @if (Model.Id == 0)
-                                    {
-                                        <span style="color: Red">*</span>
-                                    }
+                                    Confirm password
+                                        <span style="color: Red">*</span>                           
                                 </label>
                                 <div class="col-md-4">
-                                    <input class="form-control" data-val="true" data-val-equalto="Mật khẩu bạn nhập không khớp" data-val-equalto-other="*.Password" id="RetypePassword" name="RetypePassword" type="password">
+                                    <input class="form-control" data-val="true" data-val-equalto="Password incorrect" data-val-equalto-other="*.Password" id="RetypePassword" name="RetypePassword" type="password">
                                     @Html.ValidationMessage("RetypePassword")
                                 </div>
 
 
                             </div>
-
+                            }
                             <div class="form-group">
-                                <label class="control-label col-md-2">Trạng thái<span style="color: Red">*</span></label>
+                                <label class="control-label col-md-2">Status<span style="color: Red">*</span></label>
                                 <div class="col-md-4">
-                                    @Html.EnumDropDownList("Status", Model.Status, typeof(UserStatus), true, "", new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" }, "-- Trạng thái --")
+                                    @Html.EnumDropDownList("Status", Model.Status, typeof(UserStatus), true, "", new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" }, "-- Status --")
                                     @Html.ValidationMessageFor(x => x.Status)
                                 </div>
-                                <label class="control-label col-md-2">Hình ảnh</label>
+                                <label class="control-label col-md-2">Image</label>
                                 <div class="col-md-4">
-                                    <button  id="btnImage" type="button" class="btn btn-success waves-light waves-effect w-md">Chọn ảnh</button>
+                                    <button  id="btnImage" type="button" class="btn btn-success waves-light waves-effect w-md">Choose image</button>
                                     <input type="file" class="form-control" name="FileAttach" id="Image" style="display:none" />
                                     <div style="margin-top:10px; ">
                                         <img src="@(Model.Image.NotEmpty() ? Url.Content(Model.Image) : "")" style="@(Model.Image.NotEmpty() ? "" : "display: none")" width="150" id="blah" />
@@ -158,7 +161,7 @@
                 {
                     <div class="ibox">
                         <div>
-                            <h5>Danh sách nhóm quyền</h5>
+                            <h5>List group role</h5>
 
                         </div>
                         <div class="ibox-content">
@@ -185,7 +188,7 @@
                
                     <div class="ibox">
                         <div >
-                            <h5>Danh sách quyền</h5>
+                            <h5>List role</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="m-b-md">
@@ -193,8 +196,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <input type="submit" value="Lưu" class="btn btn-primary" id="btCreate" style="margin-right:10px" />
-                                    @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-white" })
+                                @if (UserPermission.Has(Permission.User_Create) || user.IsAdminCompany)
+                                {
+                                          <input type="submit" value="Save" class="btn btn-primary" id="btCreate" style="margin-right:10px" />
+                                }
+                                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                                 <br style="clear: both" />
                             </div>
@@ -223,9 +229,15 @@
 @section scripts
 {
     @*<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>*@
+    @if (Model.Id != 0 && !UserPermission.Has(Permission.User_Create) && !user.IsAdminCompany)
+    {
+        <script type="text/javascript">
+            $("input").attr("disabled", "disabled");
+            $("select").attr("disabled", "disabled");
+        </script>
+    }
     <script>
-        $(document)
-            .on('ready',
+        $(document).on('ready',
                 function () {
                   
                     $(function () {
@@ -256,16 +268,19 @@
                     //$('#DataFolder').tagsinput({
                     //    tagClass: 'label label-primary'
                     //});
-                    @if (user.IsAdminRoot == false)
-                {
-                    <text>
+               
+                   
                     $('#CreateEditAjax').submit(function () {
+                        alert(1);
                         var permission = GetSelectedPermisison();
+                        console.log(1);
+
+                        console.log(permission);
                         $('#selectedPermissions').val(permission.join());
 
                     });
-                    </text>
-                }
+                   
+              
                     @if (Model.Id == 0){
                         <text>$("#Status").val("")</text>
                     }
@@ -280,13 +295,8 @@
                     return false;
                 }
 
-                @if (user.IsAdminRoot == false)
-                {
-                    <text>
-                var permission = GetSelectedPermisison();
+               var permission = GetSelectedPermisison();
                 $('#selectedPermissions').val(permission.join());
-                </text>
-                }
 
                 var form = e.target;
                 if (form.getAttribute("enctype") === "multipart/form-data") {

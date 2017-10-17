@@ -12,7 +12,7 @@
 }
 
 <div class="">
-    <h5>Tìm thấy @(Model.TotalItemCount) nhóm</h5>
+    <h5>Has @(Model.TotalItemCount) item</h5>
 </div>
 <table class="table table-striped table-colored table-info table-hover">
     <thead>
@@ -21,16 +21,15 @@
                 STT
             </th>
             <th>
-                Tên nhóm
+                Name
             </th>
             <th data-sorter="false">
-                Ghi chú
+                Description
             </th>
-            @if (UserPermission.Has(Permission.GroupPermission_Create) || user.IsAdminRoot)
-            {
+            
                 <th data-sorter="false"></th>
-            }
-            @if (UserPermission.Has(Permission.GroupPermission_Delete) || user.IsAdminRoot)
+           
+            @if (UserPermission.Has(Permission.GroupPermission_Delete) || user.IsAdminCompany)
             {
                 <th data-sorter="false">
                     <a href="javascript:void(0)" onclick="DeleteGroupPermission()">
@@ -52,15 +51,14 @@
                     @item.Name
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                @if (UserPermission.Has(Permission.GroupPermission_Create) || user.IsAdminRoot)
-                {
-                    <td>
-                        <a href="@Url.Action("Edit", new { id = item.GroupId })">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-                    </td>
-                }
-                @if (UserPermission.Has(Permission.GroupPermission_Delete) || user.IsAdminRoot)
+            
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.GroupId })">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                
+                @if (UserPermission.Has(Permission.GroupPermission_Delete) || user.IsAdminCompany)
                 {
                     <td>
                         <input type="checkbox" name="deleteGroupId" value="@item.GroupId" />

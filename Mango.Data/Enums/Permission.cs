@@ -10,59 +10,64 @@ namespace Mango.Data.Enums
   
     public enum Permission
     {
-        [Description("Xem cửa hàng")]
+        [Description("View store")]
         Store_View = 1001,
-        [Description("Tạo tạo cửa hàng")]
+        [Description("View/Edit store")]
         Store_Create = 1002,
-        [Description("Tạo tạo cửa hàng")]
+        [Description("Delete store")]
         Store_Deleted = 1003,
 
-        [Description("Xem User")]
+        // nhân viên
+        [Description("View user")]
         User_View = 2001,
-        [Description("Tạo user")]
+        [Description("Create/Edit user")]
         User_Create = 2002,
-        [Description("Xóa user")]
+        [Description("Delete user")]
         User_Delete = 2003,
-        [Description("Xem danh sách vai trò")]
+        [Description("View role")]
         GroupPermission_View = 2004,
-        [Description("Tạo vai trò")]
+        [Description("Create/Edit role")]
         GroupPermission_Create = 2005,
-        [Description("Xóa vai trò")]
+        [Description("Delete role")]
         GroupPermission_Delete = 2006,
 
         [Description("View category")]
         Category_View = 3001,
-        [Description("Create category")]
+        [Description("Create/Edit category")]
         Category_Create = 3002,
         [Description("Delete category")]
         Category_Delete = 3003,
 
-        //[Description("Xem đơn vị tính")]
-        //Unit_View = 3003,
-        //[Description("Tạo đơn vị tính")]
-        //Unit_Create = 3004,
-        [Description("Xem sản phẩm")]
-        Product_View = 3005,
-        [Description("Tạo sản phẩm")]
-        Product_Create = 3006,
-        [Description("Xóa sản phẩm")]
-        Product_Delete = 3007,
+       
+        [Description("View product")]
+        Product_View = 4001,
+        [Description("Create/Edit product")]
+        Product_Create = 4002,
+        [Description("Delete product")]
+        Product_Delete = 4003,
 
-        [Description("Xem lệnh nhập kho")]
-        WarehouseOrder_ViewImport = 7001,
-        [Description("Tạo lệnh nhập kho")]
-        WarehouseOrder_CreateImport = 7002,
-        [Description("Xác nhận lệnh nhập kho khác")]
-        WarehouseOrder_ConfirmImport = 7003,
-        [Description("Xem lệnh xuất kho")]
-        WarehouseOrder_ViewExport = 7004,
-        [Description("Tạo lệnh xuất kho")]
-        WarehouseOrder_CreateExport = 7005,
+        [Description("View order import")]
+        StoreOrder_ViewImport = 5001,
+        [Description("Create order import")]
+        StoreOrder_CreateImport = 5002,
+        [Description("Confirm order import")]
+        StoreOrder_ConfirmImport = 5003,
+        [Description("View order export")]
+        StoreOrder_ViewExport = 5004,
+        [Description("Create order export")]
+        StoreOrder_CreateExport = 5005,
 
-        [Description("Xem đơn hàng")]
-        Order_View = 12001,
-        [Description("Tạo đơn hàng")]
-        Order_Create = 12002,
-  
+        [Description("View order")]
+        Order_View = 6001,
+        [Description("Create order")]
+        Order_Create = 6002,
+        [Description("Confirm order")]
+        Order_Confirm = 6003,
+
+        [Description("View warehouse")]
+        Warehouse_View = 7001,
+        [Description("View/Edit warehouse")]
+        Warehouse_Create = 7002
+
     }
 }

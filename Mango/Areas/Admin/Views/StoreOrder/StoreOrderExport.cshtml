@@ -25,7 +25,7 @@
             </ol>
 
             <div class="clearfix"></div>
-            @if (UserPermission.Has(Permission.WarehouseOrder_CreateExport) || user.IsAdminCompany)
+            @if (UserPermission.Has(Permission.StoreOrder_CreateExport) || user.IsAdminCompany)
             {
                 <a class="btn btn-primary waves-effect waves-light m-t-sm" href="@Url.Action("DetailStoreExport")">Create</a>
             }

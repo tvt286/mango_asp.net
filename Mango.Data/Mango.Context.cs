@@ -30,7 +30,6 @@ namespace Mango.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<User_Permission> User_Permission { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
@@ -42,5 +41,6 @@ namespace Mango.Data
         public virtual DbSet<StoreOrder> StoreOrders { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

@@ -48,11 +48,11 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Code</label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @placeholder = "Mã đơn hàng" })
+                                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @placeholder = "Code" })
                                 </div>
                                 <label class="col-md-2 control-label">Customer</label>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.CustomerId, null, "-- Customer --", new { @class = "form-control select2", style = "width: 100%", placeholder = "Tên khách hàng" })
+                                    @Html.DropDownListFor(x => x.CustomerId, null, "-- Customer --", new { @class = "form-control select2", style = "width: 100%", placeholder = "Customer" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -88,7 +88,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h5>List store</h5>
+            <h5>List result</h5>
 
             <div class="ibox-content">
                 <div id="content">

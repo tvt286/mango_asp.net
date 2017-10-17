@@ -76,7 +76,7 @@
                             <label class="control-label col-md-2">Date import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 <div class="input-group date">
-                                    @Html.TextBoxFor(x => x.TimeImport, new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(x => x.TimeImport, new { @class = "form-control", data_val = "false", data_val_required = "Thông tin bắt buộc" })
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.TimeImport, "", new { @class = "text-danger" })
@@ -207,7 +207,7 @@
                                 <td class="category"></td>
 
                                 <td style="text-align:center">
-                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport" onblur="CalculateExchange(this)"  />
+                                    <input type="text" class="form-control autoNumeric" placeholder="Quantity" name="quantityRequestImport"  />
                                 </td>
                                 <td style="text-align:center">
                                     <input type="text" placeholder="Price" class="form-control autoNumeric" name="mainSupplierPrice" />
@@ -265,13 +265,13 @@
 
     @if (Model.Id != 0)
     {
-        @*<script type="text/javascript">
+        <script type="text/javascript">
             $(function () {
                 $("input").not("[type=submit]").attr("disabled", "disabled");
                 $("select").attr("disabled", "disabled");
                 $("textarea").attr("disabled", "disabled");
             })
-        </script>*@
+        </script>
     }
     else
     {

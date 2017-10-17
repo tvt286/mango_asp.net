@@ -1,4 +1,6 @@
-﻿using Mango.Services;
+﻿using Mango.Data.Enums;
+using Mango.Security;
+using Mango.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,8 @@ namespace Mango.Areas.Admin.Controllers
 {
     public class WarehouseController : Controller
     {
-        //
-        // GET: /Admin/Warehouse/
+       
+        [AuthorizeAdmin(Permissions = new[] { Permission.Warehouse_View})]
         public ActionResult Index()
         {
             var model = new Mango.Data.Store();

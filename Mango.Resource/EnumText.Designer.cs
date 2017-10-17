@@ -61,6 +61,42 @@ namespace Mango.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ImportFromStoreOther.
+        /// </summary>
+        public static string StoreImExTypeCode_NhapTuKhoKhac {
+            get {
+                return ResourceManager.GetString("StoreImExTypeCode.NhapTuKhoKhac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ImportFromSupplier.
+        /// </summary>
+        public static string StoreImExTypeCode_NhapTuNCC {
+            get {
+                return ResourceManager.GetString("StoreImExTypeCode.NhapTuNCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ExportToCustomer.
+        /// </summary>
+        public static string StoreImExTypeCode_XuatBanKhachHang {
+            get {
+                return ResourceManager.GetString("StoreImExTypeCode.XuatBanKhachHang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ExportStoreOther.
+        /// </summary>
+        public static string StoreImExTypeCode_XuatKhoKhac {
+            get {
+                return ResourceManager.GetString("StoreImExTypeCode.XuatKhoKhac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kích hoạt .
         /// </summary>
         public static string UserStatus_Active {

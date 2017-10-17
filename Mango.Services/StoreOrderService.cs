@@ -129,6 +129,17 @@ namespace Mango.Services
             }
         }
 
+        public static StoreOrder GetDetailStoreExport(int id)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.StoreOrders
+                    .Include(x => x.StoreOrderExportDetails.Select(d => d.Product.Category))
+                    .Include(x => x.StoreOrderExportDetails.Select(d => d.StoreOrderImportDetail))
+                    .First(x => x.Id == id);
+            }
+        }
+
         public static string GenerateCode(StoreImExTypeCode? type, int? storeId, int? refStoreId, int? customerId, bool warehouseCheck = false)
         {
             var code = string.Empty;
@@ -150,6 +161,11 @@ namespace Mango.Services
                 var storeCode = "NCC";
 
                 code = string.Format("A.{0}.{1}.{2}", storeCode, refstoreCode, strDate);
+            }
+            else if (type == StoreImExTypeCode.NhapTuNCC)
+            {
+                var refstoreCode = StoreService.Get(refStoreId.GetValueOrDefault()).Code;
+                code = string.Format("N.{0}.NCC.{1}", refstoreCode, strDate);
             }
 
             else if (type == StoreImExTypeCode.XuatKhoKhac)

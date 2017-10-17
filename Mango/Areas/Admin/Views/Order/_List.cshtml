@@ -15,7 +15,7 @@
 
 
     <div class="">
-        <h5 class="m-t-lg">Result @Model.TotalItemCount</h5>
+        <h5 class="m-t-lg">Has @Model.TotalItemCount item</h5>
     </div>
     <table class="table table-striped table-colored table-info table-hover">
         <thead>
@@ -41,11 +41,9 @@
                 <th>
                     Satus
                 </th>
-                @if (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany)
-                {
-                    <th data-sorter="false">
-                    </th>
-                }
+               
+                <th data-sorter="false">
+                </th>
                
             </tr>
         </thead>
@@ -88,27 +86,21 @@
                             <label style="color:green">Comleted</label>
                         }
                     </td>
+                    <td>
 
-
-                    @if (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany)
-                    {
-                        <td>
-
-                            @if (item.Status == OrderStatus.Confirm)
-                            {
-                                <a href="@Url.Action("Detail", new { id = item.Id })">Confirm</a>
-                            }
-                            else if (item.Status == OrderStatus.Pending)
-                            {
-                                <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
-                            }
-                        </td>
-                    }
-                   
+                        @if (item.Status == OrderStatus.Confirm && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
+                        {
+                            <a href="@Url.Action("Detail", new { id = item.Id })">Confirm</a>
+                        }
+                        else if (item.Status == OrderStatus.Pending && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
+                        {
+                            <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
+                        }
+                    </td>         
                 </tr>
             }
         </tbody>

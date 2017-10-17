@@ -32,11 +32,10 @@
                     Address
                 </th>
               
-                @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
-                {
+               
                     <th data-sorter="false">
                     </th>
-                }
+              
                 @if (UserPermission.Has(Permission.Store_Deleted) || user.IsAdminCompany)
                 {
                     <th data-sorter="false">
@@ -65,15 +64,13 @@
                     <td>
                         @item.Address                      
                     </td>
-                    @if (UserPermission.Has(Permission.Store_Create) || user.IsAdminCompany)
-                    {
+                  
                         <td>
                             <a href="@Url.Action("Detail", new {id = item.Id})">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         </td>
-                    }
-
+                   
                     @if (UserPermission.Has(Permission.Store_Deleted) || user.IsAdminCompany)
                     {
                         <td>

@@ -91,7 +91,7 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                IQueryable<Store> query = context.Stores.AsNoTracking();
+                IQueryable<Store> query = context.Stores.Where(x => x.IsRoot == false && x.IsDeleted == false).AsNoTracking();
 
                 if (vendingName.NotEmpty())
                 {

@@ -14,7 +14,7 @@ namespace Mango.Areas.Admin.Controllers
 {
     public class StoreController : Controller
     {
-        [AuthorizeAdmin(Permissions = new[] { Permission.Store_View })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.Store_View, Permission.Store_Create })]
         public ActionResult Index(StoreSearchModel searchModel)
         {
 
@@ -29,7 +29,7 @@ namespace Mango.Areas.Admin.Controllers
             return PartialView("_List", pagedList);
         }
 
-        [AuthorizeAdmin(Permission = Permission.Store_Create)]
+        [AuthorizeAdmin(Permissions = new[] { Permission.Store_View, Permission.Store_Create })]
         public ActionResult Detail(int? id, bool redirectWarehouse = false)
         {
             var user = UserService.GetUserInfo();

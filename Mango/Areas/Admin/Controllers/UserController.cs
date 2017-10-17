@@ -18,20 +18,14 @@ namespace Mango.Areas.Admin.Controllers
     public class UserController : Controller
     {
 
+        [AuthorizeAdmin(Permissions = new[] { Permission.User_View, Permission.User_Create })]
         public ActionResult Index(UserViewModel searchModel)
         {
 
             if (Request.HttpMethod == "GET")
             {
-                var user = UserService.GetUserInfo();
-                if (!(UserPermission.Has(Permission.User_View) || user.IsAdminRoot || user.IsAdminCompany))
-                {
-                    return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index") });
-                }
-
-               
-                ViewBag.GroupId = new SelectList(GroupPermissionService.GetAll(), "GroupId", "Name");
-               
+                var user = UserService.GetUserInfo();    
+                ViewBag.GroupId = new SelectList(GroupPermissionService.GetAll(), "GroupId", "Name");               
                 return View(searchModel);
             }
             var pagedList = UserService.Search(searchModel.UserName, searchModel.FullName, searchModel.Phone, searchModel.Status, searchModel.GroupId, searchModel.PageSize, searchModel.PageIndex);
@@ -39,13 +33,11 @@ namespace Mango.Areas.Admin.Controllers
             return PartialView("_List", pagedList);
         }
 
+        [AuthorizeAdmin(Permissions = new[] { Permission.User_View, Permission.User_Create })]
         public ActionResult Detail(int? id)
         {
             var user = UserService.GetUserInfo();
-            if (!(UserPermission.Has(Permission.User_Create) || user.IsAdminRoot || user.IsAdminCompany))
-            {
-                return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index") });
-            }
+          
             ViewBag.User = user;
 
             var model = new User
@@ -160,6 +152,7 @@ namespace Mango.Areas.Admin.Controllers
                 }
                 else
                 {
+                    if(!model.Password.IsEmpty())
                     data.Password = Encryptor.MD5Hash(model.Password);
                 }
 

@@ -17,6 +17,7 @@
         ViewBag.Title = "Edit product";
     }
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var user = UserService.GetUserInfo();
 }
 
 <div class="row">
@@ -25,15 +26,15 @@
             <h4 class="page-title">Product</h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>
-                    <a href="@Url.Action("Index","Home")">Mango</a>
+                    <a href="@Url.Action(" index","home")">Mango</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index")">Product</a>
+                    <a href="@Url.Action(" index")">Product</a>
                 </li>
                 <li class="active">
                     @if (Model.Id == 0)
                     {
-                        <strong>Create new</strong>
+                        <strong>Create</strong>
                     }
                     else
                     {
@@ -43,18 +44,21 @@
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Lưu</a>
-            @Html.ActionLink("Thoát", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @if (UserPermission.Has(Permission.Product_Create) || user.IsAdminCompany)
+            {
+                <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            }
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
 </div>
 <!-- end row -->
+@using (Ajax.BeginForm("Create", "Product", null, new AjaxCommonOption { OnSuccess = "CreateSuccess" }, new { role = "form", id = "CreateForm", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.Id)
 
-<div class="card-box animated fadeInRight">
-    <div class="row">
-        @using (Ajax.BeginForm("Create", "Product", null, new AjaxCommonOption { OnSuccess = "CreateSuccess" }, new { role = "form", id = "CreateForm", enctype = "multipart/form-data" }))
-        {
-            @Html.HiddenFor(x => x.Id)
+    <div class="card-box animated fadeInRight">
+        <div class="row">
             <div class="col-lg-12">
                 <!--Box thông tin-->
                 <div class="ibox ">
@@ -85,7 +89,7 @@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                          
+
                             <div class="form-group">
                                 <label class="control-label col-md-2">Category<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
@@ -105,60 +109,81 @@
                                     @*@Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })*@
                                 </div>
 
-                            
-                            </div>
-                           
-                            <div class="form-group">
                                 <label class="control-label col-md-2">Amount Alert For Store<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(x => x.AmountAlertForStore, null, new { @class = "form-control autoNumeric", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(model => model.AmountAlertForStore, "", new { @class = "text-danger" })
                                 </div>
-                              
                             </div>
-                          
+
                         </div>
 
-                        <div class="row" style="margin-bottom:10px;">
-                            <div class="form-group">                           
-                                <div class="col-md-2">
-                                    <button class="btn btn-primary m-b-sm" type="button" id="btAddImage">
-                                        <i class="fa fa-plus"></i>
-                                        <span class="bold">Add Image</span>
-                                    </button>
-                                    <input name="fileImage" id="FileImageProduct" type="file" style="display:none" />
-                                    <input name="fileUploadImage" value="" id="fileUploadImage" type="hidden" />
-                                    <input name="Image" value="@Model.Image" id="Image" type="hidden" />
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div id="imagePreview"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <input style="margin-right:10px" class="btn btn-primary" type="submit" id="btUpdate" value="Save" />
-                                @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default ", role = "button" })
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        }
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+                    <h4 class="m-b-30 m-t-0 header-title"><b>Description</b></h4>
+                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control summernote" })
+        </div>
+    </div>
+    
+
+     <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <button class="btn btn-success m-b-sm" type="button" id="btAddImage">
+                                <i class="fa fa-plus"></i>
+                                <span class="bold">Add Image</span>
+                            </button>
+                            <input name="fileImage" id="FileImageProduct" type="file" style="display:none" />
+                            <input name="fileUploadImage" value="" id="fileUploadImage" type="hidden" />
+                            <input name="Image" value="@Model.Image" id="Image" type="hidden" />
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="imagePreview"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @if (UserPermission.Has(Permission.Product_Create) || user.IsAdminCompany)
+                        {
+                            <input style="margin-right:10px" class="btn btn-primary" type="submit" id="btUpdate" value="Save" />
+                        }
+                        @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default ", role = "button" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+                      
+
+}
 
 
 @section Styles {
-   <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
-<link href="~/Content/Admin/plugin//iCheck/custom.css" rel="stylesheet" />
+    <link href="/Content/Admin/summernote.css" rel="stylesheet" />
+
+    <link href="~/Content/Admin/chosen.css" rel="stylesheet" />
+    <link href="~/Content/Admin/plugin//iCheck/custom.css" rel="stylesheet" />
     <style>
         .input-validation-error {
             border: 1px solid red;
         }
-        .remove, .removeEdit{
+
+        .remove, .removeEdit {
             margin-left: 10px;
             margin-bottom: 10px;
             margin-right: 10px;
@@ -188,11 +213,31 @@
     </style>
 }
 
+
 @section scripts
 {
-    <script type="text/javascript">
-        // Upload Image
+    <script src="/Scripts/Admin/summernote.min.js"></script>
 
+    @if (Model.Id != 0 && !UserPermission.Has(Permission.Product_Create) && !user.IsAdminCompany)
+    {
+        <script type="text/javascript">
+            $("input").attr("disabled", "disabled");
+            $("select").attr("disabled", "disabled");
+        </script>
+    }
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+            $('.summernote').summernote({
+                height: 250,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: false                 // set focus to editable area after initializing summernote
+            });
+
+        });
+
+        // Upload Image
         $(function () {
             var filesToUpload = [];
             var fileIdCounter = 0;
@@ -239,36 +284,58 @@
             });
 
             function previewImages() {
-                     var fileList = this.files;
-                     var output = [];
-                    if (!isImage(fileList)) {
-                        AlertError("Vui lòng chỉ chọn file ảnh");
+                var fileList = this.files;
+                var output = [];
+                if (!isImage(fileList)) {
+                    AlertError("Vui lòng chỉ chọn file ảnh");
+                    return false;
+                }
+                var anyWindow = window.URL || window.webkitURL;
+                for (var i = 0; i < fileList.length; i++) {
+                    sizefile = fileList[i].size / 1024;
+                    if (sizefile > 2048) {
+                        AlertError("Vui lòng nhập kích thước hình ảnh < 2MB");
                         return false;
                     }
-                    var anyWindow = window.URL || window.webkitURL;
-                    for (var i = 0; i < fileList.length; i++) {
-                        sizefile = fileList[i].size / 1024;
-                        if (sizefile > 2048) {
-                            AlertError("Vui lòng nhập kích thước hình ảnh < 2MB");
-                            return false;
-                        }
 
-                        fileIdCounter++;
-                        var file = fileList[i];
-                        var fileId = "Product" + fileIdCounter;
+                    fileIdCounter++;
+                    var file = fileList[i];
+                    var fileId = "Product" + fileIdCounter;
 
-                        filesToUpload.push({
-                            id: fileId,
-                            file: file
-                        });
+                    filesToUpload.push({
+                        id: fileId,
+                        file: file
+                    });
 
-                        var objectUrl = anyWindow.createObjectURL(fileList[i]);
-                        $('#imagePreview').append('<span class=\"pip\"><img class="imagev" src="' + objectUrl + '" /><br/><span class=\"remove\" data-fileid=\"' + fileId + '\">Xóa</span></span>');
+                    var objectUrl = anyWindow.createObjectURL(fileList[i]);
+                    $('#imagePreview').append('<span class=\"pip\"><img class="imagev" src="' + objectUrl + '" /><br/><span class=\"remove\" data-fileid=\"' + fileId + '\">Xóa</span></span>');
 
-                        window.URL.revokeObjectURL(fileList[i]);
+                    window.URL.revokeObjectURL(fileList[i]);
+                }
+
+                if (filesToUpload.length > 0) {
+                    var result = "";
+                    for (var i = 0; i < filesToUpload.length; i++) {
+                        (function (i) {
+                            var FR = new FileReader();
+                            FR.onload = function (e) {
+                                result += e.target.result + " ";
+                                $("#fileUploadImage").val(result);
+                            };
+                            FR.readAsDataURL(filesToUpload[i].file);
+                        })(i);
                     }
+                }
 
+                $(".remove").click(function () {
+                    var fileId = $(this).parent(".pip").children("span").data("fileid");
+
+                    for (var i = 0; i < filesToUpload.length; ++i) {
+                        if (filesToUpload[i].id === fileId)
+                            filesToUpload.splice(i, 1);
+                    }
                     if (filesToUpload.length > 0) {
+
                         var result = "";
                         for (var i = 0; i < filesToUpload.length; i++) {
                             (function (i) {
@@ -281,34 +348,12 @@
                             })(i);
                         }
                     }
+                    else {
+                        $("#fileUploadImage").val("");
+                    }
+                    $(this).parent(".pip").remove();
+                });
 
-                    $(".remove").click(function () {
-                        var fileId = $(this).parent(".pip").children("span").data("fileid");
-
-                        for (var i = 0; i < filesToUpload.length; ++i) {
-                            if (filesToUpload[i].id === fileId)
-                                filesToUpload.splice(i, 1);
-                        }
-                        if (filesToUpload.length > 0) {
-
-                            var result = "";
-                            for (var i = 0; i < filesToUpload.length; i++) {
-                                (function (i) {
-                                    var FR = new FileReader();
-                                    FR.onload = function (e) {
-                                        result += e.target.result + " ";
-                                        $("#fileUploadImage").val(result);
-                                    };
-                                    FR.readAsDataURL(filesToUpload[i].file);
-                                })(i);
-                            }
-                        }
-                        else {
-                            $("#fileUploadImage").val("");
-                        }
-                        $(this).parent(".pip").remove();
-                    });
-            
             }
 
             $("#btAddImage").click(function () {
@@ -316,7 +361,7 @@
                 $("#FileImageProduct:hidden").trigger('click');
                 var inputLocalFont = document.getElementById("FileImageProduct");
                 inputLocalFont.addEventListener("change", previewImages, false);
-              
+
             });
 
         });

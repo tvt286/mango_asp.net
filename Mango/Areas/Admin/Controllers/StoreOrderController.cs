@@ -15,8 +15,8 @@ namespace Mango.Areas.Admin.Controllers
 {
     public class StoreOrderController : Controller
     {
-   
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewImport })]
+
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_ViewImport, Permission.StoreOrder_CreateImport })]
         public ActionResult StoreOrderImport(StoreOrderImportSearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
@@ -24,7 +24,7 @@ namespace Mango.Areas.Admin.Controllers
                 var user = UserService.GetUserInfo();
            
                 ViewBag.UserImport = new SelectList(UserService.GetAll(), "Id", "FullName", searchModel.UserImport);
-                ViewBag.RefStoreId = new SelectList(new List<Mango.Data.Store> { StoreService.GetStoreRoot() }, "Id", "Name");
+                ViewBag.RefStoreId = new SelectList( StoreService.GetAll(true) , "Id", "Name");
 
                 return View(searchModel);
             }
@@ -35,7 +35,7 @@ namespace Mango.Areas.Admin.Controllers
 
 
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewImport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_ViewImport, Permission.StoreOrder_CreateImport })]
         [HttpGet]
         public ActionResult DetailStoreImport(int? id)
         {
@@ -76,7 +76,7 @@ namespace Mango.Areas.Admin.Controllers
             return View(data);
         }
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewExport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_ViewExport,Permission.StoreOrder_CreateExport })]
         [HttpGet]
         public ActionResult DetailStoreExport(int? id)
         {
@@ -90,7 +90,7 @@ namespace Mango.Areas.Admin.Controllers
 
             if (id.HasValue)
             {
-                data = StoreOrderService.GetDetailStoreImport(id.Value);
+                data = StoreOrderService.GetDetailStoreExport(id.Value);
             }
 
             var storeHasProductList = StoreService.GetStoreHasProduct(true).Select(x => x.Id).ToList();
@@ -137,7 +137,7 @@ namespace Mango.Areas.Admin.Controllers
         //}
 
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ConfirmImport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_ConfirmImport })]
         public ActionResult ImportStoreOrderFromOtherStore(StoreOrder model, int[] storeOrderImportDetailId, int[] quantityRequestImport
             , string[] noteImport)
         {
@@ -151,7 +151,7 @@ namespace Mango.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_CreateImport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_CreateImport })]
         [HttpPost]
         public ActionResult CreateStoreOrderImport(StoreOrder storeOrder, int[] productId, int[] quantityRequestImport,  int[] mainSupplierPrice)
         {
@@ -197,7 +197,7 @@ namespace Mango.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_ViewExport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_ViewExport, Permission.StoreOrder_CreateExport })]
         public ActionResult StoreOrderExport(StoreOrderExportSearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
@@ -218,7 +218,7 @@ namespace Mango.Areas.Admin.Controllers
 
 
 
-        [AuthorizeAdmin(Permissions = new[] { Permission.WarehouseOrder_CreateExport })]
+        [AuthorizeAdmin(Permissions = new[] { Permission.StoreOrder_CreateExport })]
         public ActionResult CreateStoreOrderExport(StoreOrder storeOrder, int[] productId, string[] productName,
             int[] quantityRequestExport, int[] refStoreOrderImportDetailId)
         {

@@ -16,6 +16,7 @@ namespace Mango.Areas.Admin.Controllers
     {
         private mangoEntities db = new mangoEntities();
         // GET: GroupPermission
+        [AuthorizeAdmin(Permissions = new[] { Permission.GroupPermission_Create, Permission.GroupPermission_View })]
         public ActionResult Index(GroupPermissionSearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
@@ -92,14 +93,10 @@ namespace Mango.Areas.Admin.Controllers
             return View("Index");
         }
 
-        //[AuthorizeAdmin(Permission = Permission.GroupPermission_Create)]
+        [AuthorizeAdmin(Permissions = new[] {Permission.GroupPermission_Create, Permission.GroupPermission_View})]
         public ActionResult Edit(int? id)
         {
             var user = UserService.GetUserInfo();
-            if (!(UserPermission.Has(Permission.GroupPermission_Create)))
-            {
-                return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index") });
-            }
 
             ViewBag.User = user;
             Group model = new Group()

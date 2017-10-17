@@ -28,6 +28,7 @@
     }
     
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var user = UserService.GetUserInfo();
 }
 
 <div class="row">
@@ -47,15 +48,15 @@
             </ol>
 
             <div class="clearfix"></div>
-            @if(Model.Id != 0 && Model.Status == OrderStatus.Confirm)
+            @if (Model.Id != 0 && Model.Status == OrderStatus.Confirm && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
             {
                 <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>
             }
-            else if (Model.Id != 0 && Model.Status == OrderStatus.Pending)
+            else if (Model.Id != 0 && Model.Status == OrderStatus.Pending && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
             {
                  <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Complete</a>
             }
-            else if(Model.Id == 0)
+            else if (Model.Id == 0 && (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany))
             {
                 <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
             }
@@ -250,6 +251,16 @@
     <script src="~/Scripts/Admin/plugins/datatables/responsive.bootstrap.min.js"></script>
     <script src="~/Scripts/Admin/plugins/datatables/jquery.datatables.init.js"></script>
     <script src="~/Scripts/Admin/chosen.jquery.js"></script>
+
+    @if (Model.Id != 0 && !UserPermission.Has(Permission.Order_Create) && !user.IsAdminCompany)
+    {
+        <script type="text/javascript">
+            $("input").attr("disabled", "disabled");
+            $("select").attr("disabled", "disabled");
+            $("textarea").attr("disabled", "disabled");
+        </script>
+    }
+
     @if (Model.Id != 0)
     {
         <script type="text/javascript">

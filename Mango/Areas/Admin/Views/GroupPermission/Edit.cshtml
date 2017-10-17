@@ -2,47 +2,56 @@
 @using Mango.Common
 @using System.Web.Mvc
 @using Mango.Data.Enums
+@using Mango.Security
 @model Group
 
 @{
     if (Model.GroupId == 0)
     {
-        ViewBag.Title = "Thêm vai trò";
+        ViewBag.Title = "Create";
     }
     else
     {
-        ViewBag.Title = "Sửa vai trò";
+        ViewBag.Title = "Edit";
     }
 
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var user = (User)ViewBag.User;
+    var disabled = false;
+    if (Model.GroupId != 0 && !UserPermission.Has(Permission.GroupPermission_Create) && !user.IsAdminCompany)
+    {
+        disabled = true;
+    }
 }
 <div class="row">
     <div class="col-xs-12">
         <div class="page-title-box">
-            <h4 class="page-title">Quản lý vai trò</h4>
+            <h4 class="page-title">Role</h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>
                     <a href="@Url.Action("Index","Home")">Mango</a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index","GroupPermission")">Quản lý vai trò</a>
+                    <a href="@Url.Action("Index","GroupPermission")">Role</a>
                 </li>
                 <li class="active">
                     @if (Model.GroupId == 0)
                     {
-                        <strong>Thêm</strong>
+                        <strong>Create</strong>
                     }
                     else
                     {
-                        <strong>Sửa</strong>
+                        <strong>Edit</strong>
                     }
                 </li>
             </ol>
 
             <div class="clearfix"></div>
-            <a style="margin-right:10px" onclick="$('#Edit').submit();" class="btn btn-primary waves-effect waves-light m-t-sm">Lưu</a>
-            @Html.ActionLink("Thoát", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
+            @if (UserPermission.Has(Permission.GroupPermission_Create) || user.IsAdminCompany)
+            { 
+                   <a style="margin-right:10px" onclick="$('#Edit').submit();" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+            }
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
         </div>
     </div>
 </div>
@@ -55,7 +64,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div>
-                        <h5>Sửa vai trò</h5>
+                        <h5>Edit</h5>
                         @if (ViewBag.Message != null)
                         {
                             <div class="ibox float-e-margins">
@@ -87,16 +96,16 @@
                                 @Html.HiddenFor(x => x.CompanyId)
                             }*@
                             <div class="form-group">
-                                <label class="control-label col-md-2">Tên vai trò<span style="color: Red">(*)</span></label>
+                                <label class="control-label col-md-2">Name<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Nhập tên vai trò", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(model => model.Name)
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Ghi chú</label>
+                                <label class="control-label col-md-2">Description</label>
                                 <div class="col-md-4">
-                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Nhập ghi chú" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description" })
                                 </div>
                             </div>
                             @*<div class="form-group">
@@ -110,7 +119,7 @@
                 </div>
                 <div class="ibox">
                     <div >
-                        <h5>Danh sách quyền</h5>
+                        <h5>List role</h5>
                        
                     </div>
                     <div class="ibox-content">
@@ -121,8 +130,11 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">
-                                <input style="margin-right:10px;" type="submit" value="Lưu" class="btn btn-primary" />
-                                @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-white" })
+                            @if (UserPermission.Has(Permission.GroupPermission_Create) || user.IsAdminCompany)
+                            {
+                                   <input style="margin-right:10px;" type="submit" value="Save" class="btn btn-primary" />
+                            }
+                                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
 
                             </div>
                             <br style="clear: both" />
@@ -136,6 +148,14 @@
 
 </div>
 
+@if (Model.GroupId != 0 && !UserPermission.Has(Permission.GroupPermission_Create) && !user.IsAdminCompany)
+{
+    <script type="text/javascript">
+        $("input").attr("disabled", "disabled");
+        $("textarea").attr("disabled", "disabled");
+
+    </script>
+}
 <script type="text/javascript">
     $(document).ready(function () {
         $('.cbxAll').change(function () {

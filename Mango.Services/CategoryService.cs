@@ -64,7 +64,7 @@ namespace Mango.Services
 
             using (var context = new mangoEntities())
             {
-                if (context.Categories.Any(x => x.Code == data.Code))
+                if (context.Categories.Any(x => x.Code == data.Code && x.Id != data.Id))
                 {
                     result.Code = ResultCode.Fail;
                     result.Message = "Đã tồn tại mã loại sản phẩm này rồi";

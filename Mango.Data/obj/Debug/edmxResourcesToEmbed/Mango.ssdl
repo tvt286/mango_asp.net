@@ -94,12 +94,13 @@
     <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="AmountAlertForStore" Type="int" />
-    <Property Name="Image" Type="nvarchar" MaxLength="300" />
     <Property Name="TimeDeleted" Type="datetime" />
     <Property Name="TimeCreate" Type="datetime" Nullable="false" />
     <Property Name="TimeUpdate" Type="datetime" />
     <Property Name="UserCreateId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Store">
     <Key>

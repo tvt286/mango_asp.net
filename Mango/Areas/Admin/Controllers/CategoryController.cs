@@ -17,7 +17,7 @@ namespace Mango.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        [AuthorizeAdmin(Permission = Permission.Category_View)]
+        [AuthorizeAdmin(Permissions = new[] {Permission.Category_View, Permission.Category_Create})]
         public ActionResult Index(CategorySearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
@@ -29,9 +29,9 @@ namespace Mango.Areas.Admin.Controllers
             return PartialView("_List", pagedList);
         }
 
-      
 
-        [AuthorizeAdmin(Permission = Permission.Category_View)]
+
+        [AuthorizeAdmin(Permissions = new[] { Permission.Category_View, Permission.Category_Create })]
         public ActionResult Detail(int? id)
         {
             var user = UserService.GetUserInfo();

@@ -19,7 +19,7 @@ namespace Mango.Data
         public int ProductId { get; set; }
         public int QuantityExchange { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual Store Store { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

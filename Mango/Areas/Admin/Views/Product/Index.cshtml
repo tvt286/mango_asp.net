@@ -19,7 +19,7 @@
                     <a href="@Url.Action("Index", "Home")">Mango</a>
                 </li>
                 <li class="active">
-                    <strong>Create Product</strong>
+                    <strong>Create</strong>
                 </li>
             </ol>
 
@@ -60,7 +60,7 @@
           
                                 <label class="control-label col-md-2">Category</label>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Danh mục --", new { @class = "form-control" })
+                                    @Html.DropDownListFor(x => x.CategoryId, null, "-- Category --", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -80,7 +80,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <h5>Kết quả tìm kiếm</h5>
+            <h5>List result</h5>
 
             <div class="ibox-content">
                 <div id="content">

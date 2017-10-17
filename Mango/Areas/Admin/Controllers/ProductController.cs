@@ -17,7 +17,7 @@ namespace Mango.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
-        [AuthorizeAdmin(Permission = Permission.Product_View)]
+        [AuthorizeAdmin(Permissions = new[] { Permission.Product_View, Permission.Product_Create})]
         public ActionResult Index(ProductSearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
@@ -36,7 +36,7 @@ namespace Mango.Areas.Admin.Controllers
         }
 
 
-        [AuthorizeAdmin(Permission = Permission.Product_View)]
+        [AuthorizeAdmin(Permissions = new[] { Permission.Product_View, Permission.Product_Create })]
         public ActionResult Detail(int? id)
         {
             var user = UserService.GetUserInfo();
@@ -48,15 +48,14 @@ namespace Mango.Areas.Admin.Controllers
                 data = ProductService.Get(id.Value);
             }
             ViewBag.CategoryId = new SelectList(CategoryService.GetAll(), "Id", "Name", data.CategoryId);
-            //ViewBag.UnitId = new SelectList(UnitService.GetUnitByCompany(user.CompanyId.GetValueOrDefault(0)), "Id",
-            //    "Name", data.UnitId);
+
             return View(data);
         }
 
         [AuthorizeAdmin(Permission = Permission.Product_Create)]
+        [ValidateInput(false)]
         public ActionResult Create(Product data, string fileUploadImage, HttpPostedFileBase fileAttach)
         {
-           
 
             if (data.SellingPrice < 500)
             {
@@ -66,7 +65,6 @@ namespace Mango.Areas.Admin.Controllers
                     Message = "Vui lòng nhập giá bán lẻ (gía niêm yết) lớn hơn 500 đồng"
                 }, JsonRequestBehavior.AllowGet);
             }
-
 
             string sourceFile = "";
             if (data.Code != null && !data.Code.IsCode())
@@ -161,12 +159,12 @@ namespace Mango.Areas.Admin.Controllers
             {
                 var mess = ex.Message;
             }
+            dataItem.Description = data.Description;
             dataItem.Image = data.Image;
 
             dataItem.Image += sourceFile;
 
             var resultEdit = ProductService.Update(dataItem);
-                        data.Image += sourceFile;
 
             if (resultEdit.Code == ResultCode.Success)
             {
