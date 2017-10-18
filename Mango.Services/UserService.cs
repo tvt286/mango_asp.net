@@ -25,11 +25,7 @@ namespace Mango.Services
                 var user = GetUserInfo();
                 IQueryable<User> query = context.Users.Where(x => x.IsAdminCompany == false && x.IsDeleted == false
                     && x.Status == UserStatus.Active).AsNoTracking();
-                //if (user.IsAdminRoot == false)
-                //{
-                //    query = query.Where(x => x.CompanyId == user.CompanyId);
-                //}
-
+            
                 if (userName.NotEmpty())
                 {
                     query = query.Where(x => x.UserName.Contains(userName));
@@ -65,7 +61,7 @@ namespace Mango.Services
                     return new CommandResult
                     {
                         Code = ResultCode.Success,
-                        Message = "Đã tồn tại tài khoản này trong hệ thống!"
+                        Message = "Account already exists!"
                     };
                 }
 
@@ -81,7 +77,7 @@ namespace Mango.Services
                 return new CommandResult
                 {
                     Code = ResultCode.Success,
-                    Message = "Đã tạo mới tài khoản thành công!"
+                    Message = "Create successfully!"
                 };
             }
         }
@@ -95,7 +91,7 @@ namespace Mango.Services
                     return new CommandResult
                     {
                         Code = ResultCode.Success,
-                        Message = "Đã tồn tại tài khoản này trong hệ thống!"
+                        Message = "Account already exists!"
                     };
                 }
 
@@ -106,7 +102,7 @@ namespace Mango.Services
                 return new CommandResult
                 {
                     Code = ResultCode.Success,
-                    Message = "Đã tạo mới tài khoản thành công!"
+                    Message = "Update account successfully!"
                 };
             }
         }
@@ -192,7 +188,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã tạo mới tài khoản thành công"
+                Message = "Create successfully!"
             };
 
             using (var context = new mangoEntities())
@@ -200,7 +196,7 @@ namespace Mango.Services
                 if (context.Users.Any(x => x.UserName == data.UserName))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Tài khoản này đã tồn tại trên hệ thống!";
+                    result.Message = "Account already exists!";
                     return result;
                 }
 
@@ -258,14 +254,14 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã cập nhật tài khoản thành công",
+                Message = "Update account successfully!",
             };
             using (var context = new mangoEntities())
             {
                 if (context.Users.Any(x => x.UserName == data.UserName && x.Id != data.Id))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Tài khoản này đã tồn tại trên hệ thống!";
+                    result.Message = "Account already exists!";
                     return result;
                 }
 

@@ -76,7 +76,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new CommandResult
                 {
                     Code = ResultCode.Fail,
-                    Message = "Mã chỉ được nhập chữ, số và ký tự -_."
+                    Message = "Code only import letters, numbers and characters -_."
                 }, JsonRequestBehavior.AllowGet);
             }
 
@@ -86,7 +86,7 @@ namespace Mango.Areas.Admin.Controllers
                 {
                     return
                     Json(
-                        new RedirectCommand() { Code = ResultCode.Fail, Message = "Vui lòng kiểm tra lại số điện thoại!" },
+                        new RedirectCommand() { Code = ResultCode.Fail, Message = "Please check phone number!" },
                         JsonRequestBehavior.AllowGet);
                 }
             }
@@ -100,7 +100,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Mã máy đã tồn tại"
+                        Message = "Code already exists!"
                     }, JsonRequestBehavior.AllowGet);
                 }
 
@@ -108,7 +108,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new RedirectCommand
                 {
                     Code = ResultCode.Success,
-                    Message = "Đã tạo máy thành công!",
+                    Message = "Create store successfully!",
                     Url = Url.Action("Index")
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -123,7 +123,7 @@ namespace Mango.Areas.Admin.Controllers
                         return Json(new CommandResult
                         {
                             Code = ResultCode.Fail,
-                            Message = "Mã máy đã tồn tại"
+                            Message = "Code already exists!"
                         }, JsonRequestBehavior.AllowGet);
                     }
                 }
@@ -134,7 +134,7 @@ namespace Mango.Areas.Admin.Controllers
             return Json(new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã cập nhật máy thành công!",
+                Message = "Update store successfully!",
                 Url = Url.Action("Index")
             }, JsonRequestBehavior.AllowGet);
 

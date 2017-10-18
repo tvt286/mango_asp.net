@@ -57,7 +57,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new RedirectCommand
                 {
                     Code = ResultCode.Fail,
-                    Message = "Mã chỉ được nhập chữ, số và ký tự -_."
+                    Message = "Code only import letters, numbers and characters -_."
                 }, JsonRequestBehavior.AllowGet);
             }
 
@@ -81,7 +81,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new RedirectCommand
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file hình!"
+                        Message = "Only upload file image!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 if (checkFile == UploadFileStatus.OverLimited)
@@ -89,7 +89,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new RedirectCommand
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file 5MB!"
+                        Message = "Only upload file image < 5MB!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 fileAttach.SaveAs(pathFile);

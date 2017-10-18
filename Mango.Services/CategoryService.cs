@@ -33,7 +33,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã tạo danh mục thành công!"
+                Message = "Create category successfully!"
             };
             var user = UserService.GetUserInfo();
             using (var context = new mangoEntities())
@@ -41,7 +41,7 @@ namespace Mango.Services
                 if (context.Categories.Any(x => x.Code == data.Code))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Đã tồn tại mã loại sản phẩm này rồi";
+                    result.Message = "Code already exist!";
                     return result;
                 }
                 data.UserCreateId = user.Id;
@@ -59,7 +59,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã cập nhật danh mục thành công!"
+                Message = "Update successfully!"
             };
 
             using (var context = new mangoEntities())
@@ -67,7 +67,7 @@ namespace Mango.Services
                 if (context.Categories.Any(x => x.Code == data.Code && x.Id != data.Id))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Đã tồn tại mã loại sản phẩm này rồi";
+                    result.Message = "Code already exist!";
                     return result;
                 }
 
@@ -116,7 +116,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã xóa sản phẩm thành công!",
+                Message = "Delete successfully!",
             };
             using (var context = new mangoEntities())
             {
@@ -126,17 +126,13 @@ namespace Mango.Services
                 {
                     var Id = int.Parse(categoryId);
                     var category = context.Categories.FirstOrDefault(x => x.Id == Id);
-                    //if (context.WarehouseProducts
-                    //    .Any(x => x.ProductId == product.Id
-                    //    && x.CompanyId == product.CompanyId
-                    //    && (x.QuantityExchange > 0 ||
-                    //    x.QuantityExchangeFail > 0 ||
-                    //    x.QuantityExchangeLose > 0)))
-                    //{
-                    //    result.Code = ResultCode.Fail;
-                    //    result.Message = "Sản phẩm này còn tồn trong kho không thể xóa được!";
-                    //    return result;
-                    //}
+                    var products = context.Products.Where(x => x.CategoryId == category.Id).ToList();
+                    if (products.Count > 0)
+                    {
+                        result.Code = ResultCode.Fail;
+                        result.Message = "Loại sản phẩm này có sản phẩm không thể xóa được!";
+                        return result;
+                    }
                     category.IsDeleted = true;
                     category.TimeDeleted = DateTime.Now;
                 }

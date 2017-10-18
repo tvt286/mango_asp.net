@@ -86,7 +86,7 @@ namespace Mango.Areas.Admin.Controllers
                     });
                 }
                 db.SaveChanges();
-                TempData["Message"] = "Thêm mới thành công .";          
+                TempData["Message"] = "Create successfully!";          
                 return View("Index");
             }
 
@@ -141,7 +141,7 @@ namespace Mango.Areas.Admin.Controllers
                         });
                     }
                     db.SaveChanges();
-                    TempData["Message"] = "Thêm mới thành công .";
+                    TempData["Message"] = "Create successfully!";
 
                     return View("Index");
                 }
@@ -161,7 +161,7 @@ namespace Mango.Areas.Admin.Controllers
                 foreach (var groupPermission in deleted.ToList())
                 {
                     db.Group_Permission.Remove(groupPermission);
-                    ViewBag.message = "Cập nhật quyền thành công.";
+                    ViewBag.message = "Update successfully!";
                 }
                 var addNew = selectedGroupPermission.Where(x => _group.Group_Permission.All(y => y.PermissionId != x));
 
@@ -171,7 +171,7 @@ namespace Mango.Areas.Admin.Controllers
                     permission.GroupId = group.GroupId;
                     permission.PermissionId = permissionId;
                     db.Group_Permission.Add(permission);
-                    ViewBag.message = "Cập nhật quyền thành công.";
+                    ViewBag.message = "Update successfully!";
                 }
                 db.SaveChanges();
                 return View(_group);

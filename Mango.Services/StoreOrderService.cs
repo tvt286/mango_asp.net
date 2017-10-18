@@ -265,7 +265,7 @@ namespace Mango.Services
         {
             var result = new RedirectCommand
             {
-                Message = "Đã tạo lệnh xuất kho thành công!",
+                Message = "Create order export successfully!",
                 Code = ResultCode.Success
             };
 
@@ -298,7 +298,7 @@ namespace Mango.Services
                     if (refstoreOrderImportDetail.Quantity <
                         storeOrderExportDetail.Quantity)
                     {
-                        result.Message = string.Format("Dòng thứ {0} đã nhập quá số lượng còn lại {1}",
+                        result.Message = string.Format("Line {0} import quantity > quantity remaining {1}",
                             number, refstoreOrderImportDetail.Product.Name);
                         result.Code = ResultCode.Fail;
                         return result;
@@ -383,7 +383,7 @@ namespace Mango.Services
         {
             var result = new RedirectCommand
             {
-                Message = "Đã xác nhận nhập kho từ kho khác thành công!",
+                Message = "Confirm import successfully!",
                 Code = ResultCode.Success
             };
             var date = DateTime.Now;
@@ -403,13 +403,13 @@ namespace Mango.Services
                     if (storeOrderImportDetail.Quantity != quantityRequestImport[i])
                     {
                         result.Code = ResultCode.Fail;
-                        result.Message = string.Format("Vui lòng kiểm tra số lượng nhập của sp: {0}",
+                        result.Message = string.Format("Please check quantity import: {0}",
                             storeOrderImportDetail.Product.Name);
                         return result;
                     }
                     storeOrderImportDetail.Quantity = quantityRequestImport[i];
 
-                    storeOrderImportDetail.Note = note[i];
+                    //storeOrderImportDetail.Note = note[i];
 
                     if (!context.StoreProducts.Any(x => x.ProductId == storeOrderImportDetail.ProductId
                                                             && x.StoreId == storeOrder.RefStoreId) &&
@@ -438,9 +438,32 @@ namespace Mango.Services
                 context.StoreOrders.Attach(storeOrder);
                 context.Entry(storeOrder).State = EntityState.Modified;
                 context.Entry(storeOrder).Property(x => x.TimeExport).IsModified = false;
+                context.Entry(storeOrder).Property(x => x.Code).IsModified = false;
+
                 //context.Entry(storeOrder).Property(x => x.UserExport).IsModified = false;
                 context.StoreProducts.AddRange(storeProductList);
-                context.SaveChanges();
+               // context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    var strError = new StringBuilder();
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        strError.AppendFormat(
+                            "Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            strError.AppendFormat("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    var temp = strError.ToString();
+                    throw e;
+                }
             }
 
             new Thread(() =>

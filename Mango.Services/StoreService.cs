@@ -45,7 +45,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã tạo mới store thành công"
+                Message = "Create store successfully!"
             };
 
             using (var context = new mangoEntities())

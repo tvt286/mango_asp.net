@@ -62,7 +62,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new CommandResult
                 {
                     Code = ResultCode.Fail,
-                    Message = "Vui lòng nhập giá bán lẻ (gía niêm yết) lớn hơn 500 đồng"
+                    Message = "Please import selling price > 500"
                 }, JsonRequestBehavior.AllowGet);
             }
 
@@ -72,7 +72,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new CommandResult
                 {
                     Code = ResultCode.Fail,
-                    Message = "Mã chỉ được nhập chữ, số và ký tự -_."
+                    Message = "Code only import letters, numbers and characters -_."
                 }, JsonRequestBehavior.AllowGet);
             }
 
@@ -82,7 +82,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Vui lòng chọn hình ảnh cho product!"
+                        Message = "Please import image product!"
                     }, JsonRequestBehavior.AllowGet);
                
             }
@@ -94,7 +94,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Vui lòng chọn hình ảnh cho product!"
+                        Message = "Please import image product!"
                     }, JsonRequestBehavior.AllowGet);
 
                 }

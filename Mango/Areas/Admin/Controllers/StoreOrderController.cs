@@ -161,7 +161,7 @@ namespace Mango.Areas.Admin.Controllers
             if (storeOrder.TimeImport.Value.Year < 1975 || storeOrder.TimeImport.Value.Year > DateTime.Now.Year)
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng kiểm tra lại ngày nhập";
+                result.Message = "Please check date import!";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
@@ -184,14 +184,14 @@ namespace Mango.Areas.Admin.Controllers
             if (importDetailList.Any(x => x.Quantity == 0))
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng nhập số lượng lớn hơn 0";
+                result.Message = "Please import quantity > 0";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
 
             storeOrder.Code = StoreOrderService.GenerateCode(StoreImExTypeCode.NhapTuNCC, null, storeOrder.RefStoreId,null);
             StoreOrderService.CreateWarehouseOrderImport(storeOrder, importDetailList);
-            result.Message = "Đã tạo lệnh nhập hàng thành công!";
+            result.Message = "Create order import successfully!";
             result.Url = Url.Action("StoreOrderImport", new { storeOrder.Code});
         
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -227,21 +227,21 @@ namespace Mango.Areas.Admin.Controllers
             if (storeOrder.RefStoreId == storeOrder.StoreId)
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Kho nhập và kho xuất không được trùng nhau";
+                result.Message = "Store import and store export not matched!";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
             if (storeOrder.TimeExport.Value.Year < 1975 || storeOrder.TimeExport.Value.Year > DateTime.Now.Year)
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng kiểm tra lại ngày xuất";
+                result.Message = "Please check date export!";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
             if (refStoreOrderImportDetailId == null)
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng nhập sản phẩm xuất";
+                result.Message = "Please import product export!";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
@@ -261,7 +261,7 @@ namespace Mango.Areas.Admin.Controllers
             if (exportDetailList.Any(x => x.Quantity == 0))
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng nhập số lượng lớn hơn 0";
+                result.Message = "Please import quantity > 0";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
@@ -269,7 +269,7 @@ namespace Mango.Areas.Admin.Controllers
             result = StoreOrderService.CreateStoreOrderExport(storeOrder, exportDetailList);
             if (result.Code == ResultCode.Success)
             {
-                result.Message = "Đã tạo lệnh xuất kho thành công!";
+                result.Message = "Create order export successfully!";
                 result.Url = Url.Action("WarehouseOrderExport");
                 
             }

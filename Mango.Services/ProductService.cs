@@ -46,7 +46,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã tạo sản phẩm thành công!"
+                Message = "Create product successfully!"
             };
             using (var context = new mangoEntities())
             {
@@ -57,7 +57,7 @@ namespace Mango.Services
                 if (context.Products.Any(x => x.Code == data.Code))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Mã này đã tồn tại trong hệ thống rồi, vui lòng kiểm tra lại!";
+                    result.Message = "Code already exists!";
                     return result;
                 }
                 data.UserCreateId = user.Id;
@@ -73,14 +73,14 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã cập nhật sản phẩm thành công!",
+                Message = "Update successfully!",
             };
             using (var context = new mangoEntities())
             {
                 if (context.Products.Any(x => x.Code == data.Code && x.Id != data.Id))
                 {
                     result.Code = ResultCode.Fail;
-                    result.Message = "Mã này đã tồn tại trong hệ thống rồi, vui lòng kiểm tra lại!";
+                    result.Message = "Code already exists!";
                     return result;
                 }
 
@@ -196,7 +196,7 @@ namespace Mango.Services
             var result = new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã xóa sản phẩm thành công!",
+                Message = "Delete product successfully!",
             };
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
@@ -206,17 +206,14 @@ namespace Mango.Services
                 {
                     var Id = int.Parse(productId);
                     var product = context.Products.First(x => x.Id == Id);
-                    //if (context.WarehouseProducts
-                    //    .Any(x => x.ProductId == product.Id
-                    //    && x.CompanyId == product.CompanyId
-                    //    && (x.QuantityExchange > 0 ||
-                    //    x.QuantityExchangeFail > 0 ||
-                    //    x.QuantityExchangeLose > 0)))
-                    //{
-                    //    result.Code = ResultCode.Fail;
-                    //    result.Message = "Sản phẩm này còn tồn trong kho không thể xóa được!";
-                    //    return result;
-                    //}
+                    if (context.StoreProducts
+                        .Any(x => x.ProductId == product.Id
+                        && (x.QuantityExchange > 0)))
+                    {
+                        result.Code = ResultCode.Fail;
+                        result.Message = "Sản phẩm này còn tồn trong kho không thể xóa được!";
+                        return result;
+                    }
 
                     product.IsDeleted = true;
                     product.TimeDeleted = DateTime.Now;

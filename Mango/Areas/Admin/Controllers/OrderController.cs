@@ -61,7 +61,7 @@ namespace Mango.Areas.Admin.Controllers
 
                 if (result.Code == ResultCode.Success)
                 {
-                    result.Message = "Đã tạo lệnh xuất bán thành công!";
+                    result.Message = "Create order export to customer successfully!";
                     result.Url = Url.Action("OrderWholeSale");
                 }
 
@@ -73,14 +73,14 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new RedirectCommand
                 {
                     Code = ResultCode.Fail,
-                    Message = "Vui lòng kiểm tra lại ngày xuất bán"
+                    Message = "Please check date export!"
                 });
             }
 
             if (refStoreOrderImportDetailId == null)
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng nhập sản phẩm để xuất bán";
+                result.Message = "Please import product!";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
@@ -101,7 +101,7 @@ namespace Mango.Areas.Admin.Controllers
             if (orderDetailList.Any(x => x.Quantity == 0))
             {
                 result.Code = ResultCode.Fail;
-                result.Message = "Vui lòng nhập số lượng lớn hơn 0";
+                result.Message = "Please import quantity > 0";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
@@ -113,8 +113,8 @@ namespace Mango.Areas.Admin.Controllers
 
             if (result.Code == ResultCode.Success)
             {
-                result.Message = "Đã tạo lệnh xuất bán thành công!";
-                result.Url = Url.Action("OrderWholeSale");
+                result.Message = "Create order export to customer successfully!";
+                result.Url = Url.Action("Index");
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

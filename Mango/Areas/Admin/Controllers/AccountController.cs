@@ -43,7 +43,7 @@ namespace Mango.Areas.Admin.Controllers
                 {
                     if (user.Status == UserStatus.InActive)
                     {
-                        ViewBag.Message = "Tài khoản đã bị khóa ! Vui lòng liên hệ IT để được trợ giúp .";
+                        ViewBag.Message = "Account locked!";
                         return View();
                     }
                     else
@@ -51,7 +51,6 @@ namespace Mango.Areas.Admin.Controllers
                         FormsAuthentication.SetAuthCookie(user.UserName, rememberMe);
                         if (string.IsNullOrEmpty(returnUrl))
                         {
-                            var operation = "Tài khoản " + user.UserName + " đã đăng nhập";
                             return RedirectToAction("Index", "Home");
                         }
                         else
@@ -60,7 +59,7 @@ namespace Mango.Areas.Admin.Controllers
                         }
                     }
                 }
-                ViewBag.Message = "Tên đăng nhập hay mật khẩu không hợp lệ";
+                ViewBag.Message = "Username or password is invalid!";
                 return View();
             }
         }
@@ -102,7 +101,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file hình!"
+                        Message = "Only upload file image!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 if (checkFile == UploadFileStatus.OverLimited)
@@ -110,7 +109,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file 5MB!"
+                        Message = "Only upload file image < 5MB!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 Bitmap bitmap = (Bitmap)Bitmap.FromStream(fileAttach.InputStream, true);
@@ -150,7 +149,7 @@ namespace Mango.Areas.Admin.Controllers
 
             return Json(new CommandResult()
             {
-                Message = "Cập nhật thông tin thành công"
+                Message = "Update successfully!"
             }, JsonRequestBehavior.AllowGet);
         }
     }

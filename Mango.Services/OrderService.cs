@@ -65,7 +65,7 @@ namespace Mango.Services
         {
             var result = new RedirectCommand
             {
-                Message = "Đã tạo lệnh xuất kho thành công!",
+                Message = "Create order export successfully!",
                 Code = ResultCode.Success
             };
             var user = UserService.GetUserInfo();
@@ -86,7 +86,7 @@ namespace Mango.Services
                      orderDetail.Product = refStoreOrderImportDetail.Product;
                      if (refStoreOrderImportDetail.Quantity < orderDetail.Quantity)
                     {
-                        result.Message = string.Format("Dòng thứ {0} đã nhập quá số lượng còn lại {1}",
+                        result.Message = string.Format("Line {0} import quantity > quantity remaining {1}",
                             number,
                             refStoreOrderImportDetail.Product.Name);
                         result.Code = ResultCode.Fail;

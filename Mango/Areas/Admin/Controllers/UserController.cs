@@ -64,7 +64,7 @@ namespace Mango.Areas.Admin.Controllers
             {
                 return
                 Json(
-                    new RedirectCommand() { Code = ResultCode.Fail, Message = "Vui lòng kiểm tra lại số điện thoại!" },
+                    new RedirectCommand() { Code = ResultCode.Fail, Message = "Please check the phone number!" },
                     JsonRequestBehavior.AllowGet);
             }
 
@@ -90,7 +90,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file hình!"
+                        Message = "Only upload file image!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 if (checkFile == UploadFileStatus.OverLimited)
@@ -98,7 +98,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Chỉ được up file 5MB!"
+                        Message = "Only upload file image less 5MB"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 fileAttach.SaveAs(pathFile);
@@ -113,7 +113,7 @@ namespace Mango.Areas.Admin.Controllers
                     return Json(new CommandResult
                     {
                         Code = ResultCode.Fail,
-                        Message = "Vui lòng nhập mật khẩu!"
+                        Message = "Please import password!"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 model.Image = sourceFile;
@@ -176,7 +176,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(new RedirectCommand
                 {
                     Code = ResultCode.Fail,
-                    Message = "Không có quản trị viên nào để xóa!",
+                    Message = "No admin to delete!",
                 }, JsonRequestBehavior.AllowGet);
             }
 
@@ -184,7 +184,7 @@ namespace Mango.Areas.Admin.Controllers
             return Json(new RedirectCommand
             {
                 Code = ResultCode.Success,
-                Message = "Đã xóa quản trị viên thành công!",
+                Message = "Deleted successfully!",
                 Url = Url.Action("Index")
             }, JsonRequestBehavior.AllowGet);
         }

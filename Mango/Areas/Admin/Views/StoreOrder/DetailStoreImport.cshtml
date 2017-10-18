@@ -70,6 +70,8 @@
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(x => x.Code, null, new { @class = "form-control", placeholder = "Auto create" })
                                     @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
+                                    @Html.HiddenFor(x => x.Code)
+
                                 </div>
                             }
 
@@ -80,6 +82,7 @@
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.TimeImport, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(x => x.TimeImport)
                             </div>
                         </div>
                         <div class="form-group">
@@ -92,6 +95,7 @@
                             <div class="col-md-4">
                                 @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                 @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(x => x.RefStoreId)
                             </div>
                         </div>
                         @if (Model.Id != 0 && ViewBag.IsConfirm)
@@ -102,6 +106,7 @@
                                 <div class="col-md-4">
                                     @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
                                     @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(x => x.StoreId)
                                 </div>
                             </div>
                         }
@@ -267,7 +272,7 @@
     {
         <script type="text/javascript">
             $(function () {
-                $("input").not("[type=submit]").attr("disabled", "disabled");
+                $("input").not("[type=submit]").not("[type=hidden]").attr("disabled", "disabled");
                 $("select").attr("disabled", "disabled");
                 $("textarea").attr("disabled", "disabled");
             })
