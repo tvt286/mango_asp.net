@@ -71,12 +71,12 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name<span style="color: Red">*</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" })
                                     @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                                 </div>
                                 <label class="control-label col-md-2">Email<span style="color: Red">*</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                                 </div>
@@ -86,7 +86,7 @@
                                 {
                                     <label class="control-label col-md-2">Username<span style="color: Red">*</span></label>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" })
                                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                                     </div>
                                 }
@@ -128,7 +128,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Status<span style="color: Red">*</span></label>
                                 <div class="col-md-4">
-                                    @Html.EnumDropDownList("Status", Model.Status, typeof(UserStatus), true, "", new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" }, "-- Status --")
+                                    @Html.EnumDropDownList("Status", Model.Status, typeof(UserStatus), true, "", new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" }, "-- Status --")
                                     @Html.ValidationMessageFor(x => x.Status)
                                 </div>
                                 <label class="control-label col-md-2">Image</label>

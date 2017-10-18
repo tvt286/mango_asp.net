@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Name<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name", data_val = "true", data_val_required = "This is field required" })
                                     @Html.ValidationMessageFor(model => model.Name)
                                 </div>
                             </div>
@@ -110,8 +110,8 @@
                             </div>
                             @*<div class="form-group">
                         <div class="col-md-offset-2 col-md-4">
-                            <input type="submit" value="Lưu" class="btn btn-primary" />
-                            @Html.ActionLink("Thoát", "Index", null, new { @class = "btn btn-white" })
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
                         </div>
                     </div>*@
                         </div>

@@ -62,7 +62,7 @@
                             <label class="control-label col-md-2">Time export<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
                                 <div class="input-group date">
-                                    @Html.TextBoxFor(x => x.TimeExport, new { @class = "form-control", data_val = "false", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(x => x.TimeExport, new { @class = "form-control", data_val = "false", data_val_required = "This is field required" })
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.TimeExport, "", new { @class = "text-danger" })
@@ -71,13 +71,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-2">Store export<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.DropDownListFor(x => x.StoreId, null, "-- Store export --", new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
                                 @Html.ValidationMessageFor(x => x.StoreId, "", new { @class = "text-danger" })
                             </div>
 
                             <label class="control-label col-md-2">Store import<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.DropDownListFor(x => x.RefStoreId, null, "-- Store import --", new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
                                 @Html.ValidationMessageFor(x => x.RefStoreId, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -86,7 +86,7 @@
 
                             <label class="control-label col-md-2">User export<span style="color: Red">(*)</span></label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.UserExportId, null, "-- Người nhập --", new { @class = "form-control", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                @Html.DropDownListFor(x => x.UserExportId, null, "-- Người nhập --", new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
                                 @Html.ValidationMessageFor(x => x.UserExportId, "", new { @class = "text-danger" })
                             </div>
 

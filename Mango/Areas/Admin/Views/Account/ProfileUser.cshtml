@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">Tên người dùng<span style="color: Red">(*)</span></label>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control ", data_val = "true", data_val_required = "Thông tin bắt buộc" })
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" })
                                     @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                                 </div>
                                 <label class="control-label col-md-2">Email</label>
