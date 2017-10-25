@@ -76,8 +76,8 @@
         </table>
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
         @Html.PagedListPager(Model, page =>
-{
-    Model.SearchModel.PageIndex = page;
+   {
+       Model.SearchModel.PageIndex = page;
     return Url.Action("Index", "StoreProduct", Model.SearchModel);
 },
         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))

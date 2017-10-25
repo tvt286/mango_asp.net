@@ -12,15 +12,16 @@
     
     ViewBag.Title = "Create Order";
     var action = "CreateOrder";
+    
     if(Model.Id != 0 && Model.Status == OrderStatus.Confirm)
     {
         ViewBag.Title = "Confirm";
-        action = "ChangeStatus";
+        action = "Confirm";
     }
     else if (Model.Id != 0 && Model.Status == OrderStatus.Pending)
     {
         ViewBag.Title = "Pending";
-        action = "ChangeStatus";
+        action = "Completed";
     }
     else if (Model.Id != 0 && Model.Status == OrderStatus.Complete)
     {
@@ -50,15 +51,15 @@
             <div class="clearfix"></div>
             @if (Model.Id != 0 && Model.Status == OrderStatus.Confirm && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
             {
-                <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>
+                <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Confirm</a>
             }
             else if (Model.Id != 0 && Model.Status == OrderStatus.Pending && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
             {
-                 <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Complete</a>
+                 <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Complete</a>
             }
             else if (Model.Id == 0 && (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany))
             {
-                <a style="margin-right:10px" onclick="$('#btCreate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
+                <a style="margin-right:10px" onclick="$('#btUpdate').click()" class="btn btn-primary waves-effect waves-light m-t-sm">Save</a>
             }
             
             @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default waves-effect m-t-sm" })
@@ -217,11 +218,19 @@
                             </table>
                         </div>
 
-
-                        @if (Model.Id == 0)
+                        @if (Model.Id != 0 && Model.Status == OrderStatus.Confirm && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
+                        {
+                            <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Confirm" />
+                        }
+                        else if (Model.Id != 0 && Model.Status == OrderStatus.Pending && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
+                        {
+                            <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Complete" />
+                        }
+                        else if (Model.Id == 0 && (UserPermission.Has(Permission.Order_Create) || user.IsAdminCompany))
                         {
                             <input class="btn btn-primary m-t-sm" type="submit" id="btUpdate" value="Save" />
                         }
+                      
                         @Html.ActionLink("Cancel", "Index", null, htmlAttributes: new { @class = "btn btn-default m-t-sm", role = "button" })
                     </div>
                 </div>
@@ -255,17 +264,8 @@
     @if (Model.Id != 0 && !UserPermission.Has(Permission.Order_Create) && !user.IsAdminCompany)
     {
         <script type="text/javascript">
-            $("input").attr("disabled", "disabled");
-            $("select").attr("disabled", "disabled");
-            $("textarea").attr("disabled", "disabled");
-        </script>
-    }
-
-    @if (Model.Id != 0)
-    {
-        <script type="text/javascript">
             $(function () {
-                $("input").attr("disabled", "disabled");
+              //  $("input").attr("disabled", "disabled");
                 $("select").attr("disabled", "disabled");
                 //$("textarea").attr("disabled", "disabled");
                 $("body").addClass("mini-navbar");

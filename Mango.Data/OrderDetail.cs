@@ -24,7 +24,7 @@ namespace Mango.Data
         public decimal MainSupplierPrice { get; set; }
     
         public virtual Order Order { get; set; }
-        public virtual StoreOrderImportDetail StoreOrderImportDetail { get; set; }
         public virtual Product Product { get; set; }
+        public virtual StoreOrderImportDetail StoreOrderImportDetail { get; set; }
     }
 }

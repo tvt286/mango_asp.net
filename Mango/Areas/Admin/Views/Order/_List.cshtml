@@ -83,18 +83,17 @@
                         }
                         else 
                         {
-                            <label style="color:green">Comleted</label>
+                            <label style="color:green">Completed</label>
                         }
                     </td>
                     <td>
-
                         @if (item.Status == OrderStatus.Confirm && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
                         {
                             <a href="@Url.Action("Detail", new { id = item.Id })">Confirm</a>
                         }
                         else if (item.Status == OrderStatus.Pending && (UserPermission.Has(Permission.Order_Confirm) || user.IsAdminCompany))
                         {
-                            <a href="@Url.Action("Detail", new { id = item.Id })">View</a>
+                            <a href="@Url.Action("Detail", new { id = item.Id })">Complete</a>
                         }
                         else
                         {

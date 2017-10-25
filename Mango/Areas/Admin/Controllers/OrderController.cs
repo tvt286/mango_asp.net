@@ -28,6 +28,31 @@ namespace Mango.Areas.Admin.Controllers
             return PartialView("_List", pagedList);
         }
 
+        public ActionResult Confirm(int id)
+        {
+            var result = new RedirectCommand();
+
+            OrderService.ConfirmOrder(id);
+
+            result.Code = ResultCode.Success;
+            result.Message = "Confirm order successfully!";
+            result.Url = Url.Action("Index");
+           
+           return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Completed(int id)
+        {
+            var result = new RedirectCommand();
+
+            OrderService.setCompleteOrder(id);
+
+            result.Code = ResultCode.Success;
+            result.Message = "Order completed!";
+            result.Url = Url.Action("Index");
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         [AuthorizeAdmin(Permissions = new[] { Permission.Order_View, Permission.Order_Create })]
         public ActionResult Detail(int? id)
@@ -52,7 +77,7 @@ namespace Mango.Areas.Admin.Controllers
 
         [AuthorizeAdmin(Permissions = new[] { Permission.Order_Create })]
         public ActionResult CreateOrder(Order order, int[] productId,
-           int[] quantityRequestExport, int[] refStoreOrderImportDetailId, int[] price)
+           int[] quantityRequestExport, int[] refStoreOrderImportDetailId, int[] sellingPrice)
         {
         
             var result = new RedirectCommand();
@@ -84,6 +109,7 @@ namespace Mango.Areas.Admin.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
+            // danh sách sản phẩm bán
             var orderDetailList = new List<OrderDetail>();
             for (int i = 0; i < productId.Length; i++)
             {
@@ -92,7 +118,7 @@ namespace Mango.Areas.Admin.Controllers
                     ProductId = productId[i],
                     Quantity = quantityRequestExport[i],
                     RefStoreOrderImportDetailId = refStoreOrderImportDetailId[i],
-                    SellingPrice = price[i]
+                    SellingPrice = sellingPrice[i]
                 };
 
                 orderDetailList.Add(orderDetail);

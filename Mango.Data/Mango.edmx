@@ -890,7 +890,6 @@
             <End Role="StoreOrder" EntitySet="StoreOrders" />
           </AssociationSet>
           <EntitySet Name="Orders" EntityType="mangoModel.Order" />
-          <EntitySet Name="OrderDetails" EntityType="mangoModel.OrderDetail" />
           <AssociationSet Name="FK__Order__CustomerI__3C34F16F" Association="mangoModel.FK__Order__CustomerI__3C34F16F">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
@@ -899,22 +898,10 @@
             <End Role="Store" EntitySet="Stores" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__Order__3B40CD36" Association="mangoModel.FK__OrderDeta__Order__3B40CD36">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__RefSt__4D5F7D71" Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71">
-            <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetails" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
           <EntitySet Name="Products" EntityType="mangoModel.Product" />
           <AssociationSet Name="FK__Product__Categor__47DBAE45" Association="mangoModel.FK__Product__Categor__47DBAE45">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__Produ__3A4CA8FD" Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__Product__UserCre__48CFD27E" Association="mangoModel.FK__Product__UserCre__48CFD27E">
             <End Role="User" EntitySet="Users" />
@@ -931,6 +918,19 @@
           <AssociationSet Name="FK__StoreProd__Produ__19DFD96B" Association="mangoModel.FK__StoreProd__Produ__19DFD96B">
             <End Role="Product" EntitySet="Products" />
             <End Role="StoreProduct" EntitySet="StoreProducts" />
+          </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="mangoModel.OrderDetail" />
+          <AssociationSet Name="FK__OrderDeta__Order__3B40CD36" Association="mangoModel.FK__OrderDeta__Order__3B40CD36">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Produ__3A4CA8FD" Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__RefSt__4D5F7D71" Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71">
+            <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetails" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
           </EntityContainer>
         <EnumType Name="UserStatus">
@@ -1310,8 +1310,8 @@
           <NavigationProperty Name="StoreOrderExportDetails" Relationship="mangoModel.FK__StoreOrde__RefSt__1EA48E88" FromRole="StoreOrderImportDetail" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreOrderExportDetail" Relationship="mangoModel.FK__StoreOrde__RefSt__2A164134" FromRole="StoreOrderImportDetail" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreOrder" Relationship="mangoModel.FK__StoreOrde__Store__1BC821DD" FromRole="StoreOrderImportDetail" ToRole="StoreOrder" />
-          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="StoreOrderImportDetail" ToRole="OrderDetail" />
           <NavigationProperty Name="Product" Relationship="mangoModel.FK__StoreOrde__Produ__1CBC4616" FromRole="StoreOrderImportDetail" ToRole="Product" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="StoreOrderImportDetail" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK__StoreOrde__RefSt__1EA48E88">
           <End Type="mangoModel.StoreOrderImportDetail" Role="StoreOrderImportDetail" Multiplicity="1" />
@@ -1445,24 +1445,8 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="mangoModel.FK__Order__CustomerI__3C34F16F" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="Store" Relationship="mangoModel.FK__Order__StoreId__3D2915A8" FromRole="Order" ToRole="Store" />
-          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="Order" ToRole="OrderDetail" />
           <Property Name="Status" Type="mangoModel.OrderStatus" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Order" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="OrderDetail" ToRole="Order" />
-          <Property Name="RefStoreOrderImportDetailId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StoreOrderImportDetail" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="OrderDetail" ToRole="StoreOrderImportDetail" />
-          <Property Name="SupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="MainSupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Product" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK__Order__CustomerI__3C34F16F">
           <End Type="mangoModel.User" Role="User" Multiplicity="1" />
@@ -1488,18 +1472,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderDeta__Order__3B40CD36">
-          <End Type="mangoModel.Order" Role="Order" Multiplicity="1" />
-          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EnumType Name="OrderStatus">
           <Member Name="Confirm" Value="0" />
           <Member Name="Pending" Value="1" />
@@ -1509,18 +1481,6 @@
           <Member Name="BackEnd" Value="0" />
           <Member Name="FrontEnd" Value="1" />
         </EnumType>
-        <Association Name="FK__OrderDeta__RefSt__4D5F7D71">
-          <End Type="mangoModel.StoreOrderImportDetail" Role="StoreOrderImportDetail" Multiplicity="1" />
-          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StoreOrderImportDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="RefStoreOrderImportDetailId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -1540,11 +1500,11 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="User" Relationship="mangoModel.FK__Product__UserCre__48CFD27E" FromRole="Product" ToRole="User" />
           <NavigationProperty Name="StoreOrderImportDetails" Relationship="mangoModel.FK__StoreOrde__Produ__1CBC4616" FromRole="Product" ToRole="StoreOrderImportDetail" />
           <NavigationProperty Name="StoreOrderExportDetails" Relationship="mangoModel.FK__StoreOrde__Produ__1F98B2C1" FromRole="Product" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreProducts" Relationship="mangoModel.FK__StoreProd__Produ__19DFD96B" FromRole="Product" ToRole="StoreProduct" />
+          <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK__Product__Categor__47DBAE45">
           <End Type="mangoModel.Category" Role="Category" Multiplicity="1" />
@@ -1555,18 +1515,6 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OrderDeta__Produ__3A4CA8FD">
-          <End Type="mangoModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1615,6 +1563,58 @@
             </Principal>
             <Dependent Role="StoreProduct">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="RefStoreOrderImportDetailId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MainSupplierPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="mangoModel.FK__OrderDeta__Order__3B40CD36" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="StoreOrderImportDetail" Relationship="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" FromRole="OrderDetail" ToRole="StoreOrderImportDetail" />
+        </EntityType>
+        <Association Name="FK__OrderDeta__Order__3B40CD36">
+          <End Type="mangoModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Produ__3A4CA8FD">
+          <End Type="mangoModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__RefSt__4D5F7D71">
+          <End Type="mangoModel.StoreOrderImportDetail" Role="StoreOrderImportDetail" Multiplicity="1" />
+          <End Type="mangoModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreOrderImportDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="RefStoreOrderImportDetailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1834,20 +1834,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="mangoModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetail">
-                <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
-                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
-                <ScalarProperty Name="RefStoreOrderImportDetailId" ColumnName="RefStoreOrderImportDetailId" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="mangoModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -1864,6 +1850,20 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="mangoModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
+                <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+                <ScalarProperty Name="RefStoreOrderImportDetailId" ColumnName="RefStoreOrderImportDetailId" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

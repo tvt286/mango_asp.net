@@ -54,9 +54,47 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {              
                     return context.Orders
+                        .Include(x => x.OrderDetails.Select(d => d.StoreOrderImportDetail))
                         .Include(x => x.OrderDetails.Select(d => d.Product.Category))
                         .Include(x => x.Customer)
                         .First(x => x.Id == id);             
+            }
+        }
+
+        public static void ConfirmOrder(int id)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var order =  context.Orders
+                    .Include(x => x.OrderDetails.Select(d => d.StoreOrderImportDetail))
+                    .First(x => x.Id == id);
+
+                order.Status = OrderStatus.Pending;
+                foreach (var item in order.OrderDetails)
+                {
+                    var refStoreOrderImportDetail = context.StoreOrderImportDetails.Include(x => x.Product).First(
+                          x => x.Id == item.RefStoreOrderImportDetailId);
+                    refStoreOrderImportDetail.Quantity -= item.Quantity; // trừ số lượng trong kho
+
+                }
+               
+                context.SaveChanges();
+
+                StoreOrderService.UpdateQuantityStoreProduct(order.StoreId,
+                order.OrderDetails.Select(x => x.ProductId).Distinct().ToArray());
+            }
+        }
+
+        public static void setCompleteOrder(int id)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var order = context.Orders
+                    .First(x => x.Id == id);
+                order.Status = OrderStatus.Complete;
+               
+                context.SaveChanges();
+
             }
         }
 
@@ -77,25 +115,24 @@ namespace Mango.Services
                 foreach (var orderDetail in orderDetailList)
                 {
                   
-                     var refStoreOrderImportDetail =
-                        context.StoreOrderImportDetails.Include(x => x.Product).First(
+                     var refStoreOrderImportDetail = context.StoreOrderImportDetails.Include(x => x.Product).First(
                             x => x.Id == orderDetail.RefStoreOrderImportDetailId);
 
                      orderDetail.MainSupplierPrice = refStoreOrderImportDetail.MainSupplierPrice;
 
                      orderDetail.Product = refStoreOrderImportDetail.Product;
                      if (refStoreOrderImportDetail.Quantity < orderDetail.Quantity)
-                    {
-                        result.Message = string.Format("Line {0} import quantity > quantity remaining {1}",
-                            number,
-                            refStoreOrderImportDetail.Product.Name);
-                        result.Code = ResultCode.Fail;
-                        return result;
-                    }
+                        {
+                            result.Message = string.Format("Line {0} import quantity > quantity remaining {1}",
+                                number,
+                                refStoreOrderImportDetail.Product.Name);
+                            result.Code = ResultCode.Fail;
+                            return result;
+                        }
                     number++;
                   
 
-                 //   refStoreOrderImportDetail.Quantity -= orderDetail.Quantity;
+                 //   refStoreOrderImportDetail.Quantity -= orderDetail.Quantity; // trừ số lượng trong kho
                    
                     //refStoreOrderImportDetail.QuantityExchangeExport += orderDetail.QuantityExchange;
 
