@@ -12,29 +12,22 @@ namespace Mango.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Menu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Menu()
         {
-            this.Products = new HashSet<Product>();
+            this.Categories = new HashSet<Category>();
         }
     
         public int Id { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
+        public string Url { get; set; }
         public System.DateTime TimeCreate { get; set; }
-        public Nullable<System.DateTime> TimeUpdate { get; set; }
-        public int UserCreateId { get; set; }
-        public Nullable<System.DateTime> TimeDeleted { get; set; }
-        public bool IsDeleted { get; set; }
-        public int MenuId { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public string Image { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual Menu Menu { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

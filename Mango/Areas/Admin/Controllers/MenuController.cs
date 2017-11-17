@@ -14,17 +14,18 @@ using System.Web.Mvc;
 
 namespace Mango.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class MenuController : Controller
     {
+
         // GET: Category
-        [AuthorizeAdmin(Permissions = new[] {Permission.Category_View, Permission.Category_Create})]
-        public ActionResult Index(CategorySearchModel searchModel)
+        [AuthorizeAdmin(Permissions = new[] { Permission.Category_View, Permission.Category_Create })]
+        public ActionResult Index(MenuSearchModel searchModel)
         {
             if (Request.HttpMethod == "GET")
             {
                 return View(searchModel);
             }
-            var pagedList = CategoryService.Search(searchModel.Code, searchModel.Name, searchModel.Description, searchModel.PageSize, searchModel.PageIndex);
+            var pagedList = MenuService.Search(searchModel.Name, searchModel.PageSize, searchModel.PageIndex);
             pagedList.SearchModel = searchModel;
             return PartialView("_List", pagedList);
         }
@@ -36,45 +37,33 @@ namespace Mango.Areas.Admin.Controllers
         {
             var user = UserService.GetUserInfo();
             ViewBag.User = user;
-            var data = new Category();
-         
+            var data = new Menu();
+
             if (id.HasValue)
             {
-                data = CategoryService.Get(id.Value);
+                data = MenuService.Get(id.Value);
             }
-            ViewBag.MenuId = new SelectList(MenuService.GetAll(), "Id", "Name", data.MenuId);
 
             return PartialView("_Detail", data);
         }
 
         [AuthorizeAdmin(Permission = Permission.Category_Create)]
-        public ActionResult Create(Category model, HttpPostedFileBase fileAttach)
+        public ActionResult Create(Menu model, HttpPostedFileBase fileAttach)
         {
             RedirectCommand result;
-            var operation = String.Empty;
-
-            if (model.Code != null && !model.Code.IsCode())
-            {
-                return Json(new RedirectCommand
-                {
-                    Code = ResultCode.Fail,
-                    Message = "Code only import letters, numbers and characters -_."
-                }, JsonRequestBehavior.AllowGet);
-            }
-
             var sourceFile = "";
             if (fileAttach != null)
             {
-                if (!Directory.Exists(Server.MapPath("~/content/Upload/Category")))
+                if (!Directory.Exists(Server.MapPath("~/content/Upload/Menu")))
                 {
-                    Directory.CreateDirectory(Server.MapPath("~/content/Upload/Category"));
+                    Directory.CreateDirectory(Server.MapPath("~/content/Upload/Menu"));
                 }
 
                 var fileName = Utility.ConvertToUnsign(Path.GetFileNameWithoutExtension(fileAttach.FileName))
                         .Replace("&", "")
                         .Replace("?", "")
                         .Replace(" ", "-") + "-" + Guid.NewGuid() + Path.GetExtension(fileAttach.FileName);
-                sourceFile = string.Format("~/content/Upload/Category/{0}", fileName);
+                sourceFile = string.Format("~/content/Upload/Menu/{0}", fileName);
                 var pathFile = Server.MapPath(sourceFile);
                 var checkFile = UploadHelper.CheckImageUpload(fileAttach);
                 if (checkFile == UploadFileStatus.NotSupportExtension)
@@ -101,7 +90,7 @@ namespace Mango.Areas.Admin.Controllers
             if (model.Id == 0)
             {
                 model.Image = sourceFile;
-                result = CategoryService.Create(model);
+                result = MenuService.Create(model);
                 if (result.Code == ResultCode.Success)
                 {
                     result.Url = Url.Action("Index");
@@ -109,7 +98,8 @@ namespace Mango.Areas.Admin.Controllers
                 return
                     Json(result, JsonRequestBehavior.AllowGet);
             }
-            var data = CategoryService.Get(model.Id);
+
+            var data = MenuService.Get(model.Id);
             if (sourceFile.NotEmpty())
             {
                 if (data.Image.NotEmpty())
@@ -126,7 +116,8 @@ namespace Mango.Areas.Admin.Controllers
                 data.Image = sourceFile;
             }
             TryUpdateModel(data);
-            result = CategoryService.Update(data);
+            result = MenuService.Update(data);
+
             if (result.Code == ResultCode.Success)
             {
                 result.Url = Url.Action("Index");
@@ -135,9 +126,9 @@ namespace Mango.Areas.Admin.Controllers
                     Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Delete(string categoryId)
+        public ActionResult Delete(string menuId)
         {
-            var result = CategoryService.DeleteCategory(categoryId);
+            var result = MenuService.DeleteMenu(menuId);
             if (result.Code == ResultCode.Success)
             {
                 result.Url = Url.Action("Index");

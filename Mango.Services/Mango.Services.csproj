@@ -63,6 +63,7 @@
     <Compile Include="CategoryService.cs" />
     <Compile Include="GroupPermissionService.cs" />
     <Compile Include="LocationService.cs" />
+    <Compile Include="MenuService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="PagedSearchResult.cs" />
     <Compile Include="ProductService.cs" />

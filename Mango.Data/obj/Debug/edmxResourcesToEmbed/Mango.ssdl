@@ -14,6 +14,7 @@
     <Property Name="UserCreateId" Type="int" Nullable="false" />
     <Property Name="TimeDeleted" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="City">
     <Key>
@@ -56,6 +57,17 @@
     </Key>
     <Property Name="GroupId" Type="int" Nullable="false" />
     <Property Name="PermissionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Url" Type="nvarchar" MaxLength="50" />
+    <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="Image" Type="nvarchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -229,6 +241,18 @@
     <Property Name="Lng" Type="float" Nullable="false" />
     <Property Name="DistrictId" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK__Category__MenuId__76619304">
+    <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+    <End Role="Category" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Category__UserCr__49C3F6B7">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Category" Type="Self.Category" Multiplicity="*" />
@@ -631,6 +655,7 @@
     <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group_Permission" EntityType="Self.Group_Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -644,6 +669,10 @@
     <EntitySet Name="User_Group" EntityType="Self.User_Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Permission" EntityType="Self.User_Permission" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ward" EntityType="Self.Ward" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Category__MenuId__76619304" Association="Self.FK__Category__MenuId__76619304">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="Category" EntitySet="Category" />
+    </AssociationSet>
     <AssociationSet Name="FK__Category__UserCr__49C3F6B7" Association="Self.FK__Category__UserCr__49C3F6B7">
       <End Role="User" EntitySet="User" />
       <End Role="Category" EntitySet="Category" />

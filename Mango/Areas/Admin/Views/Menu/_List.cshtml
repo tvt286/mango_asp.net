@@ -1,0 +1,111 @@
+﻿@using Mango.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Client.Common
+@using Mango.Web
+@using PagedList.Mvc;
+@model Mango.Services.PagedSearchList<Mango.Data.Menu>
+
+    @{
+        var user = UserService.GetUserInfo();
+    }
+
+
+    <div class="">
+        <h5 class="m-t-lg">Has @Model.TotalItemCount item</h5>
+    </div>
+    <table class="table table-striped table-colored table-info table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+         
+                <th>
+                    Name
+                </th>           
+                <th>
+                    Date create
+                </th>
+
+                <th data-sorter="false">
+
+                </th>
+
+                @if (UserPermission.Has(Permission.Category_Delete) || user.IsAdminCompany)
+                {
+                    <th data-sorter="false">
+                        <a href="javascript:void(0)" onclick="DeleteMenu()">
+                            <i class="fa fa-times" style="color: red"></i>
+                        </a>
+                    </th>
+                }
+            </tr>
+        </thead>
+        @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(index++)
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>              
+                    <td>
+                        @item.TimeCreate.ToString("MM-yyyy")
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="Detail(@item.Id)">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+
+                    @if (UserPermission.Has(Permission.Category_Delete) || user.IsAdminCompany)
+                    {
+                        <td>
+                            <input style="margin:auto" type="checkbox" class="checkbox checkbox-danger checkbox-circle" name="deleteMenuId" value="@item.Id" />
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page =>
+{
+    Model.SearchModel.PageIndex = page;
+    return Url.Action("Index", Model.SearchModel);
+},
+                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxCommonOption() { HttpMethod = "POST", UpdateTargetId = "content" }))
+    <script type="text/javascript">
+        $(function () {
+            InitSortTable();
+        });
+
+        function DeleteMenu() {
+            var callFunc = function () {
+                var menuStr = "";
+
+                $.each($("input[name=deleteMenuId]:checked"),
+                    function (index, element) {
+                        menuStr += $(element).val() + ",";
+                    });
+
+                $.post('@Url.Action("Delete", "Menu")',
+                    {
+                        menuId: menuStr
+                    },
+                    function (data) {
+                        debugger;
+                        OnSuccessAjax(data);
+                    });
+            };
+
+            ConfirmPopup("Bạn thực sự muốn xóa menu",
+                "Menu này sẽ được xóa khỏi hệ thống",
+                callFunc
+                );
+
+        }
+    </script>

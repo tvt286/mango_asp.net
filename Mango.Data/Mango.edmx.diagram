@@ -54,6 +54,8 @@
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Order__3B40CD36" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" />
+        <EntityTypeShape EntityType="mangoModel.Menu" Width="1.5" PointX="0.75" PointY="6.875" />
+        <AssociationConnector Association="mangoModel.FK__Category__MenuId__76619304" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

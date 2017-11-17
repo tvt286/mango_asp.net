@@ -88,6 +88,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Mango.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Menu.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>

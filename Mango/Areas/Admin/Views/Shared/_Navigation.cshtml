@@ -55,6 +55,12 @@
                     <ul class="list-unstyled">
                         @if (UserPermission.Has(Permission.Category_View) || UserPermission.Has(Permission.Category_Create) || user.IsAdminCompany)
                         {
+      
+                            <li class="@Html.IsSelected(action: "Index", controller: "Menu")"><a href="@Url.Action("Index", "Menu")">Menu</a></li>
+
+                        }
+                        @if (UserPermission.Has(Permission.Category_View) || UserPermission.Has(Permission.Category_Create) || user.IsAdminCompany)
+                        {
                             <li class="@Html.IsSelected(action: "Index", controller: "Category")"><a href="@Url.Action("Index", "Category")">Category</a></li>
                         }
                         @if (UserPermission.Has(Permission.Product_Create) || UserPermission.Has(Permission.Product_View) || user.IsAdminCompany)
@@ -96,7 +102,8 @@
                     <li class="@Html.IsSelected(action: "Index, Detail", controller: "Store") ">
                         <a href="@Url.Action("Index", "Store")" class="waves-effect"><i class="mdi mdi-home"></i><span> Store </span></a>
                     </li>  
-                }    
+                }
+
             </ul>
         </div>
         <!-- Sidebar -->

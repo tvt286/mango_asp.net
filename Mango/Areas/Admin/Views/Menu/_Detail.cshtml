@@ -5,31 +5,15 @@
 @using Mango.Common
 @using Mango.Data.Enums
 @using Mango.Services
-@model Category
+@model Menu
 @{
     var user = UserService.GetUserInfo();
 }
-@using (Ajax.BeginForm("Create", "Category", null, new AjaxCommonOption { OnSuccess = "CreateCategorySuccess" }, new { role = "form", id = "CreateCategoryForm", enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("Create", "Menu", null, new AjaxCommonOption { OnSuccess = "CreateMenuSuccess" }, new { role = "form", id = "CreateMenuForm", enctype = "multipart/form-data" }))
 {
     <input type="hidden" name="Id" value="@Model.Id" />
     <div class="modal-body">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="field-1" class="control-label">Code<span style="color: Red">*</span></label>
-                    @if(Model.Id == 0)
-                    {
-                         @Html.TextBoxFor(x => x.Code, new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
-                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-                    }
-                    else
-                    {
-                         @Html.TextBoxFor(x => x.Code, new {@disabled = "disabled", @class = "form-control", data_val = "true", data_val_required = "This is field required" })
-                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-                    }
-                </div>
-            </div>
-        </div>
+      
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
@@ -39,27 +23,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="field-1" class="control-label">Menu<span style="color: Red">*</span></label>
-                    @Html.DropDownListFor(x => x.MenuId, null, "-- Menu --", new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
-                    @Html.ValidationMessageFor(model => model.MenuId, "", new { @class = "text-danger" })
-                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="field-1" class="control-label">Description<span style="color: Red">*</span></label>
-                    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
@@ -70,7 +33,7 @@
                         <img src="@(Model.Image.NotEmpty() ? Url.Content(Model.Image) : "")" style="@(Model.Image.NotEmpty() ? "" : "display: none")" width="150" id="blah" />
                     </div>
 
-                 </div>
+                </div>
             </div>
         </div>
 
@@ -80,7 +43,7 @@
         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>'
         @if (UserPermission.Has(Permission.Category_Create) || user.IsAdminCompany)
         {
-                <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
         }
     </div>
 }
@@ -93,12 +56,12 @@
     </script>
 }
 <script type="text/javascript">
-    jQuery.validator.unobtrusive.parse('#CreateCategoryForm');
+    jQuery.validator.unobtrusive.parse('#CreateMenuForm');
     $(function () {
         //jQuery.validator.unobtrusive.parse('#CreateCompanyForm');
     });
 
-    function CreateCategorySuccess(data) {
+    function CreateMenuSuccess(data) {
         if (data.Code == 0) {
             data.callFunc = function () {
                 $('#myModal').modal('hide');
@@ -130,14 +93,14 @@
         }
     }
 
-   
+
 
     $("#Image")
           .change(function () {
               readURL(this);
               $('#blah').show();
           });
-   
+
     function inItUploadAjaxForm(successFunction) {
         window.addEventListener("submit", function (e) {
 

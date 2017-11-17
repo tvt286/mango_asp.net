@@ -145,6 +145,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreController.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
     <Compile Include="Areas\Admin\Models\GroupPermissionModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\MenuSearchModel.cs" />
     <Compile Include="Areas\Admin\Models\OrderViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\StoreModel.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Common\AjaxCommonOption.cs" />
     <Compile Include="Common\EnumUtil.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -538,6 +541,9 @@
     <Content Include="Areas\Admin\Views\Order\_List.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\StoreOrder\_StoreOrderImportDetailToCreateOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\_Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\_List.cshtml" />
     <None Include="Scripts\Admin\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.js" />
     <Content Include="Scripts\Admin\jquery-1.10.2.min.js" />
@@ -688,6 +694,9 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\_Banner.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
