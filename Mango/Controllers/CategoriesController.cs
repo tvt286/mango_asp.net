@@ -7,20 +7,15 @@ using System.Web.Mvc;
 
 namespace Store.Controllers
 {
-    public class ProductsController : Controller
+    public class CategoriesController : Controller
     {
         //
-        // GET: /Product/
+        // GET: /Categories/
         public ActionResult Index(int? id)
         {
             var category = CategoryService.Get(id.Value);
 
-            return View(category);
-        }
-
-        public ActionResult Detail()
-        {
-            return View();
+            return View("Index",category);
         }
 	}
 }

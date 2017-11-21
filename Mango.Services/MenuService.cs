@@ -24,7 +24,7 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Menus.Where(x => x.IsDeleted == false).AsNoTracking().ToList();
+                return context.Menus.Where(x => x.IsDeleted == false).Include(x => x.Categories).AsNoTracking().ToList();
             }
         }
 

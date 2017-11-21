@@ -16,7 +16,7 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Categories.First(x => x.Id == id);
+                return context.Categories.Include(x => x.Products).First(x => x.Id == id);
             }
         }
 

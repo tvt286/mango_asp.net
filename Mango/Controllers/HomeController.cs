@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mango.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,6 +28,12 @@ namespace Mango.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult MenuLayout()
+        {
+            var menu = MenuService.GetAll();
+            return PartialView("_Navigation", menu);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Mango.Web
         public static string IsSelected(this HtmlHelper html, string controller = null, string action = null, string cssClass = null)
         {
             if (String.IsNullOrEmpty(cssClass))
-                cssClass = "active";
+                cssClass = "menu__item--current";
 
             string currentAction = (string)html.ViewContext.RouteData.Values["action"];
             string currentController = (string)html.ViewContext.RouteData.Values["controller"];
@@ -32,6 +32,8 @@ namespace Mango.Web
             return controllerList.Contains(currentController) && actionList.Contains(currentAction) ?
                 cssClass : String.Empty;
         }
+
+
 
         public static string PageClass(this HtmlHelper html)
         {
