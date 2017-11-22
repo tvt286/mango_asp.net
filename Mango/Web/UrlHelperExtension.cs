@@ -28,13 +28,33 @@ namespace Mango.Web
             return url.Content(product.Image);
         }
 
-        public static string ImageCategory(this UrlHelper url, Category category)
+        public static string ImageProductInfo(this UrlHelper url, Product product)
         {
-            if (string.IsNullOrEmpty(category.Image))
+            if (string.IsNullOrEmpty(product.Image))
             {
                 return url.Content("~/Content/Upload/noimage.png");
             }
-            return url.Content(category.Image);
+            var image = product.Image.Split(';')[0];
+            return url.Content(image);
+        }
+
+        public static string ImageProductSlide(this UrlHelper url, Product product, int position)
+        {
+            if (string.IsNullOrEmpty(product.Image))
+            {
+                return url.Content("~/Content/Upload/noimage.png");
+            }
+            var image = product.Image.Split(';')[position];
+            return url.Content(image);
+        }
+
+        public static string ImageMenu(this UrlHelper url, Menu menu)
+        {
+            if (string.IsNullOrEmpty(menu.Image))
+            {
+                return url.Content("~/Content/Upload/noimage.png");
+            }
+            return url.Content(menu.Image);
         }
 
 

@@ -18,9 +18,10 @@ namespace Store.Controllers
             return View(category);
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(int? id)
         {
-            return View();
+            var product = ProductService.Get(id.Value);
+            return View(product);
         }
 	}
 }

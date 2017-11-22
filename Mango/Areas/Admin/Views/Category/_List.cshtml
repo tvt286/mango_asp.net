@@ -19,17 +19,12 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>
-                    Image
-                </th>
+               
                 <th>
                     Code
                 </th>
                 <th>
                     Name
-                </th>
-                <th>
-                    Description
                 </th>
                 <th>
                     Date create
@@ -57,18 +52,13 @@
                     <td>
                         @(index++)
                     </td>
-                    <td>
-                        <img style="width: 70px;" src="@Url.ImageCategory(item)" />
-                    </td>
+                
                     <td>
                         @item.Code
                     </td>
                     <td>
                         @item.Name
                     </td>
-                    <th>
-                        @item.Description
-                    </th>
                     <td>
                         @item.TimeCreate.ToString("MM-yyyy")
                     </td>

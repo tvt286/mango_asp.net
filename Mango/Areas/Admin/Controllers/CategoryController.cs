@@ -101,6 +101,7 @@ namespace Mango.Areas.Admin.Controllers
             if (model.Id == 0)
             {
                 model.Image = sourceFile;
+                model.Description = "";
                 result = CategoryService.Create(model);
                 if (result.Code == ResultCode.Success)
                 {

@@ -19,7 +19,9 @@
         <thead>
             <tr>
                 <th>#</th>
-         
+                <th>
+                    Image
+                </th>
                 <th>
                     Name
                 </th>           
@@ -48,6 +50,9 @@
                 <tr>
                     <td>
                         @(index++)
+                    </td>
+                    <td>
+                        <img style="width: 70px;" src="@Url.ImageMenu(item)" />
                     </td>
                     <td>
                         @item.Name
