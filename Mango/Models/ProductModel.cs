@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Mango.Models
 {
-    public class CategoryModel
+    public class ProductModel
     {
-        public Category category { get; set; }
-        public List<Category> categories {get; set;}
+        public Product product { get; set; }
+        public List<Product> productsHot { get; set; }
     }
 }

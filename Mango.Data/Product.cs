@@ -37,6 +37,7 @@ namespace Mango.Data
         public bool IsDeleted { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public Nullable<int> BuyCount { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }

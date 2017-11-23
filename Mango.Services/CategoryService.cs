@@ -16,15 +16,34 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Categories.Include(x => x.Products).First(x => x.Id == id);
+                return context.Categories.Include(x => x.Products).Include(x => x.Menu).First(x => x.Id == id);
             }
         }
 
-        public static List<Category> GetAll()
+        public static List<Category> GetAll(bool includeMenuName = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Categories.Where(x => x.IsDeleted == false).AsNoTracking().ToList();
+                var categories = context.Categories.Where(x => x.IsDeleted == false).AsNoTracking().ToList();
+                if(includeMenuName)
+                {
+                    foreach (var item in categories)
+                    {
+                        var menu = MenuService.Get(item.MenuId);
+                        item.Name = menu.Name + " - " + item.Name;
+                    }
+                }       
+                return categories;
+            }
+        }
+
+        public static List<Category> GetByMenuId(int menuId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var categories = context.Categories.Where(x => x.IsDeleted == false && x.MenuId == menuId).AsNoTracking().ToList();
+              
+                return categories;
             }
         }
 

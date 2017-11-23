@@ -23,8 +23,7 @@ namespace Mango.Areas.Admin.Controllers
             if (Request.HttpMethod == "GET")
             {
                 var user = UserService.GetUserInfo();
-                ViewBag.CategoryId =
-                    new SelectList(CategoryService.GetAll(), "Id", "Name");
+                ViewBag.CategoryId = new SelectList(CategoryService.GetAll(true), "Id", "Name");
                 return View(searchModel);
             }
 
@@ -47,7 +46,7 @@ namespace Mango.Areas.Admin.Controllers
             {
                 data = ProductService.Get(id.Value);
             }
-            ViewBag.CategoryId = new SelectList(CategoryService.GetAll(), "Id", "Name", data.CategoryId);
+            ViewBag.CategoryId = new SelectList(CategoryService.GetAll(true), "Id", "Name", data.CategoryId);
 
             return View(data);
         }

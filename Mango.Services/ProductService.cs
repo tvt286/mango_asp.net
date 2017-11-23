@@ -32,6 +32,14 @@ namespace Mango.Services
             }
         }
 
+        public static List<Product> GetProductsHot()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Products.Where(x => x.IsDeleted == false).AsNoTracking().Take(4).ToList();
+            }
+        }
+
         public static Product GetByCode(string Code)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))

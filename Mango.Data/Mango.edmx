@@ -118,6 +118,7 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="BuyCount" Type="int" />
         </EntityType>
         <EntityType Name="Store">
           <Key>
@@ -1541,6 +1542,7 @@
           <NavigationProperty Name="StoreOrderExportDetails" Relationship="mangoModel.FK__StoreOrde__Produ__1F98B2C1" FromRole="Product" ToRole="StoreOrderExportDetail" />
           <NavigationProperty Name="StoreProducts" Relationship="mangoModel.FK__StoreProd__Produ__19DFD96B" FromRole="Product" ToRole="StoreProduct" />
           <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
+          <Property Name="BuyCount" Type="Int32" />
         </EntityType>
         <Association Name="FK__Product__Categor__47DBAE45">
           <End Type="mangoModel.Category" Role="Category" Multiplicity="1" />
@@ -1898,6 +1900,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="mangoModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="BuyCount" ColumnName="BuyCount" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

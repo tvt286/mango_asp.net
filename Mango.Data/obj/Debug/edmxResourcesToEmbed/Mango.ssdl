@@ -113,6 +113,7 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Image" Type="nvarchar(max)" />
+    <Property Name="BuyCount" Type="int" />
   </EntityType>
   <EntityType Name="Store">
     <Key>
