@@ -12,8 +12,6 @@
         <AssociationConnector Association="mangoModel.FK__Group_Per__Group__286302EC" />
         <AssociationConnector Association="mangoModel.FK__User_Perm__UserI__2B3F6F97" />
         <AssociationConnector Association="mangoModel.User_Group" />
-        <EntityTypeShape EntityType="mangoModel.Category" Width="1.5" PointX="5.375" PointY="4.5" />
-        <AssociationConnector Association="mangoModel.FK__Category__UserCr__49C3F6B7" />
         <EntityTypeShape EntityType="mangoModel.City" Width="1.5" PointX="7.375" PointY="12.5" />
         <EntityTypeShape EntityType="mangoModel.District" Width="1.5" PointX="9.625" PointY="12.5" />
         <EntityTypeShape EntityType="mangoModel.Street" Width="1.5" PointX="11.875" PointY="12.875" />
@@ -45,7 +43,6 @@
         <AssociationConnector Association="mangoModel.FK__Order__CustomerI__3C34F16F" />
         <AssociationConnector Association="mangoModel.FK__Order__StoreId__3D2915A8" />
         <EntityTypeShape EntityType="mangoModel.Product" Width="1.5" PointX="7.625" PointY="1.75" />
-        <AssociationConnector Association="mangoModel.FK__Product__Categor__47DBAE45" />
         <AssociationConnector Association="mangoModel.FK__Product__UserCre__48CFD27E" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1CBC4616" />
         <AssociationConnector Association="mangoModel.FK__StoreOrde__Produ__1F98B2C1" />
@@ -54,8 +51,13 @@
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Order__3B40CD36" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" />
         <AssociationConnector Association="mangoModel.FK__OrderDeta__RefSt__4D5F7D71" />
-        <EntityTypeShape EntityType="mangoModel.Menu" Width="1.5" PointX="0.75" PointY="6.875" />
-        <AssociationConnector Association="mangoModel.FK__Category__MenuId__76619304" />
+        <EntityTypeShape EntityType="mangoModel.Menu1" Width="1.5" PointX="3" PointY="6.875" />
+        <EntityTypeShape EntityType="mangoModel.Category" Width="1.5" PointX="5.25" PointY="4.125" />
+        <AssociationConnector Association="mangoModel.FK__Category__MenuId__0E391C95" />
+        <AssociationConnector Association="mangoModel.FK__Category__UserCr__49C3F6B7" />
+        <AssociationConnector Association="mangoModel.FK__Product__Categor__47DBAE45" />
+        <EntityTypeShape EntityType="mangoModel.Menu" Width="1.5" PointX="0.75" PointY="7" />
+        <AssociationConnector Association="mangoModel.FK__Menu1__MenuId__0D44F85C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

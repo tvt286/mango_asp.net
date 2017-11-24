@@ -55,23 +55,6 @@
         <ScalarProperty Name="GroupId" ColumnName="GroupId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="mangoModel.Category">
-        <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="TimeDeleted" ColumnName="TimeDeleted" />
-          <ScalarProperty Name="UserCreateId" ColumnName="UserCreateId" />
-          <ScalarProperty Name="TimeUpdate" ColumnName="TimeUpdate" />
-          <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
-          <ScalarProperty Name="Image" ColumnName="Image" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="mangoModel.City">
         <MappingFragment StoreEntitySet="City">
@@ -243,6 +226,35 @@
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menu1">
+      <EntityTypeMapping TypeName="mangoModel.Menu1">
+        <MappingFragment StoreEntitySet="Menu1">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="mangoModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="TimeDeleted" ColumnName="TimeDeleted" />
+          <ScalarProperty Name="UserCreateId" ColumnName="UserCreateId" />
+          <ScalarProperty Name="TimeUpdate" ColumnName="TimeUpdate" />
+          <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

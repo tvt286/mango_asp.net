@@ -32,9 +32,9 @@ namespace Mango.Data
         public bool IsDeleted { get; set; }
         public int MenuId { get; set; }
     
+        public virtual Menu1 Menu1 { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
-        public virtual Menu Menu { get; set; }
     }
 }

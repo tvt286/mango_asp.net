@@ -7,7 +7,7 @@
 @using Mango.Data
 @model Mango.Models.ProductModel
 @{
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = @Model.product.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

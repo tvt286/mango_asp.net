@@ -91,6 +91,9 @@
     <Compile Include="Menu.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>
+    <Compile Include="Menu1.cs">
+      <DependentUpon>Mango.tt</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs">
       <DependentUpon>Mango.tt</DependentUpon>
     </Compile>

@@ -24,9 +24,31 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Menus.Where(x => x.IsDeleted == false).Include(x => x.Categories).AsNoTracking().ToList();
+                return context.Menus.Where(x => x.IsDeleted == false)
+                    .Include(x => x.Menu1)
+                    .Include(x => x.Menu1.Select(a => a.Categories))
+                    .AsNoTracking().ToList();
             }
         }
+
+        public static List<Menu1> GetAllMenu1()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Menu1.Where(x => x.IsDeleted == false).Include(x => x.Categories).AsNoTracking().ToList();
+            }
+        }
+
+        public static List<Menu1> GetMenu1ByMenuId(int id)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Menu1.Where(x => x.IsDeleted == false)
+                    .Where(x=>x.MenuId == id)
+                    .Include(x => x.Categories).AsNoTracking().ToList();
+            }
+        }
+
 
         public static RedirectCommand Create(Menu data)
         {

@@ -42,7 +42,8 @@ namespace Mango.Areas.Admin.Controllers
             {
                 data = CategoryService.Get(id.Value);
             }
-            ViewBag.MenuId = new SelectList(MenuService.GetAll(), "Id", "Name", data.MenuId);
+
+            ViewBag.MenuId = new SelectList(MenuService.GetAllMenu1(), "Id", "Title", data.MenuId);
 
             return PartialView("_Detail", data);
         }

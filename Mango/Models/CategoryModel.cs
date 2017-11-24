@@ -9,6 +9,7 @@ namespace Mango.Models
     public class CategoryModel
     {
         public Category category { get; set; }
-        public List<Category> categories {get; set;}
+        public List<Menu1> menus1 { get; set; }
+
     }
 }

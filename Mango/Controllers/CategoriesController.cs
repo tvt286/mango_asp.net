@@ -17,10 +17,7 @@ namespace Store.Controllers
         {
             var category = CategoryService.Get(id.Value);
             var model = new CategoryModel();
-            model.category = category;
-            model.categories = new List<Category>();
-            model.categories.AddRange(CategoryService.GetByMenuId(category.MenuId));
-
+      
             return View("Index", model);
         }
 	}

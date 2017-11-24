@@ -25,7 +25,7 @@
                     <ul class="nav navbar-nav menu__list">
                         @foreach (var item in Model)
                         {
-                            if (item.Categories.Count != 0)
+                            if (item.Menu1.Count != 0)
                             {
                                 <li class="dropdown menu__item">
                                     <a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@item.Name<span class="caret"></span></a>
@@ -34,14 +34,22 @@
                                             <div class="col-sm-6 multi-gd-img1 multi-gd-text ">
                                                 <a href="mens.html"><img src="@(item.Image.NotEmpty() ? Url.Content(item.Image) : "")" alt=" " /></a>
                                             </div>
-                                            <div class="col-sm-3 multi-gd-img">
-                                                <ul class="multi-column-dropdown">
-                                                    @foreach (var sub in item.Categories)
-                                                    {
-                                                        <li><a href="@Url.Action("Index", "Products", new { id = @sub.Id })">@sub.Name</a></li>
-                                                    }
-                                                </ul>
-                                            </div>
+                                            @foreach(var menu1 in @item.Menu1)
+                                            {
+                                                <div class="col-sm-3 multi-gd-img">
+                                                    <strong>@menu1.Name</strong>
+                                                    <ul class="multi-column-dropdown">
+                                                        @if (menu1.Categories.Count != 0)
+                                                        {
+                                                            foreach (var sub in @menu1.Categories)
+                                                            {
+                                                                <li><a href="@Url.Action("Index", "Products", new { id = @sub.Id, menuId = @item.Id })">@sub.Name</a></li>
+                                                            }
+                                                        }
+                                                        
+                                                    </ul>
+                                                </div>
+                                            }                                      
                                             <div class="clearfix"></div>
                                         </div>
                                     </ul>

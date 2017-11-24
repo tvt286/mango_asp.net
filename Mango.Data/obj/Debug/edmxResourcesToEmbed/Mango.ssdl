@@ -69,6 +69,17 @@
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="Image" Type="nvarchar" MaxLength="300" />
   </EntityType>
+  <EntityType Name="Menu1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TimeCreate" Type="datetime" Nullable="false" />
+    <Property Name="MenuId" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="Id" />
@@ -242,11 +253,11 @@
     <Property Name="Lng" Type="float" Nullable="false" />
     <Property Name="DistrictId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__Category__MenuId__76619304">
-    <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+  <Association Name="FK__Category__MenuId__0E391C95">
+    <End Role="Menu1" Type="Self.Menu1" Multiplicity="1" />
     <End Role="Category" Type="Self.Category" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Menu">
+      <Principal Role="Menu1">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Category">
@@ -287,6 +298,18 @@
       </Principal>
       <Dependent Role="Group_Permission">
         <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Menu1__MenuId__0D44F85C">
+    <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+    <End Role="Menu1" Type="Self.Menu1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Menu1">
+        <PropertyRef Name="MenuId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -657,6 +680,7 @@
     <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group_Permission" EntityType="Self.Group_Permission" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu1" EntityType="Self.Menu1" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -670,8 +694,8 @@
     <EntitySet Name="User_Group" EntityType="Self.User_Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Permission" EntityType="Self.User_Permission" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ward" EntityType="Self.Ward" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Category__MenuId__76619304" Association="Self.FK__Category__MenuId__76619304">
-      <End Role="Menu" EntitySet="Menu" />
+    <AssociationSet Name="FK__Category__MenuId__0E391C95" Association="Self.FK__Category__MenuId__0E391C95">
+      <End Role="Menu1" EntitySet="Menu1" />
       <End Role="Category" EntitySet="Category" />
     </AssociationSet>
     <AssociationSet Name="FK__Category__UserCr__49C3F6B7" Association="Self.FK__Category__UserCr__49C3F6B7">
@@ -685,6 +709,10 @@
     <AssociationSet Name="FK__Group_Per__Group__286302EC" Association="Self.FK__Group_Per__Group__286302EC">
       <End Role="Group" EntitySet="Group" />
       <End Role="Group_Permission" EntitySet="Group_Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Menu1__MenuId__0D44F85C" Association="Self.FK__Menu1__MenuId__0D44F85C">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="Menu1" EntitySet="Menu1" />
     </AssociationSet>
     <AssociationSet Name="FK__Order__CustomerI__3C34F16F" Association="Self.FK__Order__CustomerI__3C34F16F">
       <End Role="User" EntitySet="User" />

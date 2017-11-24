@@ -36,7 +36,7 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
-                return context.Products.Where(x => x.IsDeleted == false).AsNoTracking().Take(4).ToList();
+                return context.Products.Where(x => x.IsDeleted == false).OrderByDescending(x => x.BuyCount).AsNoTracking().Take(4).ToList();
             }
         }
 

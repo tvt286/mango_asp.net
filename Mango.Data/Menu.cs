@@ -17,7 +17,7 @@ namespace Mango.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Menu()
         {
-            this.Categories = new HashSet<Category>();
+            this.Menu1 = new HashSet<Menu1>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace Mango.Data
         public string Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Menu1> Menu1 { get; set; }
     }
 }
