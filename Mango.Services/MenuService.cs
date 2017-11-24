@@ -31,6 +31,20 @@ namespace Mango.Services
             }
         }
 
+       
+
+        public static List<Menu> GetMenusHasCategory()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Menus
+                    .Include(x => x.Menu1)
+                    .Include(x => x.Menu1.Select(a => a.Categories))
+                    .Where(x => x.IsDeleted == false)
+                    .AsNoTracking().ToList();
+            }
+        }
+
         public static List<Menu1> GetAllMenu1()
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))

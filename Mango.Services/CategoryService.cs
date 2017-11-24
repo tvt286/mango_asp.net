@@ -43,6 +43,7 @@ namespace Mango.Services
             {
                 var categories = context.Categories.Where(x => x.IsDeleted == false && x.MenuId == menuId)
                     .Include(x => x.Menu1)
+                    .Include(x => x.Products)
                     .AsNoTracking().ToList();
               
                 return categories;

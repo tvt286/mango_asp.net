@@ -1,4 +1,7 @@
-﻿using Mango.Services;
+﻿using Mango.Data;
+using Mango.Models;
+using Mango.Service;
+using Mango.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +16,10 @@ namespace Mango.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            HomeModel model = new HomeModel();
+            model.menus = new List<MenuModel>();
+            model.menus = HomeService.getListProductsInHome();
+            return View(model);
         }
 
         public ActionResult About()

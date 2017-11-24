@@ -32,11 +32,29 @@ namespace Mango.Services
             }
         }
 
+        // lấy ra danh sách sản phẩm bán được nhiều
         public static List<Product> GetProductsHot()
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 return context.Products.Where(x => x.IsDeleted == false).OrderByDescending(x => x.BuyCount).AsNoTracking().Take(4).ToList();
+            }
+        }
+
+        // lấy ra sản phẩm bản chạy của menu hiển thị ở home
+        public static List<Product> GetProductsInHome(int menu1Id)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var results = new List<Product>();
+
+                var categories = CategoryService.GetByMenuId(menu1Id);
+                foreach (var item in categories)
+                {
+                    results.AddRange(item.Products.OrderByDescending(x => x.BuyCount).Take(1));
+                }
+
+                return results;
             }
         }
 

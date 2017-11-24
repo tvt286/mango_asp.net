@@ -172,10 +172,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Security.cs" />
+    <Compile Include="Service\HomeService.cs" />
     <Compile Include="Web\HtmlHelperExtension.cs" />
     <Compile Include="Web\UploadHelper.cs" />
     <Compile Include="Web\UrlHelperExtension.cs" />
@@ -708,7 +710,6 @@
     <Folder Include="Content\Plugin\" />
     <Folder Include="Content\Upload\" />
     <Folder Include="Scripts\Admin\plugins\datatables\json\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
