@@ -113,5 +113,14 @@ namespace Mango.Resource {
                 return ResourceManager.GetString("UserStatus.InActive", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UserType {
+            get {
+                return ResourceManager.GetString("UserType", resourceCulture);
+            }
+        }
     }
 }

@@ -41,5 +41,11 @@ namespace Mango.Controllers
             var menu = MenuService.GetAll();
             return PartialView("_Navigation", menu);
         }
+
+        public ActionResult Footer()
+        {
+            var menu = MenuService.GetAll();
+            return PartialView("_Footer", menu);
+        }
     }
 }

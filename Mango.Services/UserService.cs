@@ -126,10 +126,12 @@ namespace Mango.Services
         }
 
 
-        public static User Get(string userName)
+        public static User Get(string userName, bool fromFrontEnd = false)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
+                if(fromFrontEnd)
+                    return context.Users.FirstOrDefault(x => x.UserName == userName && x.Type == UserType.FrontEnd);
                 return context.Users.FirstOrDefault(x => x.UserName == userName);
             }
         }
@@ -155,7 +157,7 @@ namespace Mango.Services
             }
         }
 
-        public static User GetUserInfo()
+        public static User GetUserInfo( bool fromFrontEnd = false)
         {
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return null;
             var username = HttpContext.Current.User.Identity.Name;
@@ -164,7 +166,11 @@ namespace Mango.Services
             {
                 using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
                 {
-                    return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username);
+                    if(fromFrontEnd)
+                        return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username && x.Type == UserType.FrontEnd);
+                    else
+                        return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username);
+
                 }
             });
             if (user == null)
@@ -180,6 +186,15 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 return context.Groups.AsNoTracking().ToList();
+            }
+        }
+
+        public static void CreateCustomer(User model)
+        {
+            using (var context = new mangoEntities())
+            {
+                context.Users.Add(model);
+                context.SaveChanges();
             }
         }
 

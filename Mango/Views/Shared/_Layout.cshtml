@@ -40,7 +40,7 @@
     @RenderBody()
 
     <!-- footer -->
-        @Html.Partial("_Footer")
+    @Html.Action("Footer", "Home")
     <!--end footer-->
 
         @Scripts.Render("~/bundles/jquery")
@@ -114,6 +114,7 @@
                 $().UItoTop({ easingType: 'easeOutQuart' });
 
             });
+         
         </script>
         <!-- //here ends scrolling icon -->
         @RenderSection("scripts", required: false)

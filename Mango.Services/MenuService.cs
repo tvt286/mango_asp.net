@@ -40,7 +40,7 @@ namespace Mango.Services
                 return context.Menus
                     .Include(x => x.Menu1)
                     .Include(x => x.Menu1.Select(a => a.Categories))
-                    .Where(x => x.IsDeleted == false)
+                    .Where(x => x.IsDeleted == false && x.Menu1.Any())
                     .AsNoTracking().ToList();
             }
         }

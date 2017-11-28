@@ -42,13 +42,13 @@ namespace Mango.Services
         }
 
         // lấy ra sản phẩm bản chạy của menu hiển thị ở home
-        public static List<Product> GetProductsInHome(int menu1Id)
+        public static List<Product> GetProductsInHome(int menuId)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 var results = new List<Product>();
-
-                var categories = CategoryService.GetByMenuId(menu1Id);
+                Menu1 menu1 = context.Menu1.FirstOrDefault(x => x.MenuId == menuId);
+                var categories = CategoryService.GetByMenuId(menu1.Id);
                 foreach (var item in categories)
                 {
                     results.AddRange(item.Products.OrderByDescending(x => x.BuyCount).Take(1));

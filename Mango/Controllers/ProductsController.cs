@@ -15,12 +15,16 @@ namespace Store.Controllers
         // GET: /Product/
         public ActionResult Index(int? id, int? menuId)
         {
+            if(!id.HasValue)
+            {
+                id = MenuService.GetMenu1ByMenuId(menuId.Value).ElementAt(0).Categories.ElementAt(0).Id;
+            }
             // lấy ra loại sản phẩm theo id
             var category = CategoryService.Get(id.Value);
             var model = new CategoryModel();
             model.category = category;
             model.menus1 = new List<Menu1>();
-            // lay ra dan sách menu cấp 1 theo menu id
+            // lay ra danh sách menu cấp 1 theo menu id
             model.menus1.AddRange(MenuService.GetMenu1ByMenuId(menuId.Value));            
             return View("Index", model);
         }

@@ -20,6 +20,27 @@ namespace Mango
             //);
 
             routes.MapRoute(
+              "User logout",
+              "logout",
+              new { controller = "Users", action = "LogOff", id = UrlParameter.Optional },
+              new[] { "Mango.Controllers" }
+            );
+
+
+            routes.MapRoute(
+              "User register",
+              "register",
+              new { controller = "Users", action = "Register", id = UrlParameter.Optional },
+              new[] { "Mango.Controllers" }
+            );
+
+            routes.MapRoute(
+               "User login",
+               "login",
+               new { controller = "Users", action = "Login", id = UrlParameter.Optional },
+               new[] { "Mango.Controllers" }
+           );
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
@@ -30,6 +51,13 @@ namespace Mango
                 "Product",
                 "{controller}/{action}/{id}",
                 new { controller = "Products", action = "Index", id = UrlParameter.Optional },
+                new[] { "Mango.Controllers" }
+            );
+
+            routes.MapRoute(
+                "Users",
+                "{controller}/{action}/{id}",
+                new { controller = "Users", action = "Login", id = UrlParameter.Optional },
                 new[] { "Mango.Controllers" }
             );
         }
