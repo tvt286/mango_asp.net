@@ -40,6 +40,12 @@ namespace Mango.Data
         public string Phone { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<UserType> Type { get; set; }
+        public string Address { get; set; }
+        public Nullable<int> CityId { get; set; }
+        public Nullable<int> DistrictId { get; set; }
+        public Nullable<int> WardId { get; set; }
+        public Nullable<int> StreetId { get; set; }
+        public string NumberStreet { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Permission> User_Permission { get; set; }
@@ -57,5 +63,9 @@ namespace Mango.Data
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories { get; set; }
+        public virtual City City { get; set; }
+        public virtual District District { get; set; }
+        public virtual Street Street { get; set; }
+        public virtual Ward Ward { get; set; }
     }
 }

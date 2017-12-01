@@ -11,7 +11,7 @@ namespace Store.Controllers
 {
     public class CategoriesController : Controller
     {
-        //
+        
         // GET: /Categories/
         public ActionResult Index(int? id)
         {

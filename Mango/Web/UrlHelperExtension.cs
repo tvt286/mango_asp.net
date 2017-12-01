@@ -34,7 +34,7 @@ namespace Mango.Web
             {
                 return url.Content("~/Content/Upload/noimage.png");
             }
-            var image = product.Image.Split(';')[0];
+            var image = product.Image.Split(';')[1];
             return url.Content(image);
         }
 

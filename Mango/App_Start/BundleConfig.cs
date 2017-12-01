@@ -9,7 +9,7 @@ namespace Mango.App_Start
         {
             // Vendor scripts
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery.min.js", "~/Scripts/jquery-2.1.4.min.js", "~/Scripts/easy-responsive-tabs.js", "~/Scripts/bootstrap.js"));
+                "~/Scripts/jquery.min.js", "~/Scripts/jquery-2.1.4.min.js", "~/Scripts/easy-responsive-tabs.js", "~/Scripts/bootstrap.js", "~/Scripts/Admin/autoNumeric-min.js"));
 
             // modernizr scripts
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

@@ -166,12 +166,15 @@
     <Compile Include="Common\AjaxCommonOption.cs" />
     <Compile Include="Common\EnumUtil.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -271,6 +274,7 @@
     <Content Include="Content\css\flexslider.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\jquery-ui.css" />
+    <Content Include="Content\css\jquery.bootstrap-touchspin.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\team.css" />
     <Content Include="Content\fonts\Admin\font-awesome\css\font-awesome.css" />
@@ -510,7 +514,7 @@
     <Content Include="Areas\Admin\Views\User\_List.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Areas\Admin\Views\User\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\StoreOrder\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
@@ -679,6 +683,7 @@
     <Content Include="Scripts\imagezoom.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.bootstrap-touchspin.js" />
     <Content Include="Scripts\jquery.countup.js" />
     <Content Include="Scripts\jquery.easing.min.js" />
     <Content Include="Scripts\jquery.flexslider.js" />
@@ -709,6 +714,8 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Users\_Login.cshtml" />
     <Content Include="Views\Users\_Register.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,7 +16,7 @@ namespace Mango.Controllers
     {
         //
         // GET: /Users/
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
             return PartialView("_Login");
@@ -24,26 +24,28 @@ namespace Mango.Controllers
 
         public ActionResult Register()
         {
-            return PartialView("_Register");
+            var model = new Mango.Data.User();
+
+            ViewBag.CityId = new SelectList(LocationService.GetAllCity(), "Id", "Name", model.CityId);
+            ViewBag.DistrictId = new SelectList(LocationService.GetDistrictByCity(model.CityId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.DistrictId);
+            ViewBag.WardId = new SelectList(LocationService.GetWardByDistrict(model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.WardId);
+            ViewBag.StreetId = new SelectList(LocationService.GetStreetByDistrictAndCity(model.CityId.GetValueOrDefault(-1), model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, x.Name }).ToList(), "Id", "Name", model.StreetId);
+
+            return PartialView("_Register", model);
         }
 
         [HttpPost]
-        public ActionResult DoRegister(string FullName, string UserName, string Password, string Email, string Phone)
+        public ActionResult DoRegister(User data)
         {
-            var model = new User{
-                FullName = FullName,
-                UserName = UserName,
-                Password = Encryptor.MD5Hash(Password),
-                Email = Email,
-                Phone = Phone,
-                Type = UserType.FrontEnd,
-                Status = UserStatus.Active,
-                IsDeleted = false,
-                IsAdminCompany = false,
-                IsAdminRoot = false,
-                TimeCreate = DateTime.Now
-            };
-            UserService.CreateCustomer(model);
+           
+            data.Password = Encryptor.MD5Hash(data.Password);
+            data.Type = UserType.FrontEnd;
+            data.Status = UserStatus.Active;
+            data.IsDeleted = false;
+            data.TimeCreate = DateTime.Now;
+            data.Address = LocationService.BuildAddress(data.CityId, data.DistrictId, data.WardId, data.StreetId, data.NumberStreet, data.Address);
+
+            UserService.CreateCustomer(data);
             return RedirectToAction("Index", "Home", "");
 
         }

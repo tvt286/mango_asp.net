@@ -5,6 +5,7 @@
 @using Mango.Data.Enums
 @using Mango.Web
 @using Mango.Data
+@model Mango.Data.User
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -12,63 +13,60 @@
 <div class="modal-body modal-body-sub_agile">
     <div class="col-md-8 modal_body_left modal_body_left1">
         <h3 class="agileinfo_sign">Sign Up <span>Now</span></h3>
-        @using (Html.BeginForm("DoRegister", "Users",  FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {            
+        @using (Html.BeginForm("DoRegister", "Users", FormMethod.Post, new { role = "form" }))
+        {
             <div class="styled-input agile-styled-input-top">
-                        <input type="text" name="FullName" required="">
-                        <label>Full Name</label>
-                        <span></span>
-                    </div>
-                    <div class="styled-input agile-styled-input-top">
-                        <input type="text" name="UserName" required="">
-                        <label>User Name</label>
-                        <span></span>
-                    </div>
-                    <div class="styled-input agile-styled-input-top">
-                        <input type="text" name="Phone" required="">
-                        <label>Phone</label>
-                        <span></span>
-                    </div>
-                    <div class="styled-input">
-                        <input type="email" name="Email" required="">
-                        <label>Email</label>
-                        <span></span>
-                    </div>
-                    <div class="styled-input">
-                        <input type="password" name="Password" required="">
-                        <label>Password</label>
-                        <span></span>
-                    </div>                  
-                    <input type="submit" value="Sign Up">
+                <input type="text" name="FullName" required="">
+                <label>Full Name</label>
+                <span></span>
+            </div>
+            <div class="styled-input agile-styled-input-top">
+                <input type="text" name="UserName" required="">
+                <label>User Name</label>
+                <span></span>
+            </div>
+            <div class="styled-input agile-styled-input-top">
+                <input type="text" name="Phone" required="">
+                <label>Phone</label>
+                <span></span>
+            </div>
+            <div class="styled-input">
+                <input type="email" name="Email" required="">
+                <label>Email</label>
+                <span></span>
+            </div>
+            <div class="styled-input">
+                <input type="password" name="Password" required="">
+                <label>Password</label>
+                <span></span>
+            </div>
+            <div class="styled-input">
+                @Html.DropDownListFor(x => x.CityId, null, "-- City --", new { @required = "", @class = "form-control", data_val = "true", data_val_required = "This is field required" })
+                @Html.ValidationMessageFor(x => x.CityId)
+            </div>
+            <div class="styled-input">
+
+                @Html.DropDownListFor(x => x.DistrictId, null, "-- District --", new { @required = "", @class = "form-control", data_val = "true", data_val_required = "This is field required" })
+                @Html.ValidationMessageFor(x => x.DistrictId)
+            </div>
+
+            <div class="styled-input">
+                @Html.DropDownListFor(x => x.WardId, null, "-- Ward --", new { @class = "form-control", data_val = "true", data_val_required = "This is field required" })
+                @Html.ValidationMessageFor(x => x.WardId)
+
+
+            </div>
+            <div class="styled-input">
+                @Html.DropDownListFor(x => x.StreetId, null, "-- Street --", new { @class = "form-control ", data_val = "true", data_val_required = "This is field required" })
+                @Html.ValidationMessageFor(x => x.StreetId)
+            </div>
+             <div class="styled-input">
+                 <input type="text" name="NumberStreet" required="">
+                <label>Street Number</label>
+                <span></span>
+            </div>
+            <input type="submit" value="Sign Up">
         }
-                <ul class="social-nav model-3d-0 footer-social w3_agile_social top_agile_third">
-            <li>
-                <a href="#" class="facebook">
-                    <div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                    <div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="twitter">
-                    <div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                    <div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="instagram">
-                    <div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                    <div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="pinterest">
-                    <div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                    <div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
-                </a>
-            </li>
-        </ul>
-        <div class="clearfix"></div>
-        <p><a href="#">By clicking register, I agree to your terms</a></p>
 
     </div>
     <div class="col-md-4 modal_body_right modal_body_right1">
@@ -78,3 +76,62 @@
 </div>
 
 <!-- //Modal2 -->
+
+<style>
+    .modal-body {
+        height: 550px;
+        overflow-y: auto;
+    }
+</style>
+<script>
+    function selectCity() {
+        $('#DistrictId,#WardId').find("option[value\!='']").remove();
+        //   $('#DistrictId,#WardId').select2('val', '');
+        $.post('@Url.Action("GetDictrict", "Common")',
+            { cityID: $(this).val() },
+            function (data) {
+                $.each(data,
+                    function (key, value) {
+                        $('#DistrictId').append($('<option></option>').val(value.ID).html(value.Text));
+                    });
+            });
+    }
+
+    function selectDistrict() {
+        $('#WardId').find("option[value\!='']").remove();
+        //     $('#WardId').select2('val', '');
+        $.post('@Url.Action("GetWard","Common")',
+            { dictrictID: $(this).val() },
+            function (data) {
+                $('#WardId').find("option[value\!='']").remove();
+                $.each(data,
+                    function (key, value) {
+                        $('#WardId').append($('<option></option>').val(value.ID).html(value.Text));
+                    });
+            });
+
+
+        $('#StreetId').find("option[value\!='']").remove();
+        //    $('#StreetId').select2('val', '');
+        $.post('@Url.Action("GetStreet","Common")',
+            {
+                dictrictID: $(this).val(),
+                cityId: $("#CityId").val()
+            },
+            function (data) {
+                $('#StreetId').find("option[value\!='']").remove();
+                $.each(data,
+                    function (key, value) {
+                        $('#StreetId').append($('<option></option>').val(value.ID).html(value.Text));
+                    });
+            });
+    }
+
+
+
+    $(function () {
+        $('#CityId').change(selectCity);
+        $('#DistrictId').change(selectDistrict);
+
+    });
+</script>

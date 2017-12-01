@@ -224,6 +224,12 @@
     <Property Name="Phone" Type="nvarchar" MaxLength="50" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="Type" Type="int" />
+    <Property Name="Address" Type="nvarchar" MaxLength="300" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="DistrictId" Type="int" />
+    <Property Name="WardId" Type="int" />
+    <Property Name="StreetId" Type="int" />
+    <Property Name="NumberStreet" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="User_Group">
     <Key>
@@ -625,6 +631,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__User__CityId__19AACF41">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__DistrictId__1B9317B3">
+    <End Role="District" Type="Self.District" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__StreetId__1C873BEC">
+    <End Role="Street" Type="Self.Street" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="StreetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__WardId__1A9EF37A">
+    <End Role="Ward" Type="Self.Ward" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ward">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="WardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__User_Grou__Group__29572725">
     <End Role="Group" Type="Self.Group" Multiplicity="1" />
     <End Role="User_Group" Type="Self.User_Group" Multiplicity="*" />
@@ -817,6 +871,22 @@
     <AssociationSet Name="FK__Street__District__693CA210" Association="Self.FK__Street__District__693CA210">
       <End Role="District" EntitySet="District" />
       <End Role="Street" EntitySet="Street" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__CityId__19AACF41" Association="Self.FK__User__CityId__19AACF41">
+      <End Role="City" EntitySet="City" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__DistrictId__1B9317B3" Association="Self.FK__User__DistrictId__1B9317B3">
+      <End Role="District" EntitySet="District" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__StreetId__1C873BEC" Association="Self.FK__User__StreetId__1C873BEC">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__WardId__1A9EF37A" Association="Self.FK__User__WardId__1A9EF37A">
+      <End Role="Ward" EntitySet="Ward" />
+      <End Role="User" EntitySet="User" />
     </AssociationSet>
     <AssociationSet Name="FK__User_Grou__Group__29572725" Association="Self.FK__User_Grou__Group__29572725">
       <End Role="Group" EntitySet="Group" />

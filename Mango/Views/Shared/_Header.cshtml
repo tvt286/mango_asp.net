@@ -10,7 +10,7 @@
                 <a href="javascript:void(0)" onclick="@(user == null ? "Login()" : "")" ><i class="fa @(user == null ? "fa-lock" : "fa-user-circle")" aria-hidden="true"></i>@(user == null ? "Sign In" : ("Hello, " + user.FullName))</a>
             </li>
             <li>        
-                 <a href="@(user != null ? "/logout" : "")" onclick="@(user == null ? "Register()" : "")" ><i class="fa @(user == null ? "fa-pencil-square-o" : "fa-arrow-circle-left")" aria-hidden="true"></i>@(user == null ? "Sign Up" : "Logout")</a>
+                 <a href="@(user != null ? "/logout" : "javascript:void(0)")" onclick="@(user == null ? "Register()" : "")" ><i class="fa @(user == null ? "fa-pencil-square-o" : "fa-arrow-circle-left")" aria-hidden="true"></i>@(user == null ? "Sign Up" : "Logout")</a>
             </li>
             <li>
             <i class="fa fa-phone" aria-hidden="true"></i>@(user == null ? "Phone : 01234567898" : ("Phone: " + user.Phone)) </li>
@@ -85,7 +85,6 @@
     function Login() {
         $.post('/login',
         function (data) {
-            console.log(data);
             $('.modal-content').html(data);
             $('#modelLogin').modal('show');
 
@@ -97,7 +96,6 @@
         function (data) {
             $('.modal-content').html(data);
             $('#modelLogin').modal('show');
-
         });
     }
 

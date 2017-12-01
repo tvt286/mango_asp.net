@@ -18,6 +18,7 @@ namespace Mango.Data
         public Ward()
         {
             this.Stores = new HashSet<Store>();
+            this.Users = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace Mango.Data
         public virtual District District { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Store> Stores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

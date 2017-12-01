@@ -1,0 +1,290 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+@using Mango.Models
+@model List<CartItem>
+
+    @{
+        ViewBag.Title = "Order";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+    <!-- /banner_bottom_agile_info -->
+    <div class="page-head_agile_info_w3l">
+        <div class="container">
+            <h3><span>Cart/Order</span></h3>
+            <!--/w3_short-->
+            <div class="services-breadcrumb">
+                <div class="agile_inner_breadcrumb">
+
+                    <ul class="w3_short">
+                        <li><a href="@Url.Action("Index", "Home")">Home</a><i>|</i></li>
+                        <li>Cart/Order</li>
+                    </ul>
+                </div>
+            </div>
+            <!--//w3_short-->
+        </div>
+    </div>
+
+    <div class="new_arrivals_agile_w3ls_info">
+        <div class="container">
+            @*<h3 class="wthree_text_info">New <span>Arrivals</span></h3>*@
+            <div id="horizontalTab">
+                <ul class="resp-tabs-list">
+                    <li>Cart</li>
+                    <li>Order</li>
+                </ul>
+                <div class="resp-tabs-container">
+                    <!--/tab_one-->
+                    <div class="tab1">
+                        @if (@Model != null && @Model.Count > 0)
+                        {
+                           
+                            <table class="table">
+                                <thead>
+                                    <tr style="background-color:#2f2f2f;">
+                                        <th style="color:white">
+                                            Image
+                                        </th>
+                                        <th style="color:white">
+                                            Name
+                                        </th>
+                                        <th style="color:white">
+                                            Price
+                                        </th>
+                                        <th style="color:white">
+                                            Quantity
+                                        </th>
+                                        <th style="color:white">
+                                            Total
+                                        </th>
+                                        <th>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in @Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img style="width:70px" src="@Url.ImageProductInfo(item.product)" alt="" class="pro-image-front">
+                                            </td>
+                                            <td>
+                                                @item.product.Name
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="SellingPrice" value="@item.product.SellingPrice" />
+                                                @item.product.SellingPrice.MoneyToStringVN()
+                                            </td>
+                                            <td>
+                                                <input type="text" name="quantity" value="@item.quantity" class="form-control" onblur="CalculateExchange(this)" style="width:80px;" />
+                                            </td>
+                                            <td class="exchange autoNumeric">
+                                                @((item.product.SellingPrice * item.quantity).MoneyToStringVN())
+                                            </td>
+
+                                            <td>
+                                                <input type="button" onclick="DeleteProduct(this)" data-id="@item.product.Id" class="btn btn-danger" value="Delete">
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div style="float:right;">
+                                    <div>
+                                        <strong>Total: </strong>
+                                        <strong class="priceTotal">0</strong>
+                                        <strong> VNĐ</strong>
+                                    </div>
+                                    <button style="float:right; margin-top:10px" onclick="Detail()" href="#" class="btn btn-primary">Order</button>
+                                </div>
+                                <br style="clear: both" />
+
+                            </div>
+                        }
+                        else
+                        {
+                                <div style="padding-top:20px; text-align:center">
+                                    <strong>You have no order.</strong>
+                                </div>
+                        }
+                            
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//tab_two-->
+                    <div class="tab2">             
+                                <table class="table">
+                                    <thead>
+                                        <tr style="background-color:#2f2f2f;">
+                                            <th style="color:white">
+                                                Image
+                                            </th>
+                                            <th style="color:white">
+                                                Name
+                                            </th>
+                                            <th style="color:white">
+                                                Price
+                                            </th>
+                                            <th style="color:white">
+                                                Quantity
+                                            </th>
+                                            <th style="color:white">
+                                                Total
+                                            </th>
+                                            <th style="color:white">
+                                                Status
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            <div class="form-group">
+                                <div style="float:right; margin-bottom:10px; margin-right:10px">
+                                    <strong>Total: </strong>
+                                    <strong class="priceTotal">0</strong>
+                                    <strong> VNĐ</strong>
+
+                                </div>
+                                <br style="clear: both" />
+
+                            </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--//tab_two-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal1 -->
+<div class="modal fade" id="modelDetail" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+        </div>
+        <!-- //Modal content-->
+    </div>
+</div>
+    
+    
+    @section styles
+    {
+        <style>
+          
+            .modal-body {
+                height: 550px;
+                overflow-y: auto;
+            }
+        </style>
+    }
+
+    @section scripts
+    {
+        <script>
+            $(function () {
+                $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                getTotalPrice();
+            });
+            function getTotalPrice() {
+                var totalPrice = 0;
+                $("tr").each(function () {
+                    $this = $(this);
+                    var value = $this.find(".exchange").html();
+                    if (value != null) {
+                        if (value != "")
+                            totalPrice += parseInt(value.replace(/\./g, ""));
+                    }
+                });
+                $('.priceTotal').autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                $('.priceTotal').autoNumeric('set', totalPrice);
+            }
+            function CalculateExchange(element) {
+                var quantity = $(element).closest("tr").find("input[name=quantity]").val();
+                var price = $(element).closest("tr").find("input[name=SellingPrice]").val();
+                $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+
+                if (quantity == "" || quantity == "0") {
+                    $(element).closest("tr").find(".exchange").html("0");
+
+                } else {
+                    var total = parseInt(quantity) * parseInt(price);
+                    $(element).closest("tr").find(".exchange").autoNumeric('set', total);
+                    var totalPrice = 0;
+                    $("tr").each(function () {
+                        $this = $(this);
+                        var value = $this.find(".exchange").html();
+                        if (value != null) {
+                            if (value != "")
+                                totalPrice += parseInt(value.replace(/\./g, ""));
+                        }
+                    });
+
+                    $('.priceTotal').autoNumeric('set', totalPrice);
+                }
+            }
+
+            $("#btnDelete").off('click').on('click', function () {
+
+                //$.ajax({
+                //    data: { id: $(this).data('id') },
+                //    url: '/Orders/Delete',
+                //    dataType: 'json',
+                //    type: 'POST',
+                //    success: function (res) {
+                //        if(res.status == true)
+                //        {
+                //            window.location.href = "/order";
+                //        }
+                //    }
+                //})
+            });
+
+            function DeleteProduct(element) {
+                $.ajax({
+                    data: { id: $(element).data('id') },
+                    url: '/Orders/Delete',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (res) {
+                        if(res.status == true)
+                        {
+                            $(element).closest("tr").remove();
+                            var price = $(element).closest("tr").find(".exchange").html().replace(/\./g, "");
+                            if (price != "") {
+                                var oldTotalPrice = $('.priceTotal').autoNumeric('get');
+                                $('.priceTotal').autoNumeric('set', oldTotalPrice - price);
+                            }
+                        }
+                        else
+                        {
+                            window.location.href = "/order";
+                        }
+                    }
+                })
+            
+            }
+
+            function Detail() {
+                $.post('/order-detail',
+                function (data) {
+                    $('.modal-content').html(data);
+                    $('#modelDetail').modal('show');
+
+                });
+            }
+        </script>
+    }

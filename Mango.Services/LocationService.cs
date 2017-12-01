@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mango.Data;
 using System.Data.Entity;
 using System.Data;
+using Mango.Common;
 
 namespace Mango.Services
 {
@@ -24,7 +25,47 @@ namespace Mango.Services
             }
         }
 
+        public static District GetDistrict(int dictrictId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Districts.First(x => x.Id == dictrictId);
+            }
+        }
 
+        public static City GetCity(int cityId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Cities.First(x => x.Id == cityId);
+            }
+        }
+
+        public static Street GetStreet(int streetId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Streets.First(x => x.Id == streetId);
+            }
+        }
+
+        public static string BuildAddress(int? cityId, int? districtId, int? wardId, int? streetId, string numberStreet = "", string streetName = "")
+        {
+            City city = cityId.HasValue ? GetCity(cityId.Value) : null;
+            Ward ward = wardId.HasValue ? GetWard(wardId.Value) : null;
+            District district = districtId.HasValue ? GetDistrict(districtId.Value) : null;
+            Street street = streetId.HasValue ? GetStreet(streetId.Value) : null;
+
+            var listAddressStr = new List<string>
+            {
+                streetId.HasValue ? string.Format("{0} Đường {1}", numberStreet, street.Name) : streetName,
+                wardId.HasValue ? string.Format("{0} {1}", ward.Prefix, ward.Name) : "",
+                districtId.HasValue ? string.Format("{0} {1}", district.Prefix, district.Name) : "",
+                cityId.HasValue ? string.Format("{0} {1}", city.Prefix, city.Name) : ""
+            };
+            var address = string.Join(", ", listAddressStr.Where(x => x.NotEmpty()));
+            return address;
+        }
         public static List<City> GetAllCity()
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))

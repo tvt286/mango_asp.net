@@ -69,49 +69,19 @@
                 </span>
             </div>
          
-            <div class="color-quality">
-                <div class="color-quality-right">
-                    <h5>Quality :</h5>
-                    <select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
-                        <option value="null">5 Qty</option>
-                        <option value="null">6 Qty</option>
-                        <option value="null">7 Qty</option>
-                        <option value="null">10 Qty</option>
-                    </select>
+            <div style="margin-top:20px" class="color-quality">
+                <div style="width:200px" class="color-quality-right" >
+                    <input type="hidden" value="@Model.product.Id" name="productId">
+                    <input  id="quantity" type="text" value="1" name="quantity">
                 </div>
             </div>
-            <div class="occasional">
-                <h5>Types :</h5>
-                <div class="colr ert">
-                    <label class="radio"><input type="radio" name="radio" checked=""><i></i>Casual Shoes</label>
-                </div>
-                <div class="colr">
-                    <label class="radio"><input type="radio" name="radio"><i></i>Sneakers </label>
-                </div>
-                <div class="colr">
-                    <label class="radio"><input type="radio" name="radio"><i></i>Formal Shoes</label>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
+
             <div class="occasion-cart">
                 <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
-                    <form action="#" method="post">
-                        <fieldset>
-                            <input type="hidden" name="cmd" value="_cart">
-                            <input type="hidden" name="add" value="1">
-                            <input type="hidden" name="business" value=" ">
-                            <input type="hidden" name="item_name" value="Wing Sneakers">
-                            <input type="hidden" name="amount" value="650.00">
-                            <input type="hidden" name="discount_amount" value="1.00">
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="hidden" name="return" value=" ">
-                            <input type="hidden" name="cancel_return" value=" ">
-                            <input type="submit" name="submit" value="Add to cart" class="button">
-                        </fieldset>
-                    </form>
+                    <input type="button" class="button" name="btnAddCart" value="Add to cart">
                 </div>
-
             </div>
+
             <ul class="social-nav model-3d-0 footer-social w3_agile_social single_page_w3ls">
                 <li class="share">Share On : </li>
                 <li>
@@ -139,9 +109,9 @@
                     </a>
                 </li>
             </ul>
-
         </div>
         <div class="clearfix"> </div>
+
         <!-- /new_arrivals -->
         <div class="responsive_tabs_agileits">
             <div id="horizontalTab">
@@ -186,23 +156,7 @@
                         <div class="info-product-price">
                             <span class="item_price">@item.SellingPrice.MoneyToStringVN() VNĐ</span>
                         </div>
-                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
-                            <form action="#" method="post">
-                                <fieldset>
-                                    <input type="hidden" name="cmd" value="_cart">
-                                    <input type="hidden" name="add" value="1">
-                                    <input type="hidden" name="business" value=" ">
-                                    <input type="hidden" name="item_name" value="Sleeveless Solid Blue Top">
-                                    <input type="hidden" name="amount" value="30.99">
-                                    <input type="hidden" name="discount_amount" value="1.00">
-                                    <input type="hidden" name="currency_code" value="USD">
-                                    <input type="hidden" name="return" value=" ">
-                                    <input type="hidden" name="cancel_return" value=" ">
-                                    <input type="submit" name="submit" value="Add to cart" class="button">
-                                </fieldset>
-                            </form>
-                        </div>
-
+                      
                     </div>
                 </div>
             </div>       
@@ -216,6 +170,7 @@
 @section Styles 
 {
 <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="~/Content/css/jquery.bootstrap-touchspin.css" type="text/css" media="screen" />
 
     
 }
@@ -226,6 +181,8 @@
 <!-- single -->
     <!-- FlexSlider -->
 <script src="~/Scripts/jquery.flexslider.js"></script>
+<script src="~/Scripts/jquery.bootstrap-touchspin.js"></script>
+
     <script>
         // Can also be used with $(document).ready()
         $(window).load(function () {
@@ -234,6 +191,21 @@
                 controlNav: "thumbnails"
             });
         });
+        $("input[name='quantity']").TouchSpin({
+            min: 0,
+            max: 100,
+            step: 1,
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: 'Quantity'
+        });
+
+        $("input[name='btnAddCart']").click(function () {
+            var productId = $("input[name='productId']").val();
+            var quantity = $("input[name='quantity']").val();
+            window.location.href = "/add-order/?productId="+productId+"&quantity=" +quantity;
+        });
+
     </script>
 <!-- //FlexSlider-->
 }

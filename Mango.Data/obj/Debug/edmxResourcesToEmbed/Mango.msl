@@ -23,6 +23,12 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="mangoModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="NumberStreet" ColumnName="NumberStreet" />
+          <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+          <ScalarProperty Name="WardId" ColumnName="WardId" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />

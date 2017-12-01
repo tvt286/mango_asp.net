@@ -41,6 +41,27 @@ namespace Mango
                new[] { "Mango.Controllers" }
            );
             routes.MapRoute(
+                  "add order",
+                  "add-order",
+                  new { controller = "Orders", action = "AddCartItem", id = UrlParameter.Optional },
+                  new[] { "Mango.Controllers" }
+            );
+
+            routes.MapRoute(
+                "detail order",
+                "order-detail",
+                new { controller = "Orders", action = "Detail", id = UrlParameter.Optional },
+                new[] { "Mango.Controllers" }
+          );
+
+            routes.MapRoute(
+                "order",
+                "order",
+                new { controller = "Orders", action = "Index", id = UrlParameter.Optional },
+                new[] { "Mango.Controllers" }
+            );
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
