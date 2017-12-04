@@ -162,10 +162,6 @@
                                         <th>
                                             Supplier price
                                         </th>
-                                     
-                                        <th>
-                                            Quantity remain
-                                        </th>
                                     
                                         <th>
                                             Quantity export
@@ -173,6 +169,9 @@
                                       
                                         <th>
                                             Selling Price
+                                        </th>
+                                        <th>
+                                            Total Amount
                                         </th>
   
                                         @if (Model.Id == 0)
@@ -195,22 +194,22 @@
                                                     @item.Product.Category.Name
                                                 </td>
                                                 <td>
-                                                    <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+                                                    <img class="imageProduct" style="width: 50px;" src="@Url.ImageProductInfo(item.Product)" />
                                                 </td>
                                                 <td>
-                                                    @item.StoreOrderImportDetail.MainSupplierPrice.MoneyToStringVN()
+                                                    @item.Product.SupplierPrice.MoneyToStringVN()
                                                 </td>
                                                
-                                                <td>
-                                                    @item.StoreOrderImportDetail.Quantity.MoneyToStringVN()
-                                                </td>
-                                              
                                                 <td>
                                                     @item.Quantity.MoneyToStringVN()
                                                 </td>
                                               
                                                 <td>                                                 
                                                     @item.Product.SellingPrice.MoneyToStringVN()   
+                                                </td>
+                                                <td>
+                                                    @{ var total = @item.Product.SellingPrice * @item.Quantity; }
+                                                    @total.MoneyToStringVN()
                                                 </td>
                                             </tr>
                                     }

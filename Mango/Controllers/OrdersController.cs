@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mango.Data;
 
 namespace Mango.Controllers
 {
@@ -28,6 +29,41 @@ namespace Mango.Controllers
 
             List<CartItem> cart = (List<CartItem>)Session[CART_SESSION];
             return PartialView("_Detail", cart);
+        }
+
+        public ActionResult Create(int[] productId, int[] quantity)
+        {
+            var user = UserService.GetUserInfo(true);
+            // lấy ra store gần user nhất
+            var store = StoreService.GetStoreOrderForUser(user);
+            var order = new Order { 
+                Code = StoreOrderService.GenerateCode(StoreImExTypeCode.XuatBanKhachHang, store.Id, null, customerId: user.Id),
+                CustomerId = user.Id,
+                Status = OrderStatus.Confirm,
+                StoreId = store.Id,
+                TimeCreate = DateTime.Now
+            };
+           
+            var listOrderDetail = new List<OrderDetail>();
+            for (int i = 0; i < productId.Length; i++)
+            {
+                var product = ProductService.Get(productId[i]);
+                var orderDetail = new OrderDetail
+                {
+                    ProductId = productId[i],
+                    Quantity = quantity[i],
+                    SellingPrice = product.SellingPrice,
+                    SupplierPrice = product.SupplierPrice,
+                    MainSupplierPrice = 0
+                };
+                listOrderDetail.Add(orderDetail);
+            }
+
+            order.OrderDetails = listOrderDetail;
+
+            OrderService.CreateOrderCustomer(order);
+
+            return RedirectToAction("Index", "Orders");
         }
 
         public JsonResult Delete(int id)

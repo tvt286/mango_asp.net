@@ -102,9 +102,9 @@
     <Property Name="ProductId" Type="int" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
     <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="RefStoreOrderImportDetailId" Type="int" Nullable="false" />
     <Property Name="SupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="MainSupplierPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="RefStoreOrderImportDetailId" Type="int" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -145,6 +145,8 @@
     <Property Name="TimeDeleted" Type="datetime" />
     <Property Name="UserCreateId" Type="int" Nullable="false" />
     <Property Name="IsRoot" Type="bit" Nullable="false" />
+    <Property Name="Lat" Type="nvarchar" MaxLength="100" />
+    <Property Name="Lng" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="StoreOrder">
     <Key>
@@ -230,6 +232,8 @@
     <Property Name="WardId" Type="int" />
     <Property Name="StreetId" Type="int" />
     <Property Name="NumberStreet" Type="nvarchar" MaxLength="50" />
+    <Property Name="Lat" Type="nvarchar" MaxLength="100" />
+    <Property Name="Lng" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="User_Group">
     <Key>
@@ -367,8 +371,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderDeta__RefSt__4D5F7D71">
-    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="1" />
+  <Association Name="FK__OrderDeta__RefSt__2CBDA3B5">
+    <End Role="StoreOrderImportDetail" Type="Self.StoreOrderImportDetail" Multiplicity="0..1" />
     <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StoreOrderImportDetail">
@@ -784,7 +788,7 @@
       <End Role="Product" EntitySet="Product" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderDeta__RefSt__4D5F7D71" Association="Self.FK__OrderDeta__RefSt__4D5F7D71">
+    <AssociationSet Name="FK__OrderDeta__RefSt__2CBDA3B5" Association="Self.FK__OrderDeta__RefSt__2CBDA3B5">
       <End Role="StoreOrderImportDetail" EntitySet="StoreOrderImportDetail" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>

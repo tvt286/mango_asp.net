@@ -176,7 +176,7 @@
                                         @item.Product.Name
                                     </td>
                                     <td>
-                                        <img class="imageProduct" style="width: 50px;" src="@Url.ImageProduct(item.Product)" />
+                                        <img class="imageProduct" style="width: 50px;" src="@Url.ImageProductInfo(item.Product)" />
                                     </td>
 
                                     <td class="category">
@@ -311,7 +311,7 @@
 
                         $(element).closest("tr").find("input[name=mainSupplierPrice]").val(data.SupplierPrice.replace(".", ""));
                         if (data.Image != "") {
-                            $(element).closest("tr").find(".imageProduct").attr("src", data.Image).show();
+                            $(element).closest("tr").find(".imageProduct").attr("src", data.Image.split(';')[1].replace('~','')).show();
                         } else {
                             $(element).closest("tr").find(".imageProduct").hide();
                         }

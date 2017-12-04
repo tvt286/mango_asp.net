@@ -46,6 +46,8 @@ namespace Mango.Data
         public Nullable<int> WardId { get; set; }
         public Nullable<int> StreetId { get; set; }
         public string NumberStreet { get; set; }
+        public string Lat { get; set; }
+        public string Lng { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Permission> User_Permission { get; set; }

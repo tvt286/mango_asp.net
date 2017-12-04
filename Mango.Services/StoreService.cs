@@ -36,7 +36,7 @@ namespace Mango.Services
             {
                 if(includeRoot)
                     return context.Stores.AsNoTracking().ToList();
-                return context.Stores.Where(x=> x.IsRoot == false).AsNoTracking().ToList();
+                return context.Stores.Where(x=> x.IsRoot == false).Include(x => x.StoreProducts.Select(a => a.Product)).AsNoTracking().ToList();
             }
         }
 
@@ -54,7 +54,17 @@ namespace Mango.Services
                 data.UserCreateId = user.Id;
                 data.TimeCreate = DateTime.Now;
                 data.Address = LocationService.GetAdress(data.NumberStreet, data.WardId, data.StreetId, data.DistrictId, data.CityId);
-
+                // lay Lat va Lng
+                DataTable location = new DataTable();
+                location = Utility.FindCoordinates(data.Address);
+                if (location != null)
+                {
+                    foreach (DataRow row in location.Rows)
+                    {
+                        data.Lat = row["Latitude"].ToString();
+                        data.Lng = row["Longitude"].ToString();
+                    }
+                }
                 context.Stores.Add(data);
                 context.SaveChanges();
             }
@@ -71,6 +81,14 @@ namespace Mango.Services
                 // lay Lat va Lng
                 DataTable location = new DataTable();
                 location = Utility.FindCoordinates(data.Address);
+                if (location != null)
+                {
+                    foreach (DataRow row in location.Rows)
+                    {
+                        data.Lat = row["Latitude"].ToString();
+                        data.Lng = row["Longitude"].ToString();
+                    }
+                }
                 context.Stores.Attach(data);
                 context.Entry(data).State = EntityState.Modified;
                 context.Entry(data).Property(x => x.TimeCreate).IsModified = false;
@@ -121,16 +139,60 @@ namespace Mango.Services
             }
         }
 
-        public static List<Store> GetStoreHasProduct(bool includeRoot = false)
+        public static List<Store> GetStoreHasProduct(bool includeRoot = false, int? productId = null, int? quantity = null)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 var ownStoreIdList = GetAll(includeRoot).Select(x => x.Id).ToList();
+                if (productId.HasValue && quantity.HasValue)
+                {
+                    return
+                    context.StoreProducts.Where(x => ownStoreIdList.Contains(x.StoreId) && x.ProductId == productId.Value
+                    && x.QuantityExchange > quantity)
+                        .Select(x => x.Store)
+                        .Include(x => x.Street)
+                        .Include(x => x.District)
+                        .Include(x => x.Ward)
+                        .Include(x => x.City)
+                        .ToList();
+                }
                 return
                     context.StoreProducts.Where(x => ownStoreIdList.Contains(x.StoreId)
                     && x.QuantityExchange > 0)
                         .Select(x => x.Store)
                         .ToList();
+            }
+        }
+
+        public static Store GetStoreOrderForUser(User user)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var stores = GetAll();
+                var store = stores.First();
+                var avgLat = float.Parse(stores.Max(x => x.Lat));
+                var avgLng = float.Parse(stores.Max(x => x.Lng));
+                if (stores.Count != 0)
+                {
+                    foreach (var item in stores)
+                    {
+                        if (item.Lat != null && item.Lng != null && (avgLat > Math.Abs(float.Parse(item.Lat) - float.Parse(user.Lat))) && (avgLng > Math.Abs(float.Parse(item.Lng) - float.Parse(user.Lng))))
+                        {
+                            avgLat = Math.Abs(float.Parse(item.Lat) - float.Parse(user.Lat));
+                            avgLng = Math.Abs(float.Parse(item.Lng) - float.Parse(user.Lng));
+                            store = item;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    return store;
+                }
+                else
+                {
+                    return context.Stores.Include(x => x.StoreProducts.Select(a => a.Product)).FirstOrDefault(x => x.IsRoot == true);
+                }
             }
         }
     }

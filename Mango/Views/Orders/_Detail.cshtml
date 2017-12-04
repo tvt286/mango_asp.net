@@ -66,12 +66,15 @@
                                         <img style="width:70px" src="@Url.ImageProductInfo(item.product)" alt="" class="pro-image-front">
                                     </td>
                                     <td>
+                                        <input type="hidden" name="productId" value="@item.product.Id" />
+
                                         @item.product.Name
                                     </td>
                                     <td>
                                         @item.product.SellingPrice.MoneyToStringVN()
                                     </td>
                                     <td>
+                                        <input type="hidden" name="quantity" value="@item.quantity" />
                                         @item.quantity
                                     </td>
                                     <td class="exchange autoNumeric">

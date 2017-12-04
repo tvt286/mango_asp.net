@@ -61,6 +61,15 @@ namespace Mango.Services
             }
         }
 
+        public static void CreateOrderCustomer(Order order)
+        {
+            using (var context = new mangoEntities())
+            {
+                context.Orders.Add(order);
+                context.SaveChanges();
+            }
+        }
+
         public static void ConfirmOrder(int id)
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))

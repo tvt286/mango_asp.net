@@ -514,7 +514,7 @@
     <Content Include="Areas\Admin\Views\User\_List.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Areas\Admin\Views\StoreOrder\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />

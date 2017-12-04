@@ -19,9 +19,9 @@ namespace Mango.Data
         public int ProductId { get; set; }
         public int Quantity { get; set; }
         public decimal SellingPrice { get; set; }
-        public int RefStoreOrderImportDetailId { get; set; }
         public decimal SupplierPrice { get; set; }
         public decimal MainSupplierPrice { get; set; }
+        public Nullable<int> RefStoreOrderImportDetailId { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

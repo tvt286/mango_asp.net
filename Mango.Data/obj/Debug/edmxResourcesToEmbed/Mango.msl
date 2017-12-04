@@ -23,6 +23,8 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="mangoModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Lng" ColumnName="Lng" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="NumberStreet" ColumnName="NumberStreet" />
           <ScalarProperty Name="StreetId" ColumnName="StreetId" />
           <ScalarProperty Name="WardId" ColumnName="WardId" />
@@ -137,6 +139,8 @@
     <EntitySetMapping Name="Stores">
       <EntityTypeMapping TypeName="mangoModel.Store">
         <MappingFragment StoreEntitySet="Store">
+          <ScalarProperty Name="Lng" ColumnName="Lng" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="IsRoot" ColumnName="IsRoot" />
           <ScalarProperty Name="UserCreateId" ColumnName="UserCreateId" />
           <ScalarProperty Name="TimeDeleted" ColumnName="TimeDeleted" />
@@ -222,20 +226,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="OrderDetails">
-      <EntityTypeMapping TypeName="mangoModel.OrderDetail">
-        <MappingFragment StoreEntitySet="OrderDetail">
-          <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
-          <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
-          <ScalarProperty Name="RefStoreOrderImportDetailId" ColumnName="RefStoreOrderImportDetailId" />
-          <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Menu1">
       <EntityTypeMapping TypeName="mangoModel.Menu1">
         <MappingFragment StoreEntitySet="Menu1">
@@ -273,6 +263,20 @@
           <ScalarProperty Name="TimeCreate" ColumnName="TimeCreate" />
           <ScalarProperty Name="Url" ColumnName="Url" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="mangoModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="RefStoreOrderImportDetailId" ColumnName="RefStoreOrderImportDetailId" />
+          <ScalarProperty Name="MainSupplierPrice" ColumnName="MainSupplierPrice" />
+          <ScalarProperty Name="SupplierPrice" ColumnName="SupplierPrice" />
+          <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

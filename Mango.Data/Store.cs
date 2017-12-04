@@ -38,6 +38,8 @@ namespace Mango.Data
         public Nullable<System.DateTime> TimeDeleted { get; set; }
         public int UserCreateId { get; set; }
         public bool IsRoot { get; set; }
+        public string Lat { get; set; }
+        public string Lng { get; set; }
     
         public virtual City City { get; set; }
         public virtual District District { get; set; }

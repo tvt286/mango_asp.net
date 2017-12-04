@@ -40,9 +40,9 @@ namespace Mango.Data
         public virtual DbSet<StoreOrder> StoreOrders { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Menu1> Menu1 { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Mango.Models;
 using Mango.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -44,7 +45,17 @@ namespace Mango.Controllers
             data.IsDeleted = false;
             data.TimeCreate = DateTime.Now;
             data.Address = LocationService.BuildAddress(data.CityId, data.DistrictId, data.WardId, data.StreetId, data.NumberStreet, data.Address);
-
+            // lay Lat va Lng
+            DataTable location = new DataTable();
+            location = Utility.FindCoordinates(data.Address);
+            if (location != null)
+            {
+                foreach (DataRow row in location.Rows)
+                {
+                    data.Lat = row["Latitude"].ToString();
+                    data.Lng = row["Longitude"].ToString();
+                }
+            }
             UserService.CreateCustomer(data);
             return RedirectToAction("Index", "Home", "");
 
