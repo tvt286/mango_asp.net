@@ -7,7 +7,7 @@
     <div class="container">
         <ul>
             <li>
-                <a href="javascript:void(0)" onclick="@(user == null ? "Login()" : "")" ><i class="fa @(user == null ? "fa-lock" : "fa-user-circle")" aria-hidden="true"></i>@(user == null ? "Sign In" : ("Hello, " + user.FullName))</a>
+                <a href="javascript:void(0)" onclick="@(user == null ? "Login()" : "Register()")" ><i class="fa @(user == null ? "fa-lock" : "fa-user-circle")" aria-hidden="true"></i>@(user == null ? "Sign In" : ("Hello, " + user.FullName))</a>
             </li>
             <li>        
                  <a href="@(user != null ? "/logout" : "javascript:void(0)")" onclick="@(user == null ? "Register()" : "")" ><i class="fa @(user == null ? "fa-pencil-square-o" : "fa-arrow-circle-left")" aria-hidden="true"></i>@(user == null ? "Sign Up" : "Logout")</a>

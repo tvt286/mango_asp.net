@@ -61,6 +61,20 @@ namespace Mango.Services
             }
         }
 
+        public static List<Order> GetAll(int userId)
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                return context.Orders
+                    .Include(x => x.OrderDetails.Select(d => d.StoreOrderImportDetail))
+                    .Include(x => x.OrderDetails.Select(d => d.Product.Category))
+                    .Include(x => x.Customer)
+                    .Include(x => x.Store)
+                    .OrderByDescending(x => x.Id)
+                    .Where(x => x.CustomerId == userId).ToList();
+            }
+        }
+
         public static void CreateOrderCustomer(Order order)
         {
             using (var context = new mangoEntities())

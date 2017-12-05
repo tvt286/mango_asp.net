@@ -25,38 +25,56 @@ namespace Mango.Controllers
 
         public ActionResult Register()
         {
-            var model = new Mango.Data.User();
-
-            ViewBag.CityId = new SelectList(LocationService.GetAllCity(), "Id", "Name", model.CityId);
-            ViewBag.DistrictId = new SelectList(LocationService.GetDistrictByCity(model.CityId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.DistrictId);
-            ViewBag.WardId = new SelectList(LocationService.GetWardByDistrict(model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.WardId);
-            ViewBag.StreetId = new SelectList(LocationService.GetStreetByDistrictAndCity(model.CityId.GetValueOrDefault(-1), model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, x.Name }).ToList(), "Id", "Name", model.StreetId);
-
+            var model = UserService.GetUserInfo();
+          
+                ViewBag.CityId = new SelectList(LocationService.GetAllCity(), "Id", "Name", model.CityId);
+                ViewBag.DistrictId = new SelectList(LocationService.GetDistrictByCity(model.CityId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.DistrictId);
+                ViewBag.WardId = new SelectList(LocationService.GetWardByDistrict(model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, Name = x.Prefix + " " + x.Name }).ToList(), "Id", "Name", model.WardId);
+                ViewBag.StreetId = new SelectList(LocationService.GetStreetByDistrictAndCity(model.CityId.GetValueOrDefault(-1), model.DistrictId.GetValueOrDefault(-1)).Select(x => new { x.Id, x.Name }).ToList(), "Id", "Name", model.StreetId);
+         
             return PartialView("_Register", model);
         }
 
         [HttpPost]
         public ActionResult DoRegister(User data)
         {
-           
-            data.Password = Encryptor.MD5Hash(data.Password);
-            data.Type = UserType.FrontEnd;
-            data.Status = UserStatus.Active;
-            data.IsDeleted = false;
-            data.TimeCreate = DateTime.Now;
-            data.Address = LocationService.BuildAddress(data.CityId, data.DistrictId, data.WardId, data.StreetId, data.NumberStreet, data.Address);
-            // lay Lat va Lng
-            DataTable location = new DataTable();
-            location = Utility.FindCoordinates(data.Address);
-            if (location != null)
+            if (data.Id == 0)
             {
-                foreach (DataRow row in location.Rows)
+                data.Password = Encryptor.MD5Hash(data.Password);
+                data.Type = UserType.FrontEnd;
+                data.Status = UserStatus.Active;
+                data.IsDeleted = false;
+                data.TimeCreate = DateTime.Now;
+                data.Address = LocationService.BuildAddress(data.CityId, data.DistrictId, data.WardId, data.StreetId, data.NumberStreet, data.Address);
+                // lay Lat va Lng
+                DataTable location = new DataTable();
+                location = Utility.FindCoordinates(data.Address);
+                if (location != null)
                 {
-                    data.Lat = row["Latitude"].ToString();
-                    data.Lng = row["Longitude"].ToString();
+                    foreach (DataRow row in location.Rows)
+                    {
+                        data.Lat = row["Latitude"].ToString();
+                        data.Lng = row["Longitude"].ToString();
+                    }
                 }
+                UserService.CreateCustomer(data);
+            }else
+            {
+                AuthorizeService.ClearCache(HttpContext.User.Identity.Name);
+                var model = UserService.Get(data.Id, true, true);
+                var tempPass = model.Password;
+                TryUpdateModel(model);
+                if (model.Password.IsEmpty())
+                {
+                    model.Password = tempPass;
+                }
+                else
+                {
+                    if (!data.Password.IsEmpty())
+                        model.Password = Encryptor.MD5Hash(data.Password);
+                }
+                UserService.UpdateCustomer(model);
             }
-            UserService.CreateCustomer(data);
             return RedirectToAction("Index", "Home", "");
 
         }

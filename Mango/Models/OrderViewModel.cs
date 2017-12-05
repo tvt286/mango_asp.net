@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Mango.Models
 {
-    public class CartItem
+    public class OrderViewModel
     {
-        public Product product { get; set; }
-        public int quantity { get; set; }
+        public List<Order> orders { get; set; }
+        public List<CartItem> carts { get; set; }
     }
 }

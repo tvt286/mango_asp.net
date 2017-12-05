@@ -12,13 +12,20 @@ namespace Mango.Controllers
     public class OrdersController : Controller
     {
         private const string CART_SESSION = "CART_SESSION";
-        //
-        // GET: /Orders/
+      
         public ActionResult Index()
         {
-            List<CartItem> cart = (List<CartItem>)Session[CART_SESSION];
-
-            return View("Index",cart);
+            var user = UserService.GetUserInfo(true);
+            var model = new OrderViewModel();
+            model.carts = new List<CartItem>();
+            model.carts = (List<CartItem>)Session[CART_SESSION];
+            if(user != null)
+            {
+                model.orders = new List<Order>();
+                model.orders = OrderService.GetAll(user.Id);
+            }
+            
+            return View("Index", model);
         }
 
         public ActionResult Detail()
@@ -41,9 +48,9 @@ namespace Mango.Controllers
                 CustomerId = user.Id,
                 Status = OrderStatus.Confirm,
                 StoreId = store.Id,
-                TimeCreate = DateTime.Now
+                TimeCreate = DateTime.Now,
             };
-           
+            List<CartItem> cart = (List<CartItem>)Session[CART_SESSION];
             var listOrderDetail = new List<OrderDetail>();
             for (int i = 0; i < productId.Length; i++)
             {
@@ -57,7 +64,11 @@ namespace Mango.Controllers
                     MainSupplierPrice = 0
                 };
                 listOrderDetail.Add(orderDetail);
+                cart.RemoveAll(x => x.product.Id == productId[i]);
             }
+            order.TotalAmount = (long)listOrderDetail.Sum(x => x.Quantity * x.SellingPrice);
+
+            Session[CART_SESSION] = cart;
 
             order.OrderDetails = listOrderDetail;
 
@@ -86,6 +97,20 @@ namespace Mango.Controllers
                 });
             }
         }
+
+        public JsonResult Update(int id, int quantity)
+        {
+            List<CartItem> carts = (List<CartItem>)Session[CART_SESSION];
+            carts.FirstOrDefault(x => x.product.Id == id).quantity = quantity;
+            Session[CART_SESSION] = carts;
+            
+            return Json(new
+            {
+                status = true,
+            });
+           
+        }
+
         public ActionResult AddCartItem(int productId, int quantity)
         {
             var cart = Session[CART_SESSION];

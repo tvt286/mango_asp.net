@@ -198,6 +198,18 @@ namespace Mango.Services
             }
         }
 
+        public static void UpdateCustomer(User model)
+        {
+            using (var context = new mangoEntities())
+            {
+                context.Users.Attach(model);
+                context.Entry(model).State = EntityState.Modified;
+                context.Entry(model).Property(x => x.TimeCreate).IsModified = false;
+                context.SaveChanges();
+            }
+        }
+
+
         public static RedirectCommand CreateUser(User data, int[] groupIdList, int[] permissionIdList)
         {
             var result = new RedirectCommand

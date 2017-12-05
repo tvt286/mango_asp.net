@@ -179,6 +179,7 @@
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

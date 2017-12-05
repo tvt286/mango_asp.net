@@ -553,6 +553,11 @@ a.simpleCart_empty {
     min-height:500px!important;
     padding-top:10em;
 }
+.button-order {
+    position: inherit;
+    min-height:500px!important;
+    padding-top:10px;
+}
 /*-- banner --*/  
 .carousel .item{    
 	background:-webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1.jpg) no-repeat;
@@ -600,6 +605,11 @@ s
     letter-spacing: 3px;
     padding: 8px 20px;
     margin-top: 2em;
+}
+.button-order a {
+    color: #fff;
+    letter-spacing: 3px;
+    padding: 8px 10px;
 }
 .codes{
 	padding:5em 0; 

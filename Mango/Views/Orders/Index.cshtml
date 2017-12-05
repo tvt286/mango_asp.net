@@ -5,11 +5,12 @@
 @using Mango.Data.Enums
 @using Mango.Web
 @using Mango.Models
-@model List<CartItem>
+@model OrderViewModel
 
     @{
         ViewBag.Title = "Order";
         Layout = "~/Views/Shared/_Layout.cshtml";
+        var user = UserService.GetUserInfo(true);
     }
 
 
@@ -33,258 +34,329 @@
 
     <div class="new_arrivals_agile_w3ls_info">
         <div class="container">
-            @*<h3 class="wthree_text_info">New <span>Arrivals</span></h3>*@
-            <div id="horizontalTab">
-                <ul class="resp-tabs-list">
-                    <li>Cart</li>
-                    <li>Order</li>
-                </ul>
-                <div class="resp-tabs-container">
-                    <!--/tab_one-->
-                    <div class="tab1">
-                        @if (@Model != null && @Model.Count > 0)
-                        {
-                           
-                            <table class="table">
-                                <thead>
-                                    <tr style="background-color:#2f2f2f;">
-                                        <th style="color:white">
-                                            Image
-                                        </th>
-                                        <th style="color:white">
-                                            Name
-                                        </th>
-                                        <th style="color:white">
-                                            Price
-                                        </th>
-                                        <th style="color:white">
-                                            Quantity
-                                        </th>
-                                        <th style="color:white">
-                                            Total
-                                        </th>
-                                        <th>
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in @Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <img style="width:70px" src="@Url.ImageProductInfo(item.product)" alt="" class="pro-image-front">
-                                            </td>
-                                            <td>
-                                                @item.product.Name
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="SellingPrice" value="@item.product.SellingPrice" />
-                                                @item.product.SellingPrice.MoneyToStringVN()
-                                            </td>
-                                            <td>
-                                                <input type="text" name="quantity" value="@item.quantity" class="form-control" onblur="CalculateExchange(this)" style="width:80px;" />
-                                            </td>
-                                            <td class="exchange autoNumeric">
-                                                @((item.product.SellingPrice * item.quantity).MoneyToStringVN())
-                                            </td>
-
-                                            <td>
-                                                <input type="button" onclick="DeleteProduct(this)" data-id="@item.product.Id" class="btn btn-danger" value="Delete">
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                            <div class="form-group">
-                                <div style="float:right;">
-                                    <div>
-                                        <strong>Total: </strong>
-                                        <strong class="priceTotal">0</strong>
-                                        <strong> VNĐ</strong>
-                                    </div>
-                                    <button style="float:right; margin-top:10px" onclick="Detail()" href="#" class="btn btn-primary">Order</button>
-                                </div>
-                                <br style="clear: both" />
-
-                            </div>
-                        }
-                        else
-                        {
-                                <div style="padding-top:20px; text-align:center">
-                                    <strong>You have no order.</strong>
-                                </div>
-                        }
-                            
-                        <div class="clearfix"></div>
+            <div class="contact-grid-agile-w3s">
+                <div class="col-md-4 contact-grid-agile-w3">
+                    <div class="contact-grid-agile-w31">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <h4>Address</h4>
+                        <p>@user.Address</p>
                     </div>
-                    <!--//tab_two-->
-                    <div class="tab2">             
-                                <table class="table">
-                                    <thead>
-                                        <tr style="background-color:#2f2f2f;">
-                                            <th style="color:white">
-                                                Image
-                                            </th>
-                                            <th style="color:white">
-                                                Name
-                                            </th>
-                                            <th style="color:white">
-                                                Price
-                                            </th>
-                                            <th style="color:white">
-                                                Quantity
-                                            </th>
-                                            <th style="color:white">
-                                                Total
-                                            </th>
-                                            <th style="color:white">
-                                                Status
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            <div class="form-group">
-                                <div style="float:right; margin-bottom:10px; margin-right:10px">
-                                    <strong>Total: </strong>
-                                    <strong class="priceTotal">0</strong>
-                                    <strong> VNĐ</strong>
-
-                                </div>
-                                <br style="clear: both" />
-
-                            </div>
-
-                        <div class="clearfix"></div>
+                </div>
+                <div class="col-md-4 contact-grid-agile-w3">
+                    <div class="contact-grid-agile-w32">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <h4>Phone</h4>
+                        <p>@user.Phone<span>--</span></p>
                     </div>
-                    <!--//tab_two-->
+                </div>
+                <div class="col-md-4 contact-grid-agile-w3">
+                    <div class="contact-grid-agile-w33">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <h4>Email</h4>
+                        <p><a href="mailto:@user.Email">@user.Email</a><span>--</span></p>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div style="padding-top:40px;" class="agile-contact-grids">
+                <div class="agile-contact-left">
+                    <div class="col-md-6 address-grid">
+                        <h4>Order <span>Information</span></h4>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="clearfix"> </div>
+                        <div id="horizontalTab" style="padding-top:40px;">
+                            <ul class="resp-tabs-list">
+                                <li>Cart</li>
+                                <li>Order</li>
+                            </ul>
+                            <div class="resp-tabs-container">
+                                <!--/tab_one-->
+                                <div class="tab1">
+                                    @if (@Model.carts != null && @Model.carts.Count > 0)
+                                    {
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr style="background-color:#2f2f2f;">
+                                                    <th style="color:white">
+                                                        Image
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Name
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Price
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Quantity
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Total
+                                                    </th>
+                                                    <th>
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in @Model.carts)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img style="width:70px" src="@Url.ImageProductInfo(item.product)" alt="" class="pro-image-front">
+                                                        </td>
+                                                        <td>
+                                                            @item.product.Name
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" name="SellingPrice" value="@item.product.SellingPrice" />
+                                                            @item.product.SellingPrice.MoneyToStringVN()
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="quantity" value="@item.quantity" class="form-control" onblur="CalculateExchange(this)" style="width:80px; margin-left:10px" />
+                                                        </td>
+                                                        <td class="exchange autoNumeric">
+                                                            @((item.product.SellingPrice * item.quantity).MoneyToStringVN())
+                                                        </td>
+                                                        <td>
+                                                            <input type="button" onclick="Update(this)" data-id="@item.product.Id" class="btn btn-success" value="Update">
+                                                            <input type="button" onclick="DeleteProduct(this)" data-id="@item.product.Id" class="btn btn-danger" value="Delete">
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                        <div class="form-group">
+                                            <div style="float:right;">
+                                                <div>
+                                                    <strong>Total: </strong>
+                                                    <strong class="priceTotal">0</strong>
+                                                    <strong> VNĐ</strong>
+                                                </div>
+                                                <div style="float:right;">
+                                                    <div class="button-order">
+                                                        <a id="btnOrder" class="hvr-outline-out button2">Order</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br style="clear: both" />
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="padding-top:20px; text-align:center">
+                                            <strong>You have no cart.</strong>
+                                        </div>
+                                    }
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!--//tab_two-->
+                                <div class="tab2">
+                                    @if (user != null && @Model.orders != null && @Model.orders.Count > 0)
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr style="background-color:#2f2f2f;">
+                                                    <th style="color:white">
+                                                        Customer
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Date create
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Quantity
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Total
+                                                    </th>
+                                                    <th style="color:white">
+                                                        Status
+                                                    </th>
+                                                    <th style="color:white">
+
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in @Model.orders)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.Customer.FullName
+                                                        </td>
+                                                        <td>
+                                                            @item.TimeCreate.ToString("dd-MM-yyyy HH:mm")
+                                                        </td>
+                                                        <td>
+                                                            @item.OrderDetails.Count
+                                                        </td>
+                                                        <td class="autoNumeric">
+                                                            @item.TotalAmount.MoneyToStringVN()
+                                                        </td>
+                                                        <td>
+                                                            @item.Status.GetString()
+                                                        </td>
+                                                        <td>
+                                                            <a title="Detail" href="#">Detail</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    }
+                                    else
+                                    {
+                                        <div style="padding-top:20px; text-align:center">
+                                            <strong>You have no order.</strong>
+                                        </div>
+                                    }
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!--//tab_two-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-<!-- Modal1 -->
-<div class="modal fade" id="modelDetail" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
+                <!-- Modal1 -->
+                <div class="modal fade" id="modelDetail" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
 
-        </div>
-        <!-- //Modal content-->
-    </div>
-</div>
-    
-    
-    @section styles
+                        </div>
+                        <!-- //Modal content-->
+                    </div>
+                </div>
+
+
+                @section styles
     {
-        <style>
-          
-            .modal-body {
-                height: 550px;
-                overflow-y: auto;
-            }
-        </style>
-    }
-
-    @section scripts
-    {
-        <script>
-            $(function () {
-                $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
-                getTotalPrice();
-            });
-            function getTotalPrice() {
-                var totalPrice = 0;
-                $("tr").each(function () {
-                    $this = $(this);
-                    var value = $this.find(".exchange").html();
-                    if (value != null) {
-                        if (value != "")
-                            totalPrice += parseInt(value.replace(/\./g, ""));
-                    }
-                });
-                $('.priceTotal').autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
-                $('.priceTotal').autoNumeric('set', totalPrice);
-            }
-            function CalculateExchange(element) {
-                var quantity = $(element).closest("tr").find("input[name=quantity]").val();
-                var price = $(element).closest("tr").find("input[name=SellingPrice]").val();
-                $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
-
-                if (quantity == "" || quantity == "0") {
-                    $(element).closest("tr").find(".exchange").html("0");
-
-                } else {
-                    var total = parseInt(quantity) * parseInt(price);
-                    $(element).closest("tr").find(".exchange").autoNumeric('set', total);
-                    var totalPrice = 0;
-                    $("tr").each(function () {
-                        $this = $(this);
-                        var value = $this.find(".exchange").html();
-                        if (value != null) {
-                            if (value != "")
-                                totalPrice += parseInt(value.replace(/\./g, ""));
+                    <style>
+                        .modal-body {
+                            height: 550px;
+                            overflow-y: auto;
                         }
-                    });
 
-                    $('.priceTotal').autoNumeric('set', totalPrice);
+                        td {
+                            text-align: center;
+                        }
+
+                        th {
+                            color: white;
+                            text-align: center;
+                        }
+                    </style>
                 }
-            }
 
-            $("#btnDelete").off('click').on('click', function () {
+                @section scripts
+    {
+                    <script>
+                        $(function () {
+                            $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                            getTotalPrice();
+                        });
+                        function getTotalPrice() {
+                            var totalPrice = 0;
+                            $("tr").each(function () {
+                                $this = $(this);
+                                var value = $this.find(".exchange").html();
+                                if (value != null) {
+                                    if (value != "")
+                                        totalPrice += parseInt(value.replace(/\./g, ""));
+                                }
+                            });
+                            $('.priceTotal').autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
+                            $('.priceTotal').autoNumeric('set', totalPrice);
+                        }
+                        function CalculateExchange(element) {
+                            var quantity = $(element).closest("tr").find("input[name=quantity]").val();
+                            var price = $(element).closest("tr").find("input[name=SellingPrice]").val();
+                            $(".exchange").autoNumeric('init', { aPad: false, aSep: '.', aDec: ',', vMin: 0.00, vMax: 99999999999999999.00 });
 
-                //$.ajax({
-                //    data: { id: $(this).data('id') },
-                //    url: '/Orders/Delete',
-                //    dataType: 'json',
-                //    type: 'POST',
-                //    success: function (res) {
-                //        if(res.status == true)
-                //        {
-                //            window.location.href = "/order";
-                //        }
-                //    }
-                //})
-            });
+                            if (quantity == "" || quantity == "0") {
+                                $(element).closest("tr").find(".exchange").html("0");
 
-            function DeleteProduct(element) {
-                $.ajax({
-                    data: { id: $(element).data('id') },
-                    url: '/Orders/Delete',
-                    dataType: 'json',
-                    type: 'POST',
-                    success: function (res) {
-                        if(res.status == true)
-                        {
-                            $(element).closest("tr").remove();
-                            var price = $(element).closest("tr").find(".exchange").html().replace(/\./g, "");
-                            if (price != "") {
-                                var oldTotalPrice = $('.priceTotal').autoNumeric('get');
-                                $('.priceTotal').autoNumeric('set', oldTotalPrice - price);
+                            } else {
+                                var total = parseInt(quantity) * parseInt(price);
+                                $(element).closest("tr").find(".exchange").autoNumeric('set', total);
+                                var totalPrice = 0;
+                                $("tr").each(function () {
+                                    $this = $(this);
+                                    var value = $this.find(".exchange").html();
+                                    if (value != null) {
+                                        if (value != "")
+                                            totalPrice += parseInt(value.replace(/\./g, ""));
+                                    }
+                                });
+
+                                $('.priceTotal').autoNumeric('set', totalPrice);
                             }
                         }
-                        else
-                        {
-                            window.location.href = "/order";
+
+                        $("#btnOrder").off('click').on('click', function () {
+                            $.post('/order-detail',
+                            function (data) {
+                                $('.modal-content').html(data);
+                                $('#modelDetail').modal('show');
+
+                            });
+                            //$.ajax({
+                            //    data: { id: $(this).data('id') },
+                            //    url: '/Orders/Delete',
+                            //    dataType: 'json',
+                            //    type: 'POST',
+                            //    success: function (res) {
+                            //        if(res.status == true)
+                            //        {
+                            //            window.location.href = "/order";
+                            //        }
+                            //    }
+                            //})
+                        });
+
+                        function DeleteProduct(element) {
+                            $.ajax({
+                                data: { id: $(element).data('id') },
+                                url: '/Orders/Delete',
+                                dataType: 'json',
+                                type: 'POST',
+                                success: function (res) {
+                                    if (res.status == true) {
+                                        $(element).closest("tr").remove();
+                                        var price = $(element).closest("tr").find(".exchange").html().replace(/\./g, "");
+                                        if (price != "") {
+                                            var oldTotalPrice = $('.priceTotal').autoNumeric('get');
+                                            $('.priceTotal').autoNumeric('set', oldTotalPrice - price);
+                                        }
+                                    }
+                                    else {
+                                        window.location.href = "/order";
+                                    }
+                                }
+                            })
+
                         }
-                    }
-                })
-            
-            }
 
-            function Detail() {
-                $.post('/order-detail',
-                function (data) {
-                    $('.modal-content').html(data);
-                    $('#modelDetail').modal('show');
+                        function Update(element) {
+                            var quantity = $(element).closest("tr").find("input[name=quantity]").val();
+                            $.post('@Url.Action("Update", "Orders")',
+                                         {
+                                             id: $(element).data('id'),
+                                             quantity: quantity
+                                         },
+                                         function (data) {
+                                             if (data.status == true) {
+                                                 window.location.href = "/order";
+                                             }
+                                         });
+                        }
 
-                });
-            }
-        </script>
-    }
+                    </script>
+                }

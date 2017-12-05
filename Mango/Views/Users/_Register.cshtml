@@ -12,31 +12,50 @@
 </div>
 <div class="modal-body modal-body-sub_agile">
     <div class="col-md-8 modal_body_left modal_body_left1">
-        <h3 class="agileinfo_sign">Sign Up <span>Now</span></h3>
+        @if(@Model.Id == 0)
+        {
+            <h3 class="agileinfo_sign">Sign Up <span>Now</span></h3>
+        }
+        else
+        {
+            <h3 class="agileinfo_sign"><span>Information</span></h3>
+
+        }
         @using (Html.BeginForm("DoRegister", "Users", FormMethod.Post, new { role = "form" }))
         {
+                            <input type="hidden" name="Id" required="" value="@Model.Id">
+
             <div class="styled-input agile-styled-input-top">
-                <input type="text" name="FullName" required="">
+                <input type="text" name="FullName" required="" value="@((Model.Id != 0) ? @Model.FullName:"")">
                 <label>Full Name</label>
                 <span></span>
             </div>
             <div class="styled-input agile-styled-input-top">
-                <input type="text" name="UserName" required="">
+                <input type="text" name="UserName" required="" value="@((Model.Id != 0) ? @Model.UserName:"")">
                 <label>User Name</label>
                 <span></span>
             </div>
             <div class="styled-input agile-styled-input-top">
-                <input type="text" name="Phone" required="">
+                <input type="text" name="Phone" required="" value="@((Model.Id != 0) ? @Model.Phone:"")">
                 <label>Phone</label>
                 <span></span>
             </div>
             <div class="styled-input">
-                <input type="email" name="Email" required="">
+                <input type="email" name="Email" required="" value="@((Model.Id != 0) ? @Model.Email:"")">
                 <label>Email</label>
                 <span></span>
             </div>
             <div class="styled-input">
-                <input type="password" name="Password" required="">
+                @if(@Model.Id == 0)
+                {
+                   <input type="password" name="Password" required="" >
+
+                }
+                else
+                {
+                   <input type="password" name="Password">
+
+                }
                 <label>Password</label>
                 <span></span>
             </div>
@@ -61,7 +80,7 @@
                 @Html.ValidationMessageFor(x => x.StreetId)
             </div>
              <div class="styled-input">
-                 <input type="text" name="NumberStreet" required="">
+                 <input type="text" name="NumberStreet" required="" value="@((Model.Id != 0) ? @Model.NumberStreet : "")">
                 <label>Street Number</label>
                 <span></span>
             </div>
