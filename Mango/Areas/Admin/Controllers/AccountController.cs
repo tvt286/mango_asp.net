@@ -49,6 +49,7 @@ namespace Mango.Areas.Admin.Controllers
                     else
                     {
                         FormsAuthentication.SetAuthCookie(user.UserName, rememberMe);
+
                         if (string.IsNullOrEmpty(returnUrl))
                         {
                             return RedirectToAction("Index", "Home");

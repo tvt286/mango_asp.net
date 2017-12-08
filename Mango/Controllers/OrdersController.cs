@@ -23,8 +23,7 @@ namespace Mango.Controllers
             {
                 model.orders = new List<Order>();
                 model.orders = OrderService.GetAll(user.Id);
-            }
-            
+            }            
             return View("Index", model);
         }
 
@@ -50,6 +49,7 @@ namespace Mango.Controllers
                 StoreId = store.Id,
                 TimeCreate = DateTime.Now,
             };
+
             List<CartItem> cart = (List<CartItem>)Session[CART_SESSION];
             var listOrderDetail = new List<OrderDetail>();
             for (int i = 0; i < productId.Length; i++)

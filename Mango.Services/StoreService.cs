@@ -17,7 +17,7 @@ namespace Mango.Services
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
                 var user = UserService.GetUserInfo();
-                return context.Stores.FirstOrDefault(x => x.Id == id);
+                return context.Stores.Include(x => x.StoreOrders.Select(s => s.StoreOrderImportDetails)).Include(x => x.StoreProducts.Select(p => p.Product)).FirstOrDefault(x => x.Id == id);
             }
         }
 

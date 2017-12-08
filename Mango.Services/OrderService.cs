@@ -88,19 +88,37 @@ namespace Mango.Services
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
             {
+                // phiếu mua hàng
                 var order =  context.Orders
                     .Include(x => x.OrderDetails.Select(d => d.StoreOrderImportDetail))
                     .First(x => x.Id == id);
+                // lấy ra store bán
+                var store = StoreService.Get(order.StoreId);
 
                 order.Status = OrderStatus.Pending;
                 foreach (var item in order.OrderDetails)
                 {
+                    var storeImportDetail = new StoreOrderImportDetail();
+                    foreach (var storeOrder in store.StoreOrders)
+                    {
+                        if(storeOrder.StoreOrderImportDetails.Count > 0)
+                        {
+                            storeImportDetail = storeOrder.StoreOrderImportDetails.Where(x => x.ProductId == item.ProductId && x.Quantity >= item.Quantity).First();
+                        }
+                        if(storeImportDetail.Id != 0)
+                        {
+                            break;
+                        }
+                    }
+                    item.RefStoreOrderImportDetailId = storeImportDetail.Id;
                     var refStoreOrderImportDetail = context.StoreOrderImportDetails.Include(x => x.Product).First(
                           x => x.Id == item.RefStoreOrderImportDetailId);
                     refStoreOrderImportDetail.Quantity -= item.Quantity; // trừ số lượng trong kho
 
+                    var product = context.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                    product.BuyCount += 1;
                 }
-               
+                
                 context.SaveChanges();
 
                 StoreOrderService.UpdateQuantityStoreProduct(order.StoreId,

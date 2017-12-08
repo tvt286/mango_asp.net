@@ -260,5 +260,26 @@ namespace Mango.Services
         //    }
         //}
 
+
+        public static void UpdateStar(int id, int star)
+        {
+            using (var context = new mangoEntities())
+            {
+                var product = context.Products.FirstOrDefault(x => x.Id == id);
+                if (product.CountStar != null)
+                {
+                    product.CountStar += 1;
+                    product.Star = star;
+                }
+                else
+                {
+                    product.Star = star;
+                    product.CountStar = 1;
+                }
+
+                product.TimeUpdate = DateTime.Now;
+                context.SaveChanges();
+            }
+        }
     }
 }

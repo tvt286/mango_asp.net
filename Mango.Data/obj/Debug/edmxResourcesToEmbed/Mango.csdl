@@ -735,6 +735,8 @@
     <Property Name="BuyCount" Type="Int32" />
     <NavigationProperty Name="Category" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
+    <Property Name="Star" Type="Int32" />
+    <Property Name="CountStar" Type="Int32" />
   </EntityType>
   <Association Name="FK__Product__UserCre__48CFD27E">
     <End Type="mangoModel.User" Role="User" Multiplicity="1" />

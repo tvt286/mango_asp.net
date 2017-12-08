@@ -157,11 +157,12 @@ namespace Mango.Services
             }
         }
 
-        public static User GetUserInfo( bool fromFrontEnd = false)
+        public static User GetUserInfo(bool fromFrontEnd = false)
         {
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return null;
             var username = HttpContext.Current.User.Identity.Name;
             string key = string.Format("UserService-Info-{0}", username);
+
             var user = new MemoryCacheManager().Get(key, () =>
             {
                 using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
@@ -169,10 +170,10 @@ namespace Mango.Services
                     if(fromFrontEnd)
                         return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username && x.Type == UserType.FrontEnd);
                     else
-                        return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username);
-
+                        return context.Users.AsNoTracking().FirstOrDefault(x => x.UserName == username && x.Type == UserType.BackEnd);
                 }
             });
+
             if (user == null)
             {
                 HttpContext.Current.Session.Abandon();
@@ -248,7 +249,7 @@ namespace Mango.Services
                 }
 
                 data.TimeCreate = DateTime.Now;
-                data.Type = UserType.FrontEnd;
+                data.Type = UserType.BackEnd;
                 context.Users.Add(data);
                 //context.SaveChanges();
                 try

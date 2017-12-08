@@ -125,6 +125,8 @@
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Image" Type="nvarchar(max)" />
     <Property Name="BuyCount" Type="int" />
+    <Property Name="Star" Type="int" />
+    <Property Name="CountStar" Type="int" />
   </EntityType>
   <EntityType Name="Store">
     <Key>

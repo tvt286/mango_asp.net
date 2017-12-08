@@ -6,12 +6,15 @@
 @using Mango.Web
 @using Mango.Data
 @model Mango.Models.ProductModel
+
 @{
+    
     ViewBag.Title = @Model.product.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
-       <!-- /banner_bottom_agile_info -->
+<!-- /banner_bottom_agile_info -->
 <div class="page-head_agile_info_w3l">
     <div class="container">
         <h3><span>@Model.product.Name</span></h3>
@@ -29,7 +32,7 @@
     </div>
 </div>
 
- <!-- banner-bootom-w3-agileits -->
+<!-- banner-bootom-w3-agileits -->
 <div class="banner-bootom-w3-agileits">
     <div class="container">
         <div class="col-md-4 single-right-left ">
@@ -56,23 +59,24 @@
             <p><span class="item_price">@Model.product.SellingPrice.MoneyToStringVN() VNĐ</span></p>
             <div class="rating1">
                 <span class="starRating">
-                    <input id="rating5" type="radio" name="rating" value="5">
+                    <input id="productId" type="hidden" name="productId" value="@Model.product.Id">
+                    <input id="rating5" type="radio" name="rating" value="5" @(Model.product.Star == 5 ? "checked": "")>
                     <label for="rating5">5</label>
-                    <input id="rating4" type="radio" name="rating" value="4">
+                    <input id="rating4" type="radio" name="rating" value="4" @(Model.product.Star == 4 ? "checked": "")>
                     <label for="rating4">4</label>
-                    <input id="rating3" type="radio" name="rating" value="3" checked="">
+                    <input id="rating3" type="radio" name="rating" value="3" @(Model.product.Star == 3 ? "checked": "")>
                     <label for="rating3">3</label>
-                    <input id="rating2" type="radio" name="rating" value="2">
+                    <input id="rating2" type="radio" name="rating" value="2" @(Model.product.Star == 2 ? "checked": "")>
                     <label for="rating2">2</label>
-                    <input id="rating1" type="radio" name="rating" value="1">
+                    <input id="rating1" type="radio" name="rating" value="1" @(Model.product.Star == 1 ? "checked": "")>
                     <label for="rating1">1</label>
                 </span>
             </div>
-         
+
             <div style="margin-top:20px" class="color-quality">
-                <div style="width:200px" class="color-quality-right" >
+                <div style="width:200px" class="color-quality-right">
                     <input type="hidden" value="@Model.product.Id" name="productId">
-                    <input  id="quantity" type="text" value="1" name="quantity">
+                    <input id="quantity" type="text" value="1" name="quantity">
                 </div>
             </div>
 
@@ -117,7 +121,7 @@
             <div id="horizontalTab">
                 <ul class="resp-tabs-list">
                     <li>Description</li>
-                   
+
                 </ul>
                 <div class="resp-tabs-container">
                     <!--/tab_one-->
@@ -126,40 +130,41 @@
                             @Html.Raw(@Model.product.Description)
                         </div>
                     </div>
-                  
+
                 </div>
             </div>
         </div>
         <!-- //new_arrivals -->
         <!--/slider_owl-->
-        
+
         <div class="w3_agile_latest_arrivals">
             <h3 class="wthree_text_info">Featured <span>Arrivals</span></h3>
             @foreach (var item in Model.productsHot)
             {
-              
-            <div class="col-md-3 product-men single">
-                <div class="men-pro-item simpleCart_shelfItem">
-                    <div class="men-thumb-item">
-                        <img src="@Url.ImageProductInfo(@item)" alt="" class="pro-image-front">
-                        <img src="@Url.ImageProductInfo(@item)" alt="" class="pro-image-back">
-                        <div class="men-cart-pro">
-                            <div class="inner-men-cart-pro">
-                                <a href="single.html" class="link-product-add-cart">Quick View</a>
-                            </div>
-                        </div>
-                        <span class="product-new-top">Hot</span>
 
-                    </div>
-                    <div class="item-info-product ">
-                        <h4><a href="single.html">@item.Name</a></h4>
-                        <div class="info-product-price">
-                            <span class="item_price">@item.SellingPrice.MoneyToStringVN() VNĐ</span>
+                <div class="col-md-3 product-men single">
+                    <div class="men-pro-item simpleCart_shelfItem">
+                        <div class="men-thumb-item">
+                            <img src="@Url.ImageProductInfo(@item)" alt="" class="pro-image-front">
+                            <img src="@Url.ImageProductInfo(@item)" alt="" class="pro-image-back">
+                            <div class="men-cart-pro">
+                                <div class="inner-men-cart-pro">
+                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                </div>
+                            </div>
+                            <span class="product-new-top">Hot</span>
+
                         </div>
-                      
+                        <div class="item-info-product ">
+                            <h4><a>@item.Name</a></h4>
+                         
+                            <div class="info-product-price">
+                                <span class="item_price">@item.SellingPrice.MoneyToStringVN() VNĐ</span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>       
           }
             <div class="clearfix"> </div>
             <!--//slider_owl-->
@@ -167,24 +172,25 @@
     </div>
 </div>
 <!--//single_page-->
-@section Styles 
+@section Styles
 {
-<link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="~/Content/css/jquery.bootstrap-touchspin.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/Content/css/jquery.bootstrap-touchspin.css" type="text/css" media="screen" />
 
-    
+
 }
 @section scripts
 {
-    	<!-- single -->
-<script src="~/Scripts/imagezoom.js"></script>
-<!-- single -->
+    <!-- single -->
+    <script src="~/Scripts/imagezoom.js"></script>
+    <!-- single -->
     <!-- FlexSlider -->
-<script src="~/Scripts/jquery.flexslider.js"></script>
-<script src="~/Scripts/jquery.bootstrap-touchspin.js"></script>
+    <script src="~/Scripts/jquery.flexslider.js"></script>
+    <script src="~/Scripts/jquery.bootstrap-touchspin.js"></script>
 
     <script>
         // Can also be used with $(document).ready()
+
         $(window).load(function () {
             $('.flexslider').flexslider({
                 animation: "slide",
@@ -203,9 +209,21 @@
         $("input[name='btnAddCart']").click(function () {
             var productId = $("input[name='productId']").val();
             var quantity = $("input[name='quantity']").val();
-            window.location.href = "/add-order/?productId="+productId+"&quantity=" +quantity;
+            window.location.href = "/add-order/?productId=" + productId + "&quantity=" + quantity;
         });
+        $("input[name=rating]").click(function () {
+            var star = $('input[name=rating]:checked').val();
+            $.ajax({
+                data: { id: $("input[name=productId]").val(), star: star },
+                url: '/Products/UpdateStar',
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
 
+                }
+            })
+
+        });
     </script>
-<!-- //FlexSlider-->
+    <!-- //FlexSlider-->
 }

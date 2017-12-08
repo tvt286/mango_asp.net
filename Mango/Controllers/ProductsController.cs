@@ -33,12 +33,24 @@ namespace Store.Controllers
         {
             ProductModel model = new ProductModel();
             var product = ProductService.Get(id.Value);
+            if (product.Star == null)
+                product.Star = 3;
             model.product = product;
+
             var productHot = ProductService.GetProductsHot();
             model.productsHot = new List<Product>();
             model.productsHot.AddRange(productHot);
 
             return View(model);
+        }
+
+        public JsonResult UpdateStar(int id, int star)
+        {
+            ProductService.UpdateStar(id, star);
+            return Json(new
+            {
+                status = true,
+            });
         }
 	}
 }

@@ -38,6 +38,8 @@ namespace Mango.Data
         public string Description { get; set; }
         public string Image { get; set; }
         public Nullable<int> BuyCount { get; set; }
+        public Nullable<int> Star { get; set; }
+        public Nullable<int> CountStar { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

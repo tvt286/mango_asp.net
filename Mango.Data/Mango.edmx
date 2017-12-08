@@ -130,6 +130,8 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="BuyCount" Type="int" />
+          <Property Name="Star" Type="int" />
+          <Property Name="CountStar" Type="int" />
         </EntityType>
         <EntityType Name="Store">
           <Key>
@@ -1653,6 +1655,8 @@
           <Property Name="BuyCount" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="mangoModel.FK__Product__Categor__47DBAE45" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderDetails" Relationship="mangoModel.FK__OrderDeta__Produ__3A4CA8FD" FromRole="Product" ToRole="OrderDetail" />
+          <Property Name="Star" Type="Int32" />
+          <Property Name="CountStar" Type="Int32" />
         </EntityType>
         <Association Name="FK__Product__UserCre__48CFD27E">
           <End Type="mangoModel.User" Role="User" Multiplicity="1" />
@@ -2107,6 +2111,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="mangoModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CountStar" ColumnName="CountStar" />
+                <ScalarProperty Name="Star" ColumnName="Star" />
                 <ScalarProperty Name="BuyCount" ColumnName="BuyCount" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

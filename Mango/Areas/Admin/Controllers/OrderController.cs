@@ -7,6 +7,7 @@ using Mango.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,13 +32,35 @@ namespace Mango.Areas.Admin.Controllers
         public ActionResult Confirm(int id)
         {
             var result = new RedirectCommand();
+            var order = OrderService.Get(id);
+            var store = StoreService.Get(order.StoreId);
 
+            foreach (var item in order.OrderDetails)
+            {
+                var strError = new StringBuilder();
+                var product = store.StoreProducts.FirstOrDefault(x => x.ProductId == item.ProductId);
+                // neu nhu product có trong store nhỏ hơn yêu cầu thì báo lỗi
+                if(product != null && product.QuantityExchange < item.Quantity)
+                {
+                    strError.AppendFormat("Product {0} out stock", product.Product.Name);
+                    result.Code = ResultCode.Fail;
+                    result.Message = strError.ToString();
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else if(product == null)
+                {
+                    strError.AppendFormat("Product {0} empty in store {1}", product.Product.Name, store.Name);
+                    result.Code = ResultCode.Fail;
+                    result.Message = strError.ToString();
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
             OrderService.ConfirmOrder(id);
 
             result.Code = ResultCode.Success;
             result.Message = "Confirm order successfully!";
             result.Url = Url.Action("Index");
-           
+        
            return Json(result, JsonRequestBehavior.AllowGet);
         }
 

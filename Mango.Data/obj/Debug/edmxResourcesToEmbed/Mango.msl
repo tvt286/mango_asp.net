@@ -208,6 +208,8 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="mangoModel.Product">
         <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="CountStar" ColumnName="CountStar" />
+          <ScalarProperty Name="Star" ColumnName="Star" />
           <ScalarProperty Name="BuyCount" ColumnName="BuyCount" />
           <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="Description" ColumnName="Description" />
