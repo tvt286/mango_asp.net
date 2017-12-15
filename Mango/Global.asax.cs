@@ -1,4 +1,6 @@
 ﻿using Mango.App_Start;
+using Quartz;
+using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,6 +35,37 @@ namespace Mango
 
         }
      
+    }
+
+    public class JobScheduler
+    {
+        public static void Start()
+        {
+
+            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Start();
+
+            //job kiểm tra tồn kho
+            //chạy hằng ngày
+            IJobDetail job1 = JobBuilder.Create<NotificationOutOffSock>().Build();
+            ITrigger trigger1 = TriggerBuilder.Create()
+                    .WithIdentity("trigger1", "group1")
+                    .StartNow()
+                    .WithDailyTimeIntervalSchedule(x => x
+                        .WithIntervalInHours(24)
+                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(8,0)))
+                    .Build();
+            scheduler.ScheduleJob(job1, trigger1);
+
+        }
+    }
+
+    public class NotificationOutOffSock : IJob
+    {
+        public void Execute(IJobExecutionContext context)
+        {
+        //    NotificationService.NotificationOutOffStockWarehouse();
+        }
     }
 
     public static class ExtensionHelpers

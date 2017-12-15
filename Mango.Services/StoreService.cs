@@ -21,6 +21,24 @@ namespace Mango.Services
             }
         }
 
+        public static void CheckProductOutStock()
+        {
+            using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))
+            {
+                var stores = GetAll();
+                foreach (var store in stores)
+                {
+                    foreach (var item in store.StoreProducts)
+                    {
+                        if(item.QuantityExchange <= item.Product.AmountAlertForStore)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
         public static Store GetStoreRoot()
         {
             using (var context = new mangoEntities(IsolationLevel.ReadUncommitted))

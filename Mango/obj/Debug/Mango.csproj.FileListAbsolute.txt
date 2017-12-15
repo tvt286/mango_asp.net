@@ -212,3 +212,12 @@ C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Man
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\obj\Debug\Mango.csprojResolveAssemblyReference.cache
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\obj\Debug\Store.dll
 C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\obj\Debug\Store.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.Core.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Quartz.dll
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.Core.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Common.Logging.Core.xml
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Quartz.pdb
+C:\Users\TRUC-SIDA\Documents\Visual Studio 2013\Projects\Mango\mango_asp.net\Mango\bin\Quartz.xml
