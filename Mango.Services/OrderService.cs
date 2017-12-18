@@ -56,6 +56,7 @@ namespace Mango.Services
                     return context.Orders
                         .Include(x => x.OrderDetails.Select(d => d.StoreOrderImportDetail))
                         .Include(x => x.OrderDetails.Select(d => d.Product.Category))
+                        .Include(x => x.OrderDetails.Select(d => d.Product))
                         .Include(x => x.Customer)
                         .First(x => x.Id == id);             
             }

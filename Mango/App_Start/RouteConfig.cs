@@ -13,11 +13,6 @@ namespace Mango
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
 
             routes.MapRoute(
               "User logout",
@@ -48,11 +43,18 @@ namespace Mango
             );
 
             routes.MapRoute(
-                "detail order",
-                "order-detail",
+                "detail cart",
+                "cart-detail",
                 new { controller = "Orders", action = "Detail", id = UrlParameter.Optional },
                 new[] { "Mango.Controllers" }
           );
+
+            routes.MapRoute(
+               "detail order",
+               "order-detail",
+               new { controller = "Orders", action = "DetailOrder", id = UrlParameter.Optional },
+               new[] { "Mango.Controllers" }
+            );
 
             routes.MapRoute(
                 "order",

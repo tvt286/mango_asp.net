@@ -27,6 +27,12 @@ namespace Mango.Controllers
             return View("Index", model);
         }
 
+        public ActionResult DetailOrder(int id)
+        {
+            var order = OrderService.Get(id);
+            return PartialView("_DetailOrder", order);
+        }
+
         public ActionResult Detail()
         {
             var user = UserService.GetUserInfo(true);
@@ -113,6 +119,8 @@ namespace Mango.Controllers
 
         public ActionResult AddCartItem(int productId, int quantity)
         {
+            var user = UserService.GetUserInfo(true);
+           
             var cart = Session[CART_SESSION];
             var product = ProductService.Get(productId);
 

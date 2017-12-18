@@ -5,6 +5,8 @@
 @using Mango.Data.Enums
 @using Mango.Web
 @using Mango.Models
+@using Mango.Data
+
 @model OrderViewModel
 
     @{
@@ -13,7 +15,6 @@
         var user = UserService.GetUserInfo(true);
     }
 
-
     <!-- /banner_bottom_agile_info -->
     <div class="page-head_agile_info_w3l">
         <div class="container">
@@ -21,7 +22,6 @@
             <!--/w3_short-->
             <div class="services-breadcrumb">
                 <div class="agile_inner_breadcrumb">
-
                     <ul class="w3_short">
                         <li><a href="@Url.Action("Index", "Home")">Home</a><i>|</i></li>
                         <li>Cart/Order</li>
@@ -39,21 +39,36 @@
                     <div class="contact-grid-agile-w31">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         <h4>Address</h4>
-                        <p>@user.Address</p>
+                        @if(user != null)
+                        {
+                            <p>@user.Address</p>
+                            
+                        }
+                        else
+                        {
+                            <p>You have no login<span>--</span></p>                            
+                        }
                     </div>
                 </div>
                 <div class="col-md-4 contact-grid-agile-w3">
                     <div class="contact-grid-agile-w32">
                         <i class="fa fa-phone" aria-hidden="true"></i>
                         <h4>Phone</h4>
-                        <p>@user.Phone<span>--</span></p>
+                        <p>@((user != null) ? @user.Phone : "You have no login")<span>--</span></p>
                     </div>
                 </div>
                 <div class="col-md-4 contact-grid-agile-w3">
                     <div class="contact-grid-agile-w33">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                         <h4>Email</h4>
-                        <p><a href="mailto:@user.Email">@user.Email</a><span>--</span></p>
+                        @if(user != null)
+                        {
+                              <p><a href="mailto:@user.Email">@user.Email</a><span>--</span></p>
+                        }
+                        else
+                        {
+                             <p><a href="#">You have no login</a><span>--</span></p>
+                        }
                     </div>
                 </div>
                 <div class="clearfix"> </div>
@@ -198,10 +213,21 @@
                                                             @item.TotalAmount.MoneyToStringVN()
                                                         </td>
                                                         <td>
-                                                            @item.Status.GetString()
+                                                            @if (item.Status == OrderStatus.Confirm)
+                                                            {
+                                                                <label style="color:red">@item.Status.GetString()</label>
+                                                            }
+                                                            else if (item.Status == OrderStatus.Pending)
+                                                            {
+                                                                <label style="color:orange">@item.Status.GetString()</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:green">@item.Status.GetString()</label>
+                                                            }
                                                         </td>
                                                         <td>
-                                                            <a title="Detail" href="#">Detail</a>
+                                                            <a title="Detail" class="btn btn-success" href="javascript:void(0)" onclick="DetailOrder(@item.Id)">Detail</a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -223,7 +249,6 @@
                     </div>
                 </div>
 
-
                 <!-- Modal1 -->
                 <div class="modal fade" id="modelDetail" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
@@ -234,8 +259,6 @@
                         <!-- //Modal content-->
                     </div>
                 </div>
-
-
                 @section styles
     {
                     <style>
@@ -301,25 +324,21 @@
                         }
 
                         $("#btnOrder").off('click').on('click', function () {
-                            $.post('/order-detail',
+                            $.post('/cart-detail',
                             function (data) {
                                 $('.modal-content').html(data);
                                 $('#modelDetail').modal('show');
 
                             });
-                            //$.ajax({
-                            //    data: { id: $(this).data('id') },
-                            //    url: '/Orders/Delete',
-                            //    dataType: 'json',
-                            //    type: 'POST',
-                            //    success: function (res) {
-                            //        if(res.status == true)
-                            //        {
-                            //            window.location.href = "/order";
-                            //        }
-                            //    }
-                            //})
+                          
                         });
+
+                        function DetailOrder(id) {
+                            $.post("order-detail", { id: id }, function (result) {
+                                $('.modal-content').html(result);
+                                $('#modelDetail').modal('show');
+                            });
+                        };
 
                         function DeleteProduct(element) {
                             $.ajax({

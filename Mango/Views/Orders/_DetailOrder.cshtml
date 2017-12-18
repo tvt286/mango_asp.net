@@ -1,0 +1,95 @@
+﻿@using Mango.Common
+@using Mango.Client.Common
+@using Mango.Services
+@using Mango.Security
+@using Mango.Data.Enums
+@using Mango.Web
+@using Mango.Data
+@using Mango.Models
+
+@model Mango.Data.Order
+
+    @{
+        var user = UserService.GetUserInfo(true);
+    }
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body modal-body-sub_agile">
+        <div class="col-md-12 modal_body_left modal_body_left1">
+            <h3 class="agileinfo_sign">Order <span>Detail</span></h3>
+          
+                <div class="styled-input agile-styled-input-top">
+                    <input disabled type="text" value="@user.FullName" required="">
+                    <span></span>
+                </div>
+
+                <div class="styled-input agile-styled-input-top">
+                    <input disabled type="text" name="Phone" value="@user.Phone" required="">
+                </div>
+                <div class="styled-input">
+                    <input disabled type="email" name="Email" value="@user.Email" required="">
+                </div>
+                <div class="styled-input">
+                    <input disabled type="text" name="Address" value="@user.Address" required="">
+                </div>
+                @if (@Model.OrderDetails != null && @Model.OrderDetails.Count > 0)
+                {
+
+                    <table class="table">
+                        <thead>
+                            <tr style="background-color:#fff;">
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in @Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        <img style="width:70px" src="@Url.ImageProductInfo(item.Product)" alt="" class="pro-image-front">
+                                    </td>
+                                    <td>
+                                        @item.Product.Name
+                                    </td>
+                                    <td>
+                                        @item.SellingPrice.MoneyToStringVN()
+                                    </td>
+                                    <td>
+                                        @item.Quantity
+                                    </td>
+                                    <td class="exchange autoNumeric">
+                                        @((item.Product.SellingPrice * item.Quantity).MoneyToStringVN())
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+          
+            <div class="clearfix"></div>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- //Modal2 -->

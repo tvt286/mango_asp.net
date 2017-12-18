@@ -733,6 +733,7 @@
     <Content Include="Views\Users\_Register.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Orders\_Detail.cshtml" />
+    <Content Include="Views\Orders\_DetailOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
