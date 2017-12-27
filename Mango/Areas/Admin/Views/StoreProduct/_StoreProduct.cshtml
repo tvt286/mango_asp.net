@@ -32,7 +32,7 @@
                     <th>
                         Quantity alert 
                     </th>
-                    <th data-sorter="false"></th>
+                   @* <th data-sorter="false"></th>*@
                 </tr>
             </thead>
             @{ int index = Model.PageSize * (Model.PageNumber - 1) + 1; }
@@ -63,13 +63,13 @@
                         <td>
                             @item.Product.AmountAlertForStore
 
-                        <td>
+                        @*<td>
                             @if (item.QuantityExchange > 0)
                             {
                                 <a href="javascript:void(0)" onclick="ViewDetailProduct(@item.ProductId, @item.StoreId, '@item.Product.Name')">Detail</a>
 
                             }
-                        </td>
+                        </td>*@
                     </tr>
                 }
             </tbody>

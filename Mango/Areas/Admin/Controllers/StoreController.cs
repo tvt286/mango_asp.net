@@ -23,7 +23,7 @@ namespace Mango.Areas.Admin.Controllers
                 return View(searchModel);
             }
 
-            var pagedList = StoreService.Search(searchModel.Address, searchModel.Name, searchModel.Code, searchModel.PageSize, searchModel.PageIndex);
+            var pagedList = StoreService.Search(searchModel.Address, searchModel.Code, searchModel.Name, searchModel.PageSize, searchModel.PageIndex);
             pagedList.SearchModel = searchModel;
 
             return PartialView("_List", pagedList);
@@ -139,6 +139,14 @@ namespace Mango.Areas.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
 
         }
-
+        public ActionResult Delete(string storeId)
+        {
+            var result = StoreService.DeleteStore(storeId);
+            if (result.Code == ResultCode.Success)
+            {
+                result.Url = Url.Action("Index");
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

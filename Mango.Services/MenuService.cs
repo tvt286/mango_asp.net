@@ -135,8 +135,8 @@ namespace Mango.Services
                 {
                     var Id = int.Parse(menuId);
                     var menu = context.Menus.FirstOrDefault(x => x.Id == Id);
-                    var category = context.Categories.Where(x => x.MenuId == menu.Id).ToList();
-                    if (category.Count > 0)
+                    var menu1 = context.Menu1.Where(x => x.MenuId == menu.Id).ToList();
+                    if (menu1.Count > 0)
                     {
                         result.Code = ResultCode.Fail;
                         result.Message = "Menu này có loại sản phẩm không thể xóa được!";

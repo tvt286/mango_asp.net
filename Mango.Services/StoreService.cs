@@ -213,5 +213,36 @@ namespace Mango.Services
                 }
             }
         }
+
+        public static RedirectCommand DeleteStore(string categoryIdStr)
+        {
+            var result = new RedirectCommand
+            {
+                Code = ResultCode.Success,
+                Message = "Delete successfully!",
+            };
+            using (var context = new mangoEntities())
+            {
+                var categoryIdList =
+                    categoryIdStr.Replace(" ", "").Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var categoryId in categoryIdList)
+                {
+                    var Id = int.Parse(categoryId);
+                    var store = context.Stores.FirstOrDefault(x => x.Id == Id);
+                    var products = context.StoreProducts.Where(x => x.StoreId == store.Id).ToList();
+                    if (products.Count > 0)
+                    {
+                        result.Code = ResultCode.Fail;
+                        result.Message = "Store này có sản phẩm không thể xóa được!";
+                        return result;
+                    }
+                    store.IsDeleted = true;
+                    store.TimeDeleted = DateTime.Now;
+                }
+                context.SaveChanges();
+            }
+
+            return result;
+        }
     }
 }
